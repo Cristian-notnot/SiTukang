@@ -1,72 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SiTukang</title>
-  <link href="/assets/css/output.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiTukang</title>
+    <link href="/assets/css/output.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-50">
 
-  <!-- NAVBAR -->
-  <nav class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-6 py-4 flex justify-between items-center shadow-md">
-    <h1 class="text-xl font-bold">SiTukang</h1>
-    
-    <div class="space-x-6">
-      <a href="index.html" class="hover:underline">Home</a>
-      <a href="about.html" class="hover:underline">About</a>
-      <a href="contact.html" class="hover:underline">Contact</a>
-      <a href="/login/login.html" class="bg-white text-yellow-500 px-4 py-1 rounded hover:bg-gray-100">Sign In</a>
-      <a href="/singup/singup.html" class="bg-black text-white px-4 py-1 rounded hover:bg-gray-800">Register</a>
-    </div>
-  </nav>
+    <!-- NAVBAR -->
+    <nav
+        class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-6 py-4 flex justify-between items-center shadow-md">
+        <h1 class="text-xl font-bold">SiTukang</h1>
 
-  <!-- HERO SECTION -->
-  <section class="text-center mt-20 px-4">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">
-      Si Tukang
-    </h1>
+        <div class="space-x-6">
+            <a href="index.html" class="hover:underline">Home</a>
+            <a href="about.html" class="hover:underline">About</a>
+            <a href="contact.html" class="hover:underline">Contact</a>
+            <a href="/login/login.html" class="bg-white text-yellow-500 px-4 py-1 rounded hover:bg-gray-100">Sign In</a>
+            <a href="/singup/singup.html" class="bg-black text-white px-4 py-1 rounded hover:bg-gray-800">Register</a>
+        </div>
+    </nav>
 
-    <p class="text-gray-600 max-w-xl mx-auto mb-6">
-      Menyediakan solusi terbaik untuk menemukan tukang terpercaya,
-      cepat, dan profesional sesuai kebutuhan Anda.
-    </p>
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden">
 
-    <div class="space-x-4">
-      <a href="/singup/singup.html" class="bg-yellow-500 text-white px-6 py-2 rounded-lg shadow hover:bg-yellow-600">
-        Register
-      </a>
+        <!-- BACKGROUND DECOR -->
+        <div class="absolute inset-0 bg-gradient-to-br from-yellow-100 via-white to-yellow-50"></div>
+        <div class="absolute -top-20 -right-20 w-72 h-72 bg-yellow-300 rounded-full blur-3xl opacity-30"></div>
+        <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-yellow-400 rounded-full blur-3xl opacity-20"></div>
 
-      <a href="/login/login.html" class="border border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-100">
-        Sign In
-      </a>
-    </div>
-  </section>
 
-  <!-- SECTION: WHO -->
-  <section class="mt-24 px-6 text-center">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-      Who's on Si Tukang
-    </h2>
+        <div class="relative max-w-6xl mx-auto px-5 pt-12 pb-20 flex flex-col md:flex-row items-center gap-12">
 
-    <p class="text-gray-600 max-w-2xl mx-auto">
-      Platform ini menghubungkan pengguna dengan berbagai tukang profesional
-      seperti tukang bangunan, listrik, dan lainnya yang telah terverifikasi.
-    </p>
-  </section>
 
-  <!-- SECTION: TUJUAN -->
-  <section class="mt-16 px-6 text-center mb-20">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-      Tujuan
-    </h2>
+            <div class="md:w-1/2 text-center md:text-left">
 
-    <p class="text-gray-600 max-w-2xl mx-auto">
-      Kami bertujuan memberikan kemudahan dalam mencari jasa tukang yang
-      cepat, terpercaya, dan berkualitas tanpa ribet.
-    </p>
-  </section>
+
+                <span class="inline-block bg-yellow-200 text-yellow-800 text-sm px-3 py-1 rounded-full mb-4">
+                    Platform Jasa Tukang Terpercaya
+                </span>
+
+                <!-- HEADLINE -->
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-4">
+                    Temukan Tukang
+                    <span class="text-yellow-500">Profesional</span>
+                    dengan Cepat & Mudah
+                </h1>
+
+                <!-- SUBTEXT -->
+                <p class="text-gray-600 mb-6 max-w-lg mx-auto md:mx-0">
+                    SiTukang membantu Anda menemukan tukang terpercaya untuk berbagai kebutuhan
+                    seperti renovasi, listrik, dan perbaikan rumah—tanpa ribet.
+                </p>
+
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="/singup/singup.html"
+                        class="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-yellow-600 transition">
+                        Mulai Sekarang
+                    </a>
+
+                    <a href="/login/login.html"
+                        class="border border-yellow-500 text-yellow-500 px-6 py-3 rounded-lg hover:bg-yellow-100 transition">
+                        Masuk
+                    </a>
+                </div>
+
+               
+                <div class="mt-8 flex justify-center md:justify-start gap-8 text-gray-600 text-sm">
+                    <div>
+                        <p class="font-bold text-gray-800">0+</p>
+                        <p>Tukang</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-800">1+</p>
+                        <p>Pengguna</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-800">0.0⭐</p>
+                        <p>Rating</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: IMAGE-->
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+
+                    <!-- CARD BACK -->
+                    <div class="absolute -top-4 -left-4 w-full h-full bg-yellow-200 rounded-2xl"></div>
+
+                    <!-- IMAGE -->
+                    <img src="/assets/css/img/worker.jpg" alt="Worker"
+                        class="relative w-80 md:w-[420px] rounded-2xl shadow-xl object-cover">
+
+                    <!-- FLOATING CARD -->
+                    <div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-lg shadow-md text-sm">
+                        ✔ Tukang terverifikasi
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: WHO -->
+    <section class="mt-24 px-6 text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+            Who's on Si Tukang
+        </h2>
+
+        <p class="text-gray-600 max-w-2xl mx-auto">
+            <b>Tukang</b>
+        </p>
+        <p>tukang untuk menyelesaikan masalah yang terjadi sesuai perkerjannay</p>
+        <img src="/assets/css/img/icon_worker.jpg" alt="Tukang"
+            class="w-40 h-40 object-cover mx-auto mt-6 rounded-full shadow-lg border-4 border-yellow-400 hover:scale-105 transition duration-300" />
+    </section>
+
+    <!-- SECTION: TUJUAN -->
+    <section class="mt-16 px-6 text-center mb-20">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+            Tujuan
+        </h2>
+
+        <p class="text-gray-600 max-w-2xl mx-auto">
+            Kami bertujuan memberikan kemudahan dalam mencari jasa tukang yang
+            cepat, terpercaya, dan berkualitas tanpa ribet.
+        </p>
+    </section>
 
 </body>
+
 </html>
