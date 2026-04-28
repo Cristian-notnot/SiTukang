@@ -21,5 +21,9 @@
     "url": "https://github.com/Cristian-notnot/SiTukang/issues"
   },
   "homepage": "https://github.com/Cristian-notnot/SiTukang#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
 }
