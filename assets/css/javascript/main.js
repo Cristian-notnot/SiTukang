@@ -117,3 +117,59 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 
 });
+
+// ===============================
+// TEAM SLIDER
+// ===============================
+
+const teamSlider = document.getElementById("teamSlider");
+
+const teamNext = document.getElementById("teamNext");
+
+const teamPrev = document.getElementById("teamPrev");
+
+
+// NEXT BUTTON
+teamNext.addEventListener("click", () => {
+
+  teamSlider.scrollBy({
+    left: 340,
+    behavior: "smooth"
+  });
+
+});
+
+
+// PREV BUTTON
+teamPrev.addEventListener("click", () => {
+
+  teamSlider.scrollBy({
+    left: -340,
+    behavior: "smooth"
+  });
+
+});
+
+
+// AUTO SLIDE
+setInterval(() => {
+
+  teamSlider.scrollBy({
+    left: 340,
+    behavior: "smooth"
+  });
+
+  // RESET KE AWAL
+  if (
+    teamSlider.scrollLeft + teamSlider.clientWidth >=
+    teamSlider.scrollWidth - 10
+  ) {
+
+    teamSlider.scrollTo({
+      left: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+}, 4000);
