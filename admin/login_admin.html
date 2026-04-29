@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin</title>
+    <style>
+        /* Pengaturan Dasar */
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Warna Latar Belakang Luar: Biru Tua */
+            background-color: #ff02b3; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container Utama */
+        .login-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 800px;
+            max-width: 90%;
+            height: 500px;
+            display: flex;
+            overflow: hidden; /* Agar konten tidak keluar dari radius */
+        }
+
+        /* --- Bagian Kiri (Gradient) --- */
+        .left-side {
+            flex: 1;
+            /* Gradient Biru Laut yang Profesional */
+            background: linear-gradient(135deg, #f1f902 0%, #fc02df 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .avatar-circle {
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px; /* Ukuran Ikon */
+        }
+
+        .welcome-text {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle-text {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* --- Bagian Kanan (Form) --- */
+        .right-side {
+            flex: 1.2;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-badge {
+            background-color: #e0f2fe; /* Biru muda pucat */
+            color: #0369a1; /* Biru tua teks */
+            font-size: 12px;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .login-title {
+            color: #0d1b33; /* Warna gelap untuk teks */
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* Pengaturan Form Input */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.3s;
+        }
+
+        .input-box:focus {
+            border-color: #495aff;
+            box-shadow: 0 0 0 3px rgba(73, 90, 255, 0.1);
+            outline: none;
+        }
+
+        /* Tombol Utama */
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #0d1b33; /* Warna gelap primer */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #1e3a6e;
+        }
+
+        /* Separator "ATAU" */
+        .separator {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 13px;
+            color: #888;
+            position: relative;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .separator::before { left: 0; }
+        .separator::after { right: 0; }
+
+        /* Tombol Google */
+        .btn-google {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-google:hover {
+            background-color: #f7f7f7;
+            border-color: #ccc;
+        }
+
+        .google-icon {
+           width: 40px;
+           
+        }
+
+        /* Footer Kanan */
+        .right-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .footer-link {
+            color: #495aff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsivitas (Layar Kecil) */
+        @media (max-width: 768px) {
+            .login-card {
+                flex-direction: column;
+                height: auto;
+            }
+            .left-side {
+                padding: 30px;
+                border-radius: 20px 20px 0 0;
+            }
+            .right-side {
+                padding: 30px;
+                border-radius: 0 0 20px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="login-card">
+        <div class="left-side">
+            <div class="avatar-circle">
+                👤 </div>
+            <p class="welcome-text">SELAMAT DATANG ADMIN</p>
+            <p class="subtitle-text">Silakan masuk untuk mengelola dashboard sistem Anda.</p>
+        </div>
+
+        <div class="right-side">
+            <div class="title-header">
+                
+                <h2 class="login-title">Login Admin</h2>
+            </div>
+
+            <form action="#" method="POST"> <div class="form-group">
+                    <input type="email" class="input-box" name="email" placeholder="Email / Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="input-box" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-submit">Masuk</button>
+            </form>
+
+          
+
+            
+
+            <div class="right-footer">
+                <p>Ada masalah masuk? <a href="#" class="footer-link">Hubungi IT</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
