@@ -274,22 +274,118 @@
             </div>
         </div>
 
-        <div class="form-section" id="step3">
+<div class="form-section" id="step3">
             <h2 style="color: #c2185b; font-weight: 600; margin-bottom: 30px;">3. Pembayaran & Profil</h2>
-            <div class="input-row">
-                <div class="input-group">
-                    <label>Nama Bank</label>
-                    <select name="bank" required>
-                        <option value="">Pilih bank...</option>
-                        <option value="BCA">BCA</option>
-                        <option value="BNI">BNI</option>
-                    </select>
+            
+            <div class="input-group">
+                <label>Metode Pembayaran</label>
+                <select name="metode_pembayaran" id="metodePembayaran" onchange="togglePaymentFields()" required>
+                    <option value="">Pilih metode pembayaran...</option>
+                    <option value="bank_transfer">Transfer Bank (Indonesia)</option>
+                    <option value="e_wallet">E-Wallet</option>
+                    <option value="qris">QRIS (QR Code)</option>
+                </select>
+            </div>
+
+            <!-- Bank Transfer Fields -->
+            <div id="bankFields" class="payment-fields" style="display: none;">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Nama Bank</label>
+                        <select name="bank">
+                            <option value="">Pilih bank...</option>
+                            <optgroup label="Bank Umum Nasional">
+                                <option value="BCA">BCA - Bank Central Asia</option>
+                                <option value="BRI">BRI - Bank Rakyat Indonesia</option>
+                                <option value="Mandiri">Bank Mandiri</option>
+                                <option value="BNI">BNI - Bank Negara Indonesia</option>
+                                <option value="BTN">BTN - Bank Tabungan Negara</option>
+                                <option value="BSI">BSI - Bank Sinarmas</option>
+                            </optgroup>
+                            <optgroup label="Bank Swasta">
+                                <option value="CIMB">CIMB Niaga</option>
+                                <option value="Danamon">Bank Danamon</option>
+                                <option value="Permata">Bank Permata</option>
+                                <option value="Panin">Bank Panin</option>
+                                <option value="BTPN">BTPN Jenius</option>
+                                <option value="DBS">DBS Bank</option>
+                                <option value="UOB">UOB Bank</option>
+                                <option value="Maybank">Maybank</option>
+                            </optgroup>
+                            <optgroup label="Bank Digital">
+                                <option value="Neo">Neo Bank</option>
+                                <option value="SeaBank">SeaBank</option>
+                                <option value="Allo">Bank Aladin</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Nomor Rekening</label>
+                        <input type="text" name="no_rekening" placeholder="Masukkan nomor rekening">
+                    </div>
                 </div>
                 <div class="input-group">
-                    <label>Nomor Rekening</label>
-                    <input type="text" name="no_rekening" placeholder="1234567890" required>
+                    <label>Nama Pemilak Rekening</label>
+                    <input type="text" name="nama_pemilik_rekening" placeholder="Nama sesuai buku rekening" required>
                 </div>
             </div>
+
+            <!-- E-Wallet Fields -->
+            <div id="eWalletFields" class="payment-fields" style="display: none;">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Pilih E-Wallet</label>
+                        <select name="e_wallet">
+                            <option value="">Pilih e-wallet...</option>
+                            <option value="gopay">GoPay (Gojek)</option>
+                            <option value="dana">DANA</option>
+                            <option value="ovo">OVO</option>
+                            <option value="shopepay">ShopeePay</option>
+                            <option value="linkaja">LinkAja</option>
+                            <option value="flip">Flip</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Nomor HP / Email</label>
+                        <input type="text" name="no_ewallet" placeholder="081234567890">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Nama Pemilak E-Wallet</label>
+                    <input type="text" name="nama_pemilik_ewallet" placeholder="Nama sesuai akun e-wallet" required>
+                </div>
+            </div>
+
+            <!-- QRIS Fields -->
+            <div id="qrisFields" class="payment-fields" style="display: none;">
+                <div class="input-group">
+                    <label>Nama Pemilak QRIS</label>
+                    <input type="text" name="nama_pemilik_qris" placeholder="Nama sesuai QRIS">
+                </div>
+                <div class="input-group">
+                    <label>Nomor WhatsApp untuk QRIS</label>
+                    <input type="tel" name="wa_qris" placeholder="081234567890">
+                </div>
+                <p style="color: #666; font-size: 13px; margin-top: 10px;">
+                    ℹ️ Dengan memilih QRIS, Anda akan menerima kode QR untuk pembayaran dari pelanggan.
+                </p>
+            </div>
+
+            <style>
+                .payment-fields {
+                    background: #f8f9fa;
+                    padding: 20px;
+                    border-radius: 12px;
+                    margin-top: 15px;
+                    border: 2px solid #e9ecef;
+                }
+                .payment-fields h4 {
+                    margin: 0 0 15px 0;
+                    color: #c2185b;
+                }
+            </style>
+
             <div class="btn-container">
                 <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Sebelumnya</button>
                 <button type="submit" class="btn btn-primary" form="registerForm">Daftar Sekarang</button>
@@ -325,8 +421,36 @@
             if (step < totalSteps) showStep(step + 1);
         }
 
-        function prevStep(step) {
+function prevStep(step) {
             if (step > 1) showStep(step - 1);
+        }
+
+        // Toggle payment fields based on selected payment method
+        function togglePaymentFields() {
+            const metode = document.getElementById('metodePembayaran').value;
+            const bankFields = document.getElementById('bankFields');
+            const eWalletFields = document.getElementById('eWalletFields');
+            const qrisFields = document.getElementById('qrisFields');
+            
+            // Hide all fields first
+            bankFields.style.display = 'none';
+            eWalletFields.style.display = 'none';
+            qrisFields.style.display = 'none';
+            
+            // Remove required attributes from all payment fields
+            const allPaymentInputs = document.querySelectorAll('#bankFields input, #bankFields select, #eWalletFields input, #eWalletFields select, #qrisFields input');
+            allPaymentInputs.forEach(input => {
+                input.removeAttribute('required');
+            });
+            
+            // Show selected payment fields and add required
+            if (metode === 'bank_transfer') {
+                bankFields.style.display = 'block';
+            } else if (metode === 'e_wallet') {
+                eWalletFields.style.display = 'block';
+            } else if (metode === 'qris') {
+                qrisFields.style.display = 'block';
+            }
         }
 
         updateProgress();
