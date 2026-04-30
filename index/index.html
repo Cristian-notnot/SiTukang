@@ -239,8 +239,8 @@
         <div class="md:w-1/2 text-center md:text-left">
 
           <!-- BADGE -->
-          <span class="inline-block bg-yellow-300 text-yellow-900 text-sm font-semibold px-4 py-1 rounded-full mb-4">
-            Tujuan SiTukang
+          <span class="inline-block bg-yellow-300 text-white text-4xl font-semibold px-4 py-1 rounded-full mb-4 ">
+            Our Goals
           </span>
 
           <!-- TITLE -->
@@ -291,282 +291,58 @@
   </button>
   
 
-<!-- ========================= -->
+
 <!-- SECTION : MEET OUR TEAM -->
-<!-- ========================= -->
 
-<section class="mt-24 px-6 mb-24 overflow-hidden">
+ <div class="team flex items-center gap-10 w-[800px] mx-auto mt-20">
 
-  <!-- TITLE -->
-  <div class="text-center mb-14">
+    <!-- GAMBAR -->
+    <img 
+        id="gambar"
+        class="w-[20px] h-[30px] rounded-full shadow-lg "
+    >
 
-    <h2 class="text-4xl font-bold text-gray-800">
-      Meet Our <span class="text-yellow-500">Team</span>
-    </h2>
+    <!-- DESKRIPSI -->
+    <div class="deskripsi w-[400px]">
 
-    <p class="text-gray-600 mt-3">
-      Tim terbaik di balik pengembangan SiTukang.
-    </p>
+        <h2 
+            id="Nama"
+            class="text-3xl font-bold mb-4"
+        >
+        </h2>
 
-  </div>
+        <p 
+            id="info"
+            class="text-gray-600 leading-relaxed"
+        >
+        </p>
 
+        <!-- BUTTON -->
+        <div class="flex gap-4 mt-6">
 
+            <button 
+                id="prev"
+                class="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
+            >
+                PREV
+            </button>
 
-  <!-- SLIDER CONTAINER -->
-  <div class="relative max-w-6xl mx-auto overflow-hidden">
-
-    <!-- BUTTON LEFT -->
-    <button id="prevTeam"
-      class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-yellow-500 text-white w-12 h-12 rounded-full shadow-lg hover:bg-yellow-600 transition">
-
-      ❮
-
-    </button>
-
-
-
-    <!-- BUTTON RIGHT -->
-    <button id="nextTeam"
-      class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-yellow-500 text-white w-12 h-12 rounded-full shadow-lg hover:bg-yellow-600 transition">
-
-      ❯
-
-    </button>
-
-
-
-    <!-- SLIDER -->
-    <div id="teamSlider"
-      class="flex transition-transform duration-700 ease-in-out">
-
-
-
-      <!-- ================= CARD 1 ================= -->
-      <div class="min-w-full px-4">
-
-        <div
-          class="relative h-[350px] bg-white rounded-[40px] shadow-xl overflow-hidden flex flex-col md:flex-row">
-
-          <!-- GARIS MIRING -->
-          <div
-            class="hidden md:block absolute left-1/2 top-[-20px] h-[420px] w-[3px] bg-gray-700 rotate-[28deg]">
-          </div>
-
-          <!-- LEFT -->
-          <div class="md:w-1/2 flex items-center justify-center p-10">
-
-            <img
-              src="/assets/css/img/team1.jpg"
-              alt="Team"
-              class="w-52 h-52 object-cover rounded-3xl shadow-xl">
-
-          </div>
-
-          <!-- RIGHT -->
-          <div class="md:w-1/2 flex flex-col justify-center px-10">
-
-            <h2 class="text-4xl font-bold text-gray-800 mb-3">
-              Nama Anggota 1
-            </h2>
-
-            <p class="text-yellow-500 font-semibold text-xl mb-5">
-              Frontend Developer
-            </p>
-
-            <p class="text-gray-600 leading-relaxed text-lg">
-              Bertanggung jawab dalam pengembangan tampilan
-              website SiTukang agar modern dan interaktif.
-            </p>
-
-          </div>
+            <button 
+                id="next"
+                class="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
+            >
+                NEXT
+            </button>
 
         </div>
-
-      </div>
-
-
-
-
-
-      <!-- ================= CARD 2 ================= -->
-      <div class="min-w-full px-4">
-
-        <div
-          class="relative h-[350px] bg-white rounded-[40px] shadow-xl overflow-hidden flex flex-col md:flex-row">
-
-          <div
-            class="hidden md:block absolute left-1/2 top-[-20px] h-[420px] w-[3px] bg-gray-700 rotate-[28deg]">
-          </div>
-
-          <div class="md:w-1/2 flex items-center justify-center p-10">
-
-            <img
-              src="/assets/css/img/team2.jpg"
-              alt="Team"
-              class="w-52 h-52 object-cover rounded-3xl shadow-xl">
-
-          </div>
-
-          <div class="md:w-1/2 flex flex-col justify-center px-10">
-
-            <h2 class="text-4xl font-bold text-gray-800 mb-3">
-              Nama Anggota 2
-            </h2>
-
-            <p class="text-yellow-500 font-semibold text-xl mb-5">
-              Backend Developer
-            </p>
-
-            <p class="text-gray-600 leading-relaxed text-lg">
-              Mengembangkan backend dan database
-              untuk memastikan sistem berjalan stabil.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-
-
-      <!-- ================= CARD 3 ================= -->
-      <div class="min-w-full px-4">
-
-        <div
-          class="relative h-[350px] bg-white rounded-[40px] shadow-xl overflow-hidden flex flex-col md:flex-row">
-
-          <div
-            class="hidden md:block absolute left-1/2 top-[-20px] h-[420px] w-[3px] bg-gray-700 rotate-[28deg]">
-          </div>
-
-          <div class="md:w-1/2 flex items-center justify-center p-10">
-
-            <img
-              src="/assets/css/img/team3.jpg"
-              alt="Team"
-              class="w-52 h-52 object-cover rounded-3xl shadow-xl">
-
-          </div>
-
-          <div class="md:w-1/2 flex flex-col justify-center px-10">
-
-            <h2 class="text-4xl font-bold text-gray-800 mb-3">
-              Nama Anggota 3
-            </h2>
-
-            <p class="text-yellow-500 font-semibold text-xl mb-5">
-              UI/UX Designer
-            </p>
-
-            <p class="text-gray-600 leading-relaxed text-lg">
-              Mendesain pengalaman pengguna
-              agar nyaman dan mudah digunakan.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-
-
-      <!-- ================= CARD 4 ================= -->
-      <div class="min-w-full px-4">
-
-        <div
-          class="relative h-[350px] bg-white rounded-[40px] shadow-xl overflow-hidden flex flex-col md:flex-row">
-
-          <div
-            class="hidden md:block absolute left-1/2 top-[-20px] h-[420px] w-[3px] bg-gray-700 rotate-[28deg]">
-          </div>
-
-          <div class="md:w-1/2 flex items-center justify-center p-10">
-
-            <img
-              src="/assets/css/img/team4.jpg"
-              alt="Team"
-              class="w-52 h-52 object-cover rounded-3xl shadow-xl">
-
-          </div>
-
-          <div class="md:w-1/2 flex flex-col justify-center px-10">
-
-            <h2 class="text-4xl font-bold text-gray-800 mb-3">
-              Nama Anggota 4
-            </h2>
-
-            <p class="text-yellow-500 font-semibold text-xl mb-5">
-              Project Manager
-            </p>
-
-            <p class="text-gray-600 leading-relaxed text-lg">
-              Mengatur jalannya proyek dan koordinasi tim
-              selama pengembangan aplikasi.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-
-
-      <!-- ================= CARD 5 ================= -->
-      <div class="min-w-full px-4">
-
-        <div
-          class="relative h-[350px] bg-white rounded-[40px] shadow-xl overflow-hidden flex flex-col md:flex-row">
-
-          <div
-            class="hidden md:block absolute left-1/2 top-[-20px] h-[420px] w-[3px] bg-gray-700 rotate-[28deg]">
-          </div>
-
-          <div class="md:w-1/2 flex items-center justify-center p-10">
-
-            <img
-              src="/assets/css/img/team5.jpg"
-              alt="Team"
-              class="w-52 h-52 object-cover rounded-3xl shadow-xl">
-
-          </div>
-
-          <div class="md:w-1/2 flex flex-col justify-center px-10">
-
-            <h2 class="text-4xl font-bold text-gray-800 mb-3">
-              Nama Anggota 5
-            </h2>
-
-            <p class="text-yellow-500 font-semibold text-xl mb-5">
-              Mobile Developer
-            </p>
-
-            <p class="text-gray-600 leading-relaxed text-lg">
-              Mengembangkan fitur mobile dan optimasi
-              performa aplikasi SiTukang.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
 
     </div>
 
-  </div>
+</div>
 
-</section>
 
-<script src="/assets/css/javascript/main.js "></script>
+
+<script src="/assets/css/javascript/main.js"></script>
 </body>
 
 </html>

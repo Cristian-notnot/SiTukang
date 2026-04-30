@@ -79,22 +79,7 @@ topBtn.addEventListener("click", () => {
 
 
 
-// ===============================
-// FLOATING HERO IMAGE
-// ===============================
 
-const heroImage = document.querySelector(".floating-image");
-
-let position = 0;
-
-setInterval(() => {
-
-  position = position === 0 ? 15 : 0;
-
-  heroImage.style.transform =
-    `translateY(${position}px)`;
-
-}, 2000);
 
 
 
@@ -120,56 +105,69 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ===============================
 // TEAM SLIDER
-// ===============================
-
-const teamSlider = document.getElementById("teamSlider");
-
-const teamNext = document.getElementById("teamNext");
-
-const teamPrev = document.getElementById("teamPrev");
 
 
-// NEXT BUTTON
-teamNext.addEventListener("click", () => {
-
-  teamSlider.scrollBy({
-    left: 340,
-    behavior: "smooth"
-  });
-
-});
+// Meet Our Team
 
 
-// PREV BUTTON
-teamPrev.addEventListener("click", () => {
+let next = document.getElementById("next")
+let prev = document.getElementById("prev")
+let gambar = document.getElementById("gambar")
 
-  teamSlider.scrollBy({
-    left: -340,
-    behavior: "smooth"
-  });
+let image = [
+    "../assets/css/img/worker.jpg",
+    "../assets/css/img/rumah.jpg",
+    "../assets/css/img/SiAir.jpg",
+    "../assets/css/img/SiBangunan.jpg",
+    "../assets/css/img/SiCat.jpg"
+]
 
-});
+let ucapan = [
+    "Worker",
+    "Rumah",
+    "Si Ari",
+    "Si Bangunan",
+    "Si Cat"
+]
 
+let index = 0;
 
-// AUTO SLIDE
+function updateimg(){
+    gambar.src = image[index];
+    document.getElementById("Nama").textContent = ucapan[index];
+}
+
+// tampil pertama kali
+updateimg();
+
 setInterval(() => {
+    index++;
 
-  teamSlider.scrollBy({
-    left: 340,
-    behavior: "smooth"
-  });
+    if(index > image.length - 1){
+        index = 0;
+    }
 
-  // RESET KE AWAL
-  if (
-    teamSlider.scrollLeft + teamSlider.clientWidth >=
-    teamSlider.scrollWidth - 10
-  ) {
+    updateimg();
+}, 3000);
 
-    teamSlider.scrollTo({
-      left: 0,
-      behavior: "smooth"
-    });
+next.addEventListener("click", () => {
+    index++;
 
-  }
+    if(index > image.length - 1){
+        index = 0;
+    }
 
-}, 4000);
+    updateimg();
+})
+
+prev.addEventListener("click", () => {
+    index--;
+
+    if(index < 0){
+        index = image.length - 1;
+    }
+
+    updateimg();
+})
+
+console.info(gambar)
