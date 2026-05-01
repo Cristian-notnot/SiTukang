@@ -111,6 +111,16 @@
             font-weight: 600;
             margin-bottom: 10px;
         }
+        .error-message {
+            display: none;
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
 
         @media (max-width: 768px) {
             .container { flex-direction: column; width: 400px; }
@@ -131,7 +141,8 @@
             <span class="badge-tukang">Untuk Tukang</span>
         </div>
         <h2 style="text-align:center; margin-bottom:20px;">Login Tukang</h2>
-        <form method="POST" action="/login-tukang">
+        <form method="POST" action="/login-tukang" id="loginForm">
+            <div id="errorMessage" class="error-message"></div>
             <div class="input-group">
                 <input type="email" name="email" placeholder="Email Address" required>
             </div>
@@ -148,9 +159,54 @@
             Login dengan Google
         </a>
         <div class="link">
-            Belum punya akun? <a href="../singup/singup.html">Daftar di sini</a>
+            Belum punya akun? <a href="../registerTukang/registerTukang.html">Daftar di sini</a>
         </div>
     </div>
 </div>
+
+<script>
+    // Check if user is already logged in
+    const loggedInTukang = localStorage.getItem('loggedInTukang');
+    if (loggedInTukang) {
+        // User already logged in, redirect to dashboard
+        window.location.href = '../index/index.html';
+    }
+
+    // Login Form Handling with localStorage
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Hide previous error
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+        
+        // Get users from localStorage
+        const tukangUsers = JSON.parse(localStorage.getItem('tukangUsers')) || [];
+        
+        // Find matching user
+        const user = tukangUsers.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+            // Login successful - store session
+            localStorage.setItem('loggedInTukang', JSON.stringify(user));
+            
+            // Redirect to dashboard (using index for demo)
+            window.location.href = '../index/index.html';
+        } else {
+            // Login failed - show error
+            if (errorMessage) {
+                errorMessage.textContent = 'Email atau password salah! Silakan coba lagi.';
+                errorMessage.style.display = 'block';
+            } else {
+                alert('Email atau password salah! Silakan coba lagi.');
+            }
+        }
+    });
+</script>
 </body>
 </html>

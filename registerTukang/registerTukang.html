@@ -275,8 +275,16 @@
         </div>
 
 <div class="form-section" id="step3">
-            <h2 style="color: #c2185b; font-weight: 600; margin-bottom: 30px;">3. Pembayaran & Profil</h2>
+            <h2 style="color: #c2185b; font-weight: 600; margin-bottom: 30px;">3. Akun & Pembayaran</h2>
             
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" id="registerPassword" placeholder="Masukkan password" required>
+            </div>
+            <div class="input-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" name="confirm_password" id="confirmPassword" placeholder="Masukkan konfirmasi password" required>
+            </div>
             <div class="input-group">
                 <label>Metode Pembayaran</label>
                 <select name="metode_pembayaran" id="metodePembayaran" onchange="togglePaymentFields()" required>
@@ -399,7 +407,19 @@
         </div>
     </div>
 
-    <form id="registerForm" method="POST" action="/register-tukang" enctype="multipart/form-data" style="display: none;"></form>
+<form id="registerForm" method="POST" action="/register-tukang" enctype="multipart/form-data" style="display: none;"></form>
+
+    <!-- Success Modal -->
+    <div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; max-width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+            <div style="width: 80px; height: 80px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <span style="color: white; font-size: 40px;">✓</span>
+            </div>
+            <h2 style="color: #c2185b; margin-bottom: 15px;">Pendaftaran Berhasil!</h2>
+            <p style="color: #666; margin-bottom: 25px;">Sekarang Anda dapat login untuk mengakses dashboard tukang.</p>
+            <a href="../login/loginTukang.html" style="display: block; background: #c2185b; color: white; padding: 14px 30px; border-radius: 30px; text-decoration: none; font-weight: 600;">Login Sekarang</a>
+        </div>
+    </div>
 
     <script>
         let currentStep = 1;
@@ -453,7 +473,85 @@ function prevStep(step) {
             }
         }
 
-        updateProgress();
+updateProgress();
+        
+        // Registration Form Handling with localStorage
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate password match
+            if (password !== confirmPassword) {
+                alert('Password tidak cocok! Silakan coba lagi.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password harus minimal 6 karakter!');
+                return;
+            }
+            
+            // Collect form data from all steps
+            const formData = {
+                id: Date.now().toString(),
+                nama: document.querySelector('input[name="nama"]').value,
+                email: document.querySelector('input[name="email"]').value,
+                telepon: document.querySelector('input[name="telepon"]').value,
+                tanggal_lahir: document.querySelector('input[name="tanggal_lahir"]').value,
+                jenis_kelamin: document.querySelector('select[name="jenis_kelamin"]').value,
+                alamat: document.querySelector('textarea[name="alamat"]').value,
+                keahlian_utama: document.querySelector('select[name="keahlian_utama"]').value,
+                pengalaman: document.querySelector('select[name="pengalaman"]').value,
+                skills: Array.from(document.querySelectorAll('input[name="skills[]"]:checked')).map(cb => cb.value),
+                metode_pembayaran: document.getElementById('metodePembayaran').value,
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            
+// Add payment method details
+            const metode = formData.metode_pembayaran;
+            if (metode === 'bank_transfer') {
+                formData.bank = document.querySelector('select[name="bank"]').value;
+                formData.no_rekening = document.querySelector('input[name="no_rekening"]').value;
+                formData.nama_pemilik_rekening = document.querySelector('input[name="nama_pemilik_rekening"]').value;
+            } else if (metode === 'e_wallet') {
+                formData.e_wallet = document.querySelector('select[name="e_wallet"]').value;
+                formData.no_ewallet = document.querySelector('input[name="no_ewallet"]').value;
+                formData.nama_pemilik_ewallet = document.querySelector('input[name="nama_pemilik_ewallet"]').value;
+            } else if (metode === 'qris') {
+                formData.nama_pemilik_qris = document.querySelector('input[name="nama_pemilik_qris"]').value;
+                formData.wa_qris = document.querySelector('input[name="wa_qris"]').value;
+            }
+            
+            // Get existing users from localStorage
+            let tukangUsers = JSON.parse(localStorage.getItem('tukangUsers')) || [];
+            
+            // Check if email already exists
+            const existingUser = tukangUsers.find(user => user.email === formData.email);
+            if (existingUser) {
+                alert('Email sudah terdaftar! Silakan gunakan email lain atau login.');
+                return;
+            }
+            
+            // Save to localStorage (only store email and password for login, plus basic info)
+            const userForStorage = {
+                id: formData.id,
+                email: formData.email,
+                password: formData.password,
+                nama: formData.nama,
+                keahlian_utama: formData.keahlian_utama,
+                telepon: formData.telepon,
+                createdAt: formData.createdAt
+            };
+            
+            tukangUsers.push(userForStorage);
+            localStorage.setItem('tukangUsers', JSON.stringify(tukangUsers));
+            
+            // Show success modal
+            document.getElementById('successModal').style.display = 'flex';
+        });
     </script>
 </body>
 </html>
