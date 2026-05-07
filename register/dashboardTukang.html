@@ -1,0 +1,19 @@
+<script>
+
+    // AMBIL USER YANG SEDANG LOGIN
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem("currentTukang")
+        );
+    if(!currentUser){
+        alert("Silakan login terlebih dahulu!");
+        window.location.href =
+            "loginTukang.html";
+    }
+    document.getElementById("namaUser").innerText =
+        "Halo, " + currentUser.nama;
+    document.getElementById("emailUser").innerText =
+        "Email : " + currentUser.email;
+    document.getElementById("skillUser").innerText =
+        "Keahlian : " + currentUser.keahlian;
+</script>

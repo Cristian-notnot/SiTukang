@@ -169,7 +169,7 @@
     const loggedInTukang = localStorage.getItem('loggedInTukang');
     if (loggedInTukang) {
         // User already logged in, redirect to dashboard
-        window.location.href = '../index/index.html';
+        window.location.href = '../dashboardTukang.html';
     }
 
     // Login Form Handling with localStorage
@@ -192,11 +192,13 @@
         const user = tukangUsers.find(u => u.email === email && u.password === password);
         
         if (user) {
-            // Login successful - store session
-            localStorage.setItem('loggedInTukang', JSON.stringify(user));
+            localStorage.setItem(
+    "currentTukang",
+    JSON.stringify(user)
+);
             
-            // Redirect to dashboard (using index for demo)
-            window.location.href = '../index/index.html';
+            window.location.href =
+'../dashboardTukang/dashboardTukang.html';
         } else {
             // Login failed - show error
             if (errorMessage) {

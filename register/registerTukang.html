@@ -407,8 +407,12 @@
         </div>
     </div>
 
-<form id="registerForm" method="POST" action="/register-tukang" enctype="multipart/form-data" style="display: none;"></form>
-
+<form id="registerForm" method="POST" action="/register-tukang" enctype="multipart/form-data">
+    <input type="text" id="nama" placeholder="Nama">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button type="submit">Daftar</button>
+</form>
     <!-- Success Modal -->
     <div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
         <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; max-width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
@@ -553,5 +557,18 @@ updateProgress();
             document.getElementById('successModal').style.display = 'flex';
         });
     </script>
+    <script src="../javascript/storage.js"></script>
+<script src="../javascript/register.js"></script>
+    <style>
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="../javascript/register.js"></script>
+
 </body>
 </html>
