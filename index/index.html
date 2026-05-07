@@ -8,7 +8,9 @@
   <link href="/assets/css/output.css" rel="stylesheet">
 </head>
 
+<style>
 
+</style>
 
 <body class="bg-gray-50">
 
@@ -34,14 +36,14 @@
   <a href="../loginUser/loginUser.html"
     class="bg-white text-yellow-500 px-4 py-1 rounded hover:bg-gray-100">
 
-    Login User
+    Registrasi
 
   </a>
 
   <a href="../login/loginTukang.html"
     class="bg-black text-white px-4 py-1 rounded hover:bg-gray-800">
 
-    Login Tukang
+    Login
 
   </a>
 
@@ -83,16 +85,24 @@
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
 
-  <a href="../registerUser/registerUser.html"
+  <a href="../registerTukang/registerUser.html"
     class="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-yellow-600 transition">
 
-    Daftar User
+   Daftar akun
 
   </a>
+  <a href="../login/login.html"
+    class="border border-yellow-500 text-yellow-500 px-6 py-3 rounded-lg hover:bg-yellow-100 transition">
+
+    Login
+
+  </a>
+  <p class="">Atau</p>
+
   <a href="../registerTukang/registerTukang.html"
     class="border border-yellow-500 text-yellow-500 px-6 py-3 rounded-lg hover:bg-yellow-100 transition">
 
-    Daftar Tukang
+    Daftar menjadi tukang
 
   </a>
 </div>
@@ -125,11 +135,6 @@
           <img src="/assets/css/img/worker.jpg" alt="Worker"
             class="relative w-80 md:w-[420px] rounded-2xl shadow-xl object-cover">
 
-          <!-- FLOATING CARD -->
-          <div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-lg shadow-md text-sm">
-            ✔ Tukang terverifikasi
-          </div>
-
         </div>
       </div>
 
@@ -161,7 +166,7 @@
         <!-- IMAGE -->
         <div class="flex justify-center">
           <img src="/assets/css/img/SiListrik.jpg" alt="Si Listrik"
-            class="w-20 h-20 object-cover rounded-full border-4 border-yellow-400 shadow-md">
+            class="">
         </div>
 
         <!-- TITLE -->
@@ -184,7 +189,7 @@
 
         <div class="flex justify-center">
           <img src="/assets/css/img/SiBangunan.jpg" alt="Si Bangunan"
-            class="w-32 h-32 object-cover rounded-full border-4 border-yellow-400 shadow-md">
+            class="">
         </div>
 
         <h3 class="text-2xl font-bold text-yellow-500 mt-5 mb-3">
@@ -205,10 +210,10 @@
 
         <div class="flex justify-center">
           <img src="/assets/css/img/SiAir.jpg" alt="Si Air"
-            class="w-32 h-32 object-cover rounded-full border-4 border-yellow-400 shadow-md">
+            class="w-20 h-20 object-cover">
         </div>
 
-        <h3 class="text-2xl font-bold text-yellow-500 mt-5 mb-3">
+        <h3 class="text-2xl font-bold text-yellow-500 -mt-8 mb-3  ">
           Si Air
         </h3>
 
@@ -224,8 +229,7 @@
         class="min-w-[280px] bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-2 transition duration-300 flex-shrink-0">
 
         <div class="flex justify-center">
-          <img src="/assets/css/img/SiCat.jpg" alt="Si Cat"
-            class="w-32 h-32 object-cover rounded-full border-4 border-yellow-400 shadow-md">
+          <img src="/assets/css/img/SiCat.jpg" alt="Si Cat">
         </div>
 
         <h3 class="text-2xl font-bold text-yellow-500 mt-5 mb-3">
@@ -311,59 +315,15 @@
     </div>
 
   </section>
+ </div>
+ 
+
+
+
   <button id="topBtn"
-    class="fixed bottom-6 right-6 bg-yellow-500 text-white w-12 h-12 rounded-full shadow-lg hidden hover:bg-yellow-600 transition z-50">
+    class="fixed bottom-6 right-6 bg-yellow-500 text-white w-[50px] h-[50px] rounded-full shadow-lg hidden hover:bg-yellow-600 transition z-50 text-2xl">
     ↑
   </button>
-  
-
-
-<!-- SECTION : MEET OUR TEAM -->
-
- <div class="team flex items-center gap-10 w-[800px] mx-auto mt-20">
-
-    <!-- GAMBAR -->
-    <img 
-        id="gambar"
-        class="w-[20px] h-[30px] rounded-full shadow-lg "
-    >
-
-    <!-- DESKRIPSI -->
-    <div class="deskripsi w-[400px]">
-
-        <h2 
-            id="Nama"
-            class="text-3xl font-bold mb-4"
-        >
-        </h2>
-
-        <p 
-            id="info"
-            class="text-gray-600 leading-relaxed"
-        >
-        </p>
-
-        <!-- BUTTON -->
-        <div class="flex gap-4 mt-6">
-
-            <button 
-                id="prev"
-                class="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
-            >
-                PREV
-            </button>
-
-            <button 
-                id="next"
-                class="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
-            >
-                NEXT
-            </button>
-
-        </div>
-
-    </div>
-
 </div>
 
 

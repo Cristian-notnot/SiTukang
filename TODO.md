@@ -5,6 +5,6 @@
 - [x] Pastikan dashboard menggunakan `localStorage.currentTukang` (konsisten dengan `login/loginTukang.html`).
 - [x] Tampilkan nama, email, keahlian utama, dan daftar harga per hari (fallback 0).
 - [x] Tambahkan tombol Logout (hapus `currentTukang` lalu redirect ke `login/loginTukang.html`).
-- [ ] Tes manual: login tukang -> buka dashboard -> cek tampilan -> logout -> pastikan redirect.
+- [] Tes manual: login tukang -> buka dashboard -> cek tampilan -> logout -> pastikan redirect.
 
 
