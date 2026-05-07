@@ -274,9 +274,41 @@
             </div>
         </div>
 
-<div class="form-section" id="step3">
-            <h2 style="color: #c2185b; font-weight: 600; margin-bottom: 30px;">3. Akun & Pembayaran</h2>
-            
+        <div class="form-section" id="step3">
+            <h2 style="color: #c2185b; font-weight: 600; margin-bottom: 30px;">3. Akun, Harga & Pembayaran</h2>
+
+            <h3 style="color:#555; font-weight:600; margin: 10px 0 20px;">Set Harga per Hari (Kategori Keahlian)</h3>
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Bangunan (Rp)</label>
+                    <input type="number" name="harga_bangunan" min="0" step="1000" value="0" required>
+                </div>
+                <div class="input-group">
+                    <label>Listrik (Rp)</label>
+                    <input type="number" name="harga_listrik" min="0" step="1000" value="0" required>
+                </div>
+            </div>
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Ledeng (Rp)</label>
+                    <input type="number" name="harga_ledeng" min="0" step="1000" value="0" required>
+                </div>
+                <div class="input-group">
+                    <label>Cat (Rp)</label>
+                    <input type="number" name="harga_cat" min="0" step="1000" value="0" required>
+                </div>
+            </div>
+            <div class="input-row">
+                <div class="input-group">
+                    <label>AC (Rp)</label>
+                    <input type="number" name="harga_ac" min="0" step="1000" value="0" required>
+                </div>
+                <div class="input-group">
+                    <label>Lainnya (Rp)</label>
+                    <input type="number" name="harga_lainnya" min="0" step="1000" value="0" required>
+                </div>
+            </div>
+
             <div class="input-group">
                 <label>Password</label>
                 <input type="password" name="password" id="registerPassword" placeholder="Masukkan password" required>
@@ -507,7 +539,16 @@ updateProgress();
                 skills: Array.from(document.querySelectorAll('input[name="skills[]"]:checked')).map(cb => cb.value),
                 metode_pembayaran: document.getElementById('metodePembayaran').value,
                 password: password,
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                // harga per hari per kategori keahlian
+                harga_per_hari: {
+                    bangunan: Number(document.querySelector('input[name="harga_bangunan"]').value) || 0,
+                    listrik: Number(document.querySelector('input[name="harga_listrik"]').value) || 0,
+                    ledeng: Number(document.querySelector('input[name="harga_ledeng"]').value) || 0,
+                    cat: Number(document.querySelector('input[name="harga_cat"]').value) || 0,
+                    ac: Number(document.querySelector('input[name="harga_ac"]').value) || 0,
+                    lainnya: Number(document.querySelector('input[name="harga_lainnya"]').value) || 0
+                }
             };
             
 // Add payment method details
@@ -524,6 +565,7 @@ updateProgress();
                 formData.nama_pemilik_qris = document.querySelector('input[name="nama_pemilik_qris"]').value;
                 formData.wa_qris = document.querySelector('input[name="wa_qris"]').value;
             }
+
             
             // Get existing users from localStorage
             let tukangUsers = JSON.parse(localStorage.getItem('tukangUsers')) || [];
@@ -536,14 +578,17 @@ updateProgress();
             }
             
             // Save to localStorage (only store email and password for login, plus basic info)
-            const userForStorage = {
+const userForStorage = {
                 id: formData.id,
                 email: formData.email,
                 password: formData.password,
                 nama: formData.nama,
                 keahlian_utama: formData.keahlian_utama,
                 telepon: formData.telepon,
-                createdAt: formData.createdAt
+                createdAt: formData.createdAt,
+
+                // harga per hari per kategori keahlian
+                harga_per_hari: formData.harga_per_hari
             };
             
             tukangUsers.push(userForStorage);
