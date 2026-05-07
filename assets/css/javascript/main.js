@@ -85,7 +85,7 @@ topBtn.addEventListener("click", () => {
 
 // ===============================
 // SMOOTH SCROLL
-// ===============================
+
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
@@ -102,3 +102,78 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 
 });
+
+//image slider
+
+let next = document.getElementById("next");
+let prev = document.getElementById("prev");
+let gambar = document.getElementById("gambar");
+
+let image = [
+    "/assets/css/img/agi.jpeg",
+    "/assets/css/img/ade.jpeg",
+    "/assets/css/img/anas.jpeg",
+    "/assets/css/img/charly.jpeg",
+    "/assets/css/img/SiCat.jpg"
+];
+
+let ucapan = [
+    "Nouval Al Ghifary",
+    "Ade Nizar Septian",
+    "Annas Khorul Amri",
+    "Charly Agusta Cristiano",
+    "Bruno"
+];
+
+let deskripsi = [
+    "Sebagai front end & backend developer",
+    "sebagai backend developer",
+    "sebagai front end developer",
+    "sebagai front end developer",
+    "sebagai UI/UX designer"
+];
+
+let index = 0;
+
+function updateimg(){
+
+    gambar.style.opacity = "0";
+    gambar.style.transform = "scale(0.95)";
+
+    setTimeout(() => {
+
+        gambar.src = image[index];
+
+        document.getElementById("Nama").textContent = ucapan[index];
+
+        document.getElementById("info").textContent = deskripsi[index];
+
+        gambar.style.opacity = "1";
+        gambar.style.transform = "scale(1)";
+
+
+    }, 300);
+}
+
+prev.addEventListener("click",()=>{
+
+    index--;
+
+    if(index < 0){
+        index = image.length - 1;
+    }
+
+    updateimg();
+});
+
+setInterval(()=>{
+
+    index++;
+
+    if(index > image.length - 1){
+        index = 0;
+    }
+
+    updateimg();
+
+},4000);

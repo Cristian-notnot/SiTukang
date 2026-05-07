@@ -9,6 +9,47 @@
 </head>
 
 <style>
+#topBtn{
+  width: 30px;
+}
+
+#gambar{
+   width:300px;
+    height:300px;
+    object-fit:cover;
+    border-radius:20px;
+  
+    transition: opacity 0.5s ease-in-out;
+
+    opacity:1;
+}
+
+#kotakgambar{
+  margin: 0 auto;
+  margin-top: 17px;
+  padding: 15px;
+  width: 1000px;
+  box-shadow: 2px 2px 10px black;
+  background-color: rgba(232, 231, 227, 0.8);
+}
+
+#tim{
+  
+  color:#1f2a44;
+   font-size:40px;
+    font-weight:bold;
+    text-align: center;
+    margin-top: 20px;
+}
+#team{
+    color:#e0a800;
+}
+
+#Nama{
+font-size: 30px;
+margin-bottom: 100px;
+
+}
 
 </style>
 
@@ -33,18 +74,16 @@
     Contact
   </a>
 
-  <a href="../loginUser/loginUser.html"
+  <a href="../registerTukang/registerUser.html"
     class="bg-white text-yellow-500 px-4 py-1 rounded hover:bg-gray-100">
 
     Registrasi
 
   </a>
 
-  <a href="../login/loginTukang.html"
+  <a href="../login/login.html"
     class="bg-black text-white px-4 py-1 rounded hover:bg-gray-800">
-
     Login
-
   </a>
 
 </div>
@@ -315,14 +354,58 @@
     </div>
 
   </section>
+
+<!--meet our team-->
+<h2 id="tim">Meet Our <span id="team">Team</span></h2>
+ <div class="flex items-center gap-10  mx-auto mt-20" id="kotakgambar">
+
+    <!-- GAMBAR -->
+    <img 
+        id="gambar"
+        class="w-[300px] h-[300px] object-cover rounded-2xl transition-all duration-500 opacity-100"
+    >
+
+    <!-- DESKRIPSI -->
+    <div class="deskripsi w-[400px]">
+
+        <h2 
+            id="Nama"
+            class="text-3xl font-bold mb-4"
+        >
+        </h2>
+
+        <p 
+            id="info"
+            class="text-white-600 leading-relaxed"
+        >
+        </p>
+
+        <!-- BUTTON -->
+        <div class="flex gap-4 mt-6">
+
+            <button 
+                id="prev"
+                class="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
+            >
+                PREV
+            </button>
+
+            <button 
+                id="next"
+                class="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
+            >
+                NEXT
+            </button>
+
+        </div>
+
+    </div>
  </div>
- 
 
-
-
+<!--button untuk ke atas-->
   <button id="topBtn"
     class="fixed bottom-6 right-6 bg-yellow-500 text-white w-[50px] h-[50px] rounded-full shadow-lg hidden hover:bg-yellow-600 transition z-50 text-2xl">
-    ↑
+    ^
   </button>
 </div>
 
