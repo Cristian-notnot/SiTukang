@@ -2,10 +2,12 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({
-    message: "Tukang Route Works",
-  });
-});
+const {
+  getAllTukang,
+  getDetailTukang
+} = require("../controllers/tukangController");
+
+router.get("/", getAllTukang);
+router.get("/:id", getDetailTukang);
 
 module.exports = router;
