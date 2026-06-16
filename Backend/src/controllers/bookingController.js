@@ -46,3 +46,38 @@ exports.createBooking = (req, res) => {
     );
 
 };
+
+exports.getMyBooking = (req, res) => {
+
+    const user_id = req.user.id;
+
+    const sql = `
+        SELECT
+            booking.*,
+            users.nama AS nama_tukang
+        FROM booking
+        JOIN tukang
+            ON booking.tukang_id = tukang.id
+        JOIN users
+            ON tukang.user_id = users.id
+        WHERE booking.user_id = ?
+        ORDER BY booking.created_at DESC
+    `;
+
+    db.query(sql, [user_id], (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        res.json({
+            success: true,
+            data: result
+        });
+
+    });
+
+};

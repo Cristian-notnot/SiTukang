@@ -5,7 +5,8 @@ const router = express.Router();
 const verifyToken = require("../middleware/authMiddleware");
 
 const {
-    createBooking
+    createBooking,
+    getMyBooking
 } = require("../controllers/bookingController");
 
 router.post(
@@ -13,5 +14,13 @@ router.post(
     verifyToken,
     createBooking
 );
+
+router.get(
+    "/my",
+    verifyToken,
+    getMyBooking
+);
+
+router.get("/:id", verifyToken, getMyBooking);
 
 module.exports = router;
