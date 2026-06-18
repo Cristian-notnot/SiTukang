@@ -81,3 +81,36 @@ exports.getMyBooking = (req, res) => {
     });
 
 };
+
+exports.updateBookingStatus = (req, res) => {
+
+    const bookingId = req.params.id;
+    const { status } = req.body;
+
+    const sql = `
+        UPDATE booking
+        SET status = ?
+        WHERE id = ?
+    `;
+
+    db.query(
+        sql,
+        [status, bookingId],
+        (err, result) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            res.json({
+                success: true,
+                message: "Status booking berhasil diperbarui"
+            });
+
+        }
+    );
+
+};

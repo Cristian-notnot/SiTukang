@@ -6,7 +6,8 @@ const verifyToken = require("../middleware/authMiddleware");
 
 const {
     createBooking,
-    getMyBooking
+    getMyBooking,
+    updateBookingStatus
 } = require("../controllers/bookingController");
 
 router.post(
@@ -19,6 +20,12 @@ router.get(
     "/my",
     verifyToken,
     getMyBooking
+);
+
+router.put(
+    "/:id/status",
+    verifyToken,
+    updateBookingStatus
 );
 
 router.get("/:id", verifyToken, getMyBooking);
