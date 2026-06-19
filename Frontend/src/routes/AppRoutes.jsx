@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
@@ -18,30 +19,31 @@ function AppRoutes() {
             <Routes>
 
                 <Route
-                    path="/login"
-                    element={<Login />}
-                />
+    path="/admin"
+    element={
+        <ProtectedRoute>
+            <AdminDashboard />
+        </ProtectedRoute>
+    }
+/>
 
-                <Route
-                    path="/register"
-                    element={<Register />}
-                />
+<Route
+    path="/tukang"
+    element={
+        <ProtectedRoute>
+            <TukangDashboard />
+        </ProtectedRoute>
+    }
+/>
 
-                <Route
-                    path="/user"
-                    element={<Home />}
-                />
-
-                <Route
-                    path="/admin"
-                    element={<AdminDashboard />}
-                />
-
-                <Route
-                    path="/tukang"
-                    element={<TukangDashboard />}
-                />
-
+<Route
+    path="/user"
+    element={
+        <ProtectedRoute>
+            <Home />
+        </ProtectedRoute>
+    }
+/>
             </Routes>
 
         </BrowserRouter>
