@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const tukangRoutes = require("./routes/tukangRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tukang", tukangRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/admin", adminRoutes);
 
 module.exports = app;
 
