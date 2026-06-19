@@ -85,7 +85,26 @@ exports.getMyBooking = (req, res) => {
 exports.updateBookingStatus = (req, res) => {
 
     const bookingId = req.params.id;
+
     const { status } = req.body;
+
+    const allowedStatus = [
+        "pending",
+        "diterima",
+        "dikerjakan",
+        "selesai",
+        "ditolak",
+        "dibatalkan"
+    ];
+
+    if (!allowedStatus.includes(status)) {
+
+        return res.status(400).json({
+            success: false,
+            message: "Status tidak valid"
+        });
+
+    }
 
     const sql = `
         UPDATE booking

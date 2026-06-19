@@ -80,3 +80,34 @@ exports.login = (req, res) => {
   });
 };
 
+exports.getProfile = (req, res) => {
+
+    const userId = req.user.id;
+
+    const sql = `
+        SELECT
+            id,
+            nama,
+            email,
+            role
+        FROM users
+        WHERE id = ?
+    `;
+
+    db.query(sql, [userId], (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        res.json({
+            success: true,
+            data: result[0]
+        });
+
+    });
+
+};
