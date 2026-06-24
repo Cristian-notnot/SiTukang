@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import DetailTukang from "../pages/user/DetailTukang";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Login from "../pages/auth/Login";
@@ -52,6 +52,15 @@ function AppRoutes() {
                         </ProtectedRoute>
                     }
                 />
+
+                <Route
+    path="/user/tukang/:id"
+    element={
+        <ProtectedRoute>
+            <DetailTukang />
+        </ProtectedRoute>
+    }
+/>
 
             </Routes>
         </BrowserRouter>
