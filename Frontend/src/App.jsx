@@ -1,9 +1,22 @@
-import AppRoutes from "./routes/AppRoutes";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/auth/Login";
+import UserDashboard from "./pages/user/UserDashboard.jsx";
 
 function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Route Login yang sudah kamu buat sebelumnya */}
+        <Route path="/login" element={<Login />} />
 
-  return <AppRoutes />;
-
+        {/* 2. Tambahkan Route untuk Dashboard User di sini */}
+        <Route path="/user" element={<UserDashboard />} />
+        
+        {/* Kamu juga bisa menjadikannya halaman utama (/) jika mau */}
+        <Route path="/" element={<UserDashboard />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
