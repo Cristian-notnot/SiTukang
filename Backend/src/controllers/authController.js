@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 exports.register = async (req, res) => {
   const { nama, email, password } = req.body;
 
+  console.log("BODY:", req.body);
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -14,17 +16,31 @@ exports.register = async (req, res) => {
       sql,
       [nama, email, hashedPassword],
       (err, result) => {
+
         if (err) {
-          return res.status(500).json(err);
+          console.log("REGISTER ERROR:", err);
+
+          return res.status(500).json({
+            message: err.sqlMessage,
+            code: err.code
+          });
         }
+
+        console.log("REGISTER BERHASIL");
 
         res.status(201).json({
           message: "User berhasil dibuat",
         });
       }
     );
+
   } catch (error) {
-    res.status(500).json(error);
+
+    console.log("CATCH ERROR:", error);
+
+    res.status(500).json({
+      message: error.message
+    });
   }
 };
 
@@ -33,11 +49,9 @@ const jwt = require("jsonwebtoken");
 exports.login = (req, res) => {
   const { email, password } = req.body;
 
-  const sql =
-    "SELECT * FROM users WHERE email = ?";
+  const sql = "SELECT * FROM users WHERE email = ?";
 
   db.query(sql, [email], async (err, result) => {
-
     if (err) {
       return res.status(500).json(err);
     }
@@ -50,10 +64,7 @@ exports.login = (req, res) => {
 
     const user = result[0];
 
-    const isMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({
@@ -62,16 +73,16 @@ exports.login = (req, res) => {
     }
 
     const token = jwt.sign(
-    {
+      {
         id: user.id,
         email: user.email,
-        role: user.role
-    },
-    process.env.JWT_SECRET,
-    {
-        expiresIn: "1d"
-    }
-);
+        role: user.role,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      },
+    );
 
     res.json({
       token,
@@ -81,10 +92,9 @@ exports.login = (req, res) => {
 };
 
 exports.getProfile = (req, res) => {
+  const userId = req.user.id;
 
-    const userId = req.user.id;
-
-    const sql = `
+  const sql = `
         SELECT
             id,
             nama,
@@ -94,20 +104,17 @@ exports.getProfile = (req, res) => {
         WHERE id = ?
     `;
 
-    db.query(sql, [userId], (err, result) => {
+  db.query(sql, [userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
 
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: err.message
-            });
-        }
-
-        res.json({
-            success: true,
-            data: result[0]
-        });
-
+    res.json({
+      success: true,
+      data: result[0],
     });
-
+  });
 };
