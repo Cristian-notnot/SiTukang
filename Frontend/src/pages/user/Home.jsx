@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getAllTukang } from "../../api/tukangApi";
 
 function Home() {
+    console.log(tukang);
 
     const [tukang, setTukang] = useState([]);
     const [loading, setLoading] = useState(true);

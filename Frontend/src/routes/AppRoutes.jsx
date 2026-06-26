@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DetailTukang from "../pages/user/DetailTukang";
 import ProtectedRoute from "./ProtectedRoute";
+import BookingPage from "../pages/user/BookingPage";
 
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
@@ -54,13 +55,22 @@ function AppRoutes() {
                 />
 
                 <Route
-    path="/user/tukang/:id"
-    element={
-        <ProtectedRoute>
-            <DetailTukang />
-        </ProtectedRoute>
-    }
-/>
+                    path="/user/tukang/:id" 
+                    element={
+                        <ProtectedRoute>
+                            <DetailTukang />
+                        </ProtectedRoute>
+                     }
+                />
+
+                <Route
+                     path="/user/booking/:id"
+                     element={
+                     <ProtectedRoute>
+                     <BookingPage />
+                     </ProtectedRoute>
+                    }
+                />
 
             </Routes>
         </BrowserRouter>
