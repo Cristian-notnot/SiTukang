@@ -10,6 +10,8 @@ import Home from "../pages/user/Home";
 import AdminDashboard from "../pages/admin/Dashboard";
 import TukangDashboard from "../pages/tukang/Dashboard";
 
+import MyBooking from "./pages/user/MyBooking";
+
 function AppRoutes() {
     return (
         <BrowserRouter>
@@ -71,6 +73,11 @@ function AppRoutes() {
                      </ProtectedRoute>
                     }
                 />
+
+                <Route
+    path="/user/my-booking"
+    element={<MyBooking />}
+/>
 
             </Routes>
         </BrowserRouter>

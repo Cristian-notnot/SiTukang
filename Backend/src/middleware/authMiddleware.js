@@ -4,7 +4,7 @@ const verifyToken = (req, res, next) => {
 
     console.log(req.headers);
     const authHeader = req.headers.authorization;
-
+    console.log(req.headers.authorization);
     if (!authHeader) {
         return res.status(401).json({
             success: false,
@@ -28,6 +28,7 @@ const verifyToken = (req, res, next) => {
 
     } catch (error) {
 
+        console.error("JWT Error:", error);
         return res.status(401).json({
             success: false,
             message: "Token tidak valid"

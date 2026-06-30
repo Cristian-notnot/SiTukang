@@ -1,23 +1,38 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Login from "./pages/auth/Login";
-import UserDashboard from "./pages/user/UserDashboard.jsx";
-import Home from "./pages/user/home.jsx";
+import Home from "./pages/user/Home";
+import UserDashboard from "./pages/user/UserDashboard";
+import DetailTukang from "./pages/user/DetailTukang";
+import BookingPage from "./pages/user/BookingPage";
+import MyBooking from "./pages/user/MyBooking";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Route Login yang sudah kamu buat sebelumnya */}
-        <Route path="/login" element={<Login />} />
 
-        {/* 2. Tambahkan Route untuk Dashboard User di sini */}
-        <Route path="/user" element={<Home />} />
-        
-        {/* Kamu juga bisa menjadikannya halaman utama (/) jika mau */}
-        <Route path="/" element={<UserDashboard />} />
-      </Routes>
-    </Router>
-  );
+    return (
+
+        <Router>
+
+            <Routes>
+
+                <Route path="/" element={<UserDashboard />} />
+
+                <Route path="/login" element={<Login />} />
+
+                <Route path="/user" element={<Home />} />
+
+                <Route path="/user/tukang/:id" element={<DetailTukang />}/>
+
+                <Route path="/user/booking/:id" element={<BookingPage />} />
+
+                <Route path="/user/my-booking"element={<MyBooking />} />
+
+            </Routes>
+
+        </Router>
+
+    );
+
 }
 
 export default App;

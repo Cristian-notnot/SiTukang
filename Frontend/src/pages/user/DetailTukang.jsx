@@ -18,7 +18,7 @@ function DetailTukang() {
 
                 const response = await getDetailTukang(id);
 
-                setTukang(response);
+                setTukang(response.data);
 
             } catch (error) {
 

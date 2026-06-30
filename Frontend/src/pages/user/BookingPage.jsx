@@ -28,7 +28,7 @@ function BookingPage() {
 
             alert("Booking berhasil");
 
-            navigate("/user/my-booking");
+            navigate("user/my-booking");
 
         } catch (error) {
 

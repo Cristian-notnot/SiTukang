@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
-import "../../assets/Dashboard.css"; // Pastikan D-nya KAPITAL sesuai di folder assets!
+import "../../assets/Dashboard.css"; 
 
 function UserDashboard() {
   const navigate = useNavigate(); 
@@ -85,7 +85,7 @@ function UserDashboard() {
                 <p>Mulai dari</p>
                 <div className="price-amount">Rp 75.000<span>/jam</span></div>
               </div>
-              <button className="btn-booking">Booking Sekarang</button>
+            <button className="btn-booking" onClick={() => navigate("/login")}>Booking Sekarang</button>
             </div>
           </div>
         </div>
