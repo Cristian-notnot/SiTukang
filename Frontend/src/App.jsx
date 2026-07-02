@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register"; // 1. DITAMBAHKAN: Import komponen Register kamu
 import Home from "./pages/user/Home";
 import UserDashboard from "./pages/user/UserDashboard";
 import DetailTukang from "./pages/user/DetailTukang";
@@ -18,6 +19,9 @@ function App() {
                 <Route path="/" element={<UserDashboard />} />
 
                 <Route path="/login" element={<Login />} />
+                
+                {/* 2. DITAMBAHKAN: Rute halaman register */}
+                <Route path="/register" element={<Register />} />
 
                 <Route path="/user" element={<Home />} />
 
@@ -25,7 +29,7 @@ function App() {
 
                 <Route path="/user/booking/:id" element={<BookingPage />} />
 
-                <Route path="/user/my-booking"element={<MyBooking />} />
+                <Route path="/user/my-booking" element={<MyBooking />} />
 
             </Routes>
 
