@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
-import "../../assets/Dashboard.css"; 
+import "../../assets/Dashboard.css"; // Pastikan D-nya KAPITAL sesuai di folder assets!
 
 function UserDashboard() {
   const navigate = useNavigate(); 
@@ -23,9 +23,11 @@ function UserDashboard() {
           <li><a href="#kontak">Kontak</a></li>
         </ul>
         <div className="nav-buttons">
-          {/* DITAMBAHKAN: onClick ke halaman login */}
           <button className="btn-text" onClick={() => navigate("/login")}>Masuk</button>
-          <button className="btn-outline">Daftar</button>
+          
+          {/* PERBAIKAN 1: Tambah onClick ke halaman register */}
+          <button className="btn-outline" onClick={() => navigate("/register")}>Daftar</button>
+          
           <button className="btn-filled">Jadi Tukang</button>
         </div>
       </nav>
@@ -85,7 +87,7 @@ function UserDashboard() {
                 <p>Mulai dari</p>
                 <div className="price-amount">Rp 75.000<span>/jam</span></div>
               </div>
-            <button className="btn-booking" onClick={() => navigate("/login")}>Booking Sekarang</button>
+              <button className="btn-booking" onClick={() => navigate("/login")}>Booking Sekarang</button>
             </div>
           </div>
         </div>
@@ -304,8 +306,8 @@ function UserDashboard() {
               <div className="bullet-item"><span>✓</span> Pembayaran aman</div>
             </div>
             <div className="join-actions">
-              <button className="btn-action-dark">Daftar sebagai Pelanggan ➔</button>
-              {/* DITAMBAHKAN: onClick & style cursor pointer pada teks pilihan */}
+              {/* PERBAIKAN 2: Tambah onClick ke halaman register */}
+              <button className="btn-action-dark" onClick={() => navigate("/register")}>Daftar sebagai Pelanggan ➔</button>
               <span className="side-text-link" onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
                 Sudah punya akun?
               </span>
@@ -323,8 +325,8 @@ function UserDashboard() {
               <div className="bullet-item"><span>✓</span> Pelatihan & sertifikasi</div>
             </div>
             <div className="join-actions">
-              <button className="btn-action-white">Daftar sebagai Tukang ➔</button>
-              {/* DITAMBAHKAN: onClick pada tombol mitra */}
+              {/* PERBAIKAN 3: Tambah onClick ke halaman register */}
+              <button className="btn-action-white" onClick={() => navigate("/register")}>Daftar sebagai Tukang ➔</button>
               <button className="btn-action-outline-white" onClick={() => navigate("/login")}>
                 Sudah jadi mitra?
               </button>

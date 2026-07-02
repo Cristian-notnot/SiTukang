@@ -1,0 +1,255 @@
+/* RESET UTAMA LAYOUT HALAMAN */
+.register-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* SISI KIRI - GRADIENT PANEL HIJAU */
+.reg-left-panel {
+    flex: 1;
+    background: linear-gradient(145deg, #1fa38c 0%, #064e43 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px 70px;
+}
+
+/* BRAND LOGO UTAMA */
+.reg-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reg-logo-icon {
+    font-size: 26px;
+}
+
+.reg-logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* KONTEN UTAMA TEXT SISI KIRI */
+.reg-left-content {
+    margin-top: auto;
+    margin-bottom: 30px;
+    max-width: 520px;
+}
+
+.reg-left-heading {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.reg-left-subtext {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    margin-bottom: 50px;
+}
+
+/* STATISTIK DI BAGIAN BAWAH PANEL KIRI */
+.reg-stats-container {
+    display: flex;
+    gap: 50px;
+}
+
+.reg-stat-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.reg-stat-number {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.reg-stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 5px;
+}
+
+/* SISI KANAN - TEMPAT FORM UTAMA */
+.reg-right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.reg-form-wrapper {
+    width: 100%;
+    max-width: 480px;
+}
+
+.reg-right-heading {
+    font-size: 34px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.reg-right-subtext {
+    font-size: 15px;
+    color: #64748b;
+    margin-bottom: 35px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* PEMBAGIAN INPUT BARIS (NAMA DEPAN & BELAKANG) */
+.reg-input-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.reg-input-row .reg-input-group {
+    flex: 1;
+}
+
+.reg-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reg-form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.reg-form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+}
+
+.reg-form-input::placeholder {
+    color: #94a3b8;
+}
+
+.reg-form-input:focus {
+    outline: none;
+    border-color: #1fa38c;
+    box-shadow: 0 0 0 4px rgba(31, 163, 140, 0.12);
+}
+
+/* ATURAN CHECKBOX SYARAT PRIVASI */
+.reg-checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.reg-checkbox-input {
+    width: 17px;
+    height: 17px;
+    accent-color: #1fa38c;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.reg-checkbox-label {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.reg-link {
+    color: #0d7a68;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.reg-link:hover {
+    text-decoration: underline;
+}
+
+/* TOMBOL DAFTAR UTAMA (BULAT LONJONG HIJAU TUA) */
+.reg-btn-daftar {
+    width: 100%;
+    padding: 15px;
+    background-color: #097261;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 15px;
+}
+
+.reg-btn-daftar:hover {
+    background-color: #065044;
+}
+
+/* FOOTER TEXT UNTUK NAVIGASI MASUK */
+.reg-login-text {
+    text-align: center;
+    font-size: 14px;
+    color: #475569;
+    margin-top: 30px;
+}
+
+.reg-login-link {
+    color: #097261;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.reg-login-link:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE LAYOUT UNTUK MOBILE/TABLET */
+@media (max-width: 992px) {
+    .register-container {
+        flex-direction: column;
+    }
+    .reg-left-panel {
+        padding: 40px 30px;
+        min-height: auto;
+    }
+    .reg-left-content {
+        margin-top: 30px;
+        margin-bottom: 0px;
+    }
+    .reg-left-heading {
+        font-size: 30px;
+    }
+    .reg-stats-container {
+        display: none;
+    }
+    .reg-right-panel {
+        padding: 40px 20px;
+    }
+}
