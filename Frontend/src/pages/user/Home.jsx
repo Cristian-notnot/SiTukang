@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "../../assets/HomeStyle.css";
 
 import { getAllTukang } from "../../api/tukangApi";
 
 function Home() {
-  
 
     const [tukang, setTukang] = useState([]);
     const [loading, setLoading] = useState(true);
-      console.log(tukang);
 
     useEffect(() => {
         fetchTukang();
@@ -40,57 +39,75 @@ function Home() {
 
     return (
 
-        <div style={{ padding: "20px" }}>
+        <div className="home-container">
 
-            <h1>Daftar Tukang</h1>
+            <div className="home-header">
 
-            {tukang.map((item) => (
+                <h1>Daftar Tukang</h1>
 
-                <div
-                    key={item.id}
-                    style={{
-                        border: "1px solid #ddd",
-                        padding: "15px",
-                        marginBottom: "10px",
-                        borderRadius: "10px"
-                    }}
-                >
+                <p>
+                    Temukan tukang profesional sesuai kebutuhanmu.
+                </p>
 
-                    <h2>{item.nama}</h2>
+            </div>
 
-                    <p>
-                        <strong>Kategori:</strong>
-                        {" "}
-                        {item.nama_kategori}
-                    </p>
+            <div className="tukang-grid">
 
-                    <p>
-                        <strong>Telepon:</strong>
-                        {" "}
-                        {item.telepon}
-                    </p>
+                {tukang.map((item) => (
 
-                    <p>
-                        <strong>Alamat:</strong>
-                        {" "}
-                        {item.alamat}
-                    </p>
+                    <div
+                        key={item.id}
+                        className="tukang-card"
+                    >
 
-                    <p>
-                        <strong>Rating:</strong>
-                        {" "}
-                        ⭐ {item.rating}
-                    </p>
+                        <div className="card-top">
 
-                    <Link to={`/user/tukang/${item.id}`}>
-                        <button>
+                            <img
+                                className="tukang-photo"
+                                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                                alt="Foto Tukang"
+                            />
+
+                            <div>
+
+                                <h2>{item.nama}</h2>
+
+                                <span className="kategori">
+                                    {item.nama_kategori}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div className="card-body">
+
+                            <p>
+                                📞 {item.telepon}
+                            </p>
+
+                            <p>
+                                📍 {item.alamat}
+                            </p>
+
+                            <p className="rating">
+                                ⭐ {item.rating}
+                            </p>
+
+                        </div>
+
+                        <Link
+                            to={`/user/tukang/${item.id}`}
+                            className="detail-btn"
+                        >
                             Lihat Detail
-                        </button>
-                    </Link>
+                        </Link>
 
-                </div>
+                    </div>
 
-            ))}
+                ))}
+
+            </div>
 
         </div>
 

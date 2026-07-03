@@ -1,3 +1,12 @@
+/* ==========================================================================
+   Frontend/src/assets/UserDashboard.css
+   SiTukang — User Dashboard Stylesheet
+   Scope: .dashboard-wrapper (UserDashboard.jsx)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS
+   -------------------------------------------------------------------------- */
 .dashboard-wrapper {
   --st-primary: #026b5e;
   --st-primary-dark: #01423a;
@@ -68,6 +77,10 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* --------------------------------------------------------------------------
+   2. NAVBAR
+   -------------------------------------------------------------------------- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -217,6 +230,10 @@ html {
 .btn-text:active {
   transform: translateY(0) scale(0.98);
 }
+
+/* --------------------------------------------------------------------------
+   3. HERO SECTION
+   -------------------------------------------------------------------------- */
 .hero-section {
   display: flex;
   justify-content: space-between;
@@ -366,6 +383,8 @@ html {
   color: var(--st-primary);
   font-weight: bold;
 }
+
+/* Hero right — floating choice card */
 .hero-right {
   flex: 0.8;
   display: flex;
@@ -556,6 +575,10 @@ html {
   background-color: var(--st-primary-dark);
   transform: scale(1.05);
 }
+
+/* --------------------------------------------------------------------------
+   4. SECTION CONTAINERS (generic)
+   -------------------------------------------------------------------------- */
 .section-container {
   padding: 80px 8%;
 }
@@ -598,6 +621,10 @@ html {
   color: var(--st-primary);
   gap: 10px;
 }
+
+/* --------------------------------------------------------------------------
+   5. LAYANAN POPULER — SERVICES GRID
+   -------------------------------------------------------------------------- */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -673,6 +700,10 @@ html {
   position: relative;
   z-index: 2;
 }
+
+/* --------------------------------------------------------------------------
+   6. CARA KERJA — STEPS
+   -------------------------------------------------------------------------- */
 .bg-gray-section {
   background-color: var(--st-bg-soft);
   padding: 80px 8%;
@@ -738,6 +769,10 @@ html {
   color: var(--st-text-muted);
   line-height: 1.6;
 }
+
+/* --------------------------------------------------------------------------
+   7. TUKANG TERATAS
+   -------------------------------------------------------------------------- */
 .tukang-cards-row {
   display: flex;
   gap: 20px;
@@ -783,6 +818,10 @@ html {
   font-weight: 400;
   color: var(--st-text-muted);
 }
+
+/* --------------------------------------------------------------------------
+   8. TESTIMONI — HORIZONTAL SCROLL
+   -------------------------------------------------------------------------- */
 .testimonial-row {
   display: flex;
   gap: 24px;
@@ -873,6 +912,10 @@ html {
   font-size: 12px;
   color: var(--st-text-soft);
 }
+
+/* --------------------------------------------------------------------------
+   9. GABUNG — DUAL CTA
+   -------------------------------------------------------------------------- */
 .join-container {
   display: flex;
   gap: 24px;
@@ -1054,6 +1097,9 @@ html {
   color: var(--st-primary);
 }
 
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
 .footer-main {
   background-color: var(--st-bg);
   border-top: 1px solid var(--st-border);
@@ -1109,6 +1155,15 @@ html {
   font-size: 13px;
   color: var(--st-text-soft);
 }
+
+/* --------------------------------------------------------------------------
+   11. UTILITY / REUSABLE COMPONENTS
+   Belum digunakan langsung di UserDashboard.jsx saat ini, disiapkan dengan
+   token yang sama agar konsisten bila sidebar, tabel, form, atau modal
+   ditambahkan pada iterasi berikutnya. Tidak memengaruhi tampilan saat ini.
+   -------------------------------------------------------------------------- */
+
+/* Sidebar (opsional, untuk layout dashboard internal) */
 .dashboard-wrapper .sidebar {
   width: 260px;
   background: var(--st-bg);
@@ -1232,6 +1287,8 @@ html {
   border-color: var(--st-primary);
   box-shadow: 0 0 0 3px rgba(2, 107, 94, 0.1);
 }
+
+/* Modal */
 .dashboard-wrapper .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1273,6 +1330,10 @@ html {
   gap: 12px;
   margin-top: 26px;
 }
+
+/* --------------------------------------------------------------------------
+   12. ANIMATIONS
+   -------------------------------------------------------------------------- */
 @keyframes st-float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -1310,6 +1371,11 @@ html {
   to { opacity: 1; }
 }
 
+/* --------------------------------------------------------------------------
+   13. RESPONSIVE / MEDIA QUERIES
+   -------------------------------------------------------------------------- */
+
+/* Laptop kecil / Tablet besar */
 @media (max-width: 1200px) {
   .footer-grid {
     grid-template-columns: 2fr repeat(2, 1fr);
@@ -1376,6 +1442,7 @@ html {
   }
 }
 
+/* Mobile besar */
 @media (max-width: 768px) {
   .search-container {
     flex-direction: column;
@@ -1440,6 +1507,8 @@ html {
     border-bottom: 1px solid var(--st-border);
   }
 }
+
+/* Mobile kecil */
 @media (max-width: 480px) {
   .navbar {
     padding: 12px 5%;
@@ -1477,6 +1546,8 @@ html {
     padding: 22px;
   }
 }
+
+/* Aksesibilitas: hormati preferensi reduce-motion */
 @media (prefers-reduced-motion: reduce) {
   .dashboard-wrapper * {
     animation: none !important;
