@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { createBooking } from "../../api/bookingApi";
 
 function BookingPage() {
@@ -27,8 +26,8 @@ function BookingPage() {
             });
 
             alert("Booking berhasil");
-
-            navigate("user/my-booking");
+            console.log("Navigate ke /user/my-booking");
+            navigate("/user/my-booking");
 
         } catch (error) {
 

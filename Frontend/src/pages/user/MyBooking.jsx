@@ -14,6 +14,7 @@ function MyBooking() {
 
                 const response = await getMyBooking();
 
+                console.log("Response Booking:", response);
                 setBooking(response.data);
 
             } catch (error) {

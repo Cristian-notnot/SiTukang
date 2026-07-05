@@ -14,7 +14,7 @@ export const createBooking = async (data) => {
         }
     );
 
-    return response.data;
+    return response;
 
 };
 

@@ -47,7 +47,7 @@ function Login() {
             {/* SISI KIRI (HIJAU GRADIENT) */}
             <div className="left-panel">
                 {/* DITAMBAHKAN: onClick agar klik logo bisa kembali ke beranda/dashboard utama */}
-                <div className="logo-container" onClick={() => navigate("/user")} style={{ cursor: 'pointer' }}>
+                <div className="logo-container" onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>
                     <span className="logo-icon">🔨</span>
                     <span className="logo-text">SiTukang</span>
                 </div>

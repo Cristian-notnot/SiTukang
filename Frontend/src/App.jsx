@@ -20,7 +20,6 @@ function App() {
 
                 <Route path="/login" element={<Login />} />
                 
-                {/* 2. DITAMBAHKAN: Rute halaman register */}
                 <Route path="/register" element={<Register />} />
 
                 <Route path="/user" element={<Home />} />
