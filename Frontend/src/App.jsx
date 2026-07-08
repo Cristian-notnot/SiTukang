@@ -7,6 +7,7 @@ import DashboardUtama from "./pages/user/DashboardUtama";
 import DetailTukang from "./pages/user/DetailTukang";
 import BookingPage from "./pages/user/BookingPage";
 import MyBooking from "./pages/user/MyBooking";
+import Layanan from './pages/user/Layanan'; // import file baru ini
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
          <Router>
 
             <Routes>
+                <Route path="/layanan" element={<Layanan />} />
 
                 <Route path="/" element={<DashboardUtama />} />
 

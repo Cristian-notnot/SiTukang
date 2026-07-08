@@ -16,7 +16,7 @@ function UserDashboard() {
         </div>
         <ul className="nav-links">
           <li><a href="#beranda" className="active">Beranda</a></li>
-          <li><a href="#layanan">Layanan</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }}>Layanan</a></li>
           <li><a href="#tentang">Tentang</a></li>
           <li><a href="#ulasan">Ulasan</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -100,7 +100,7 @@ function UserDashboard() {
             <h2 className="section-title">Layanan populer</h2>
             <p className="section-subtitle">Pilih kategori tukang yang Anda butuhkan</p>
           </div>
-          <a href="#semua" className="view-all-link">Lihat semua ➔</a>
+          <a href="#" className="view-all-link" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }}>Lihat semua ➔</a>
         </div>
 
         <div className="services-grid">

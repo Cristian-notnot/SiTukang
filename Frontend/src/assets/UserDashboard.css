@@ -77,7 +77,6 @@
 html {
   scroll-behavior: smooth;
 }
-
 /* --------------------------------------------------------------------------
    2. NAVBAR
    -------------------------------------------------------------------------- */
@@ -131,20 +130,22 @@ html {
   padding: 0;
 }
 
+/* Ukuran font normal saat tidak aktif */
 .nav-links a {
   text-decoration: none;
-  color: var(--st-text-muted);
+  color: #4b5563;
+  font-size: 15px; /* Ukuran normal */
   font-weight: 500;
-  font-size: 15px;
-  position: relative;
-  padding: 4px 0;
-  transition: var(--st-fast);
+  transition: all 0.2s ease-in-out; /* Biar animasi membesarnya mulus (smooth) */
 }
 
-.nav-links a:hover,
+/* Ukuran font MEMBESAR dan TEBAL saat aktif */
 .nav-links a.active {
-  color: var(--st-primary);
-  font-weight: 600;
+  color: #026b5e;           /* Warna teks hijau */
+  font-weight: 700;         /* Bikin teks jadi tebal (bold) */
+  font-size: 16px;          /* Bikin ukurannya lebih BESAR */
+  border-bottom: 2px solid #026b5e; /* Garis bawah hijau */
+  padding-bottom: 4px;      /* Jarak antara teks dan garis */
 }
 
 .nav-links a::after {
