@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useMemo, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import API from "../../api/axios";
-import "../../assets/login.css"; 
+import "../../assets/login.css";
 
 function Login() {
     const navigate = useNavigate();
@@ -10,12 +10,19 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const { login } = useContext(AuthContext);
     const [roleTab, setRoleTab] = useState("Customer");
 
+
+
     const handleLogin = async (e) => {
         e.preventDefault();
+        if (isLoading) return;
         try {
+            setIsLoading(true);
+
             const response = await API.post("/auth/login", { email, password });
             const token = response.data.token;
             const user = response.data.user;
@@ -31,8 +38,15 @@ function Login() {
             }
         } catch (error) {
             alert(error.response?.data?.message || "Login gagal");
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    const roleCopy =
+        roleTab === "Tukang"
+            ? "Kelola job & penghasilan Anda."
+            : "Pesan tukang untuk kebutuhan rumah.";
 
     return (
         <div className="log-container">
@@ -43,11 +57,13 @@ function Login() {
                     <span className="log-logo-text">SiTukang</span>
                 </div>
                 
+                
                 <div className="log-left-content">
                     <h1 className="log-left-heading">Profesional terpercaya di ujung jari Anda</h1>
                     <p className="log-left-subtext">
                         Lebih dari 12.000 tukang terverifikasi siap membantu di seluruh Indonesia.
                     </p>
+
                     
                     <div className="log-stats-container">
                         <div className="log-stat-box">
@@ -70,10 +86,10 @@ function Login() {
             <div className="log-right-panel">
                 <div className="log-form-wrapper">
                     
-                <h2 className="log-right-heading">Selamat datang kembali</h2>
-                    <p className="log-right-subtext">
-                        Masuk sebagai {roleTab} — {roleTab === "Tukang" ? "Kelola job & penghasilan Anda." : "Pesan tukang untuk kebutuhan rumah."}
-                    </p>
+                    <h2 className="log-right-heading">Selamat datang kembali</h2>
+                    <p className="log-right-subtext">Masuk sebagai {roleTab} — {roleCopy}</p>
+
+
 
                     {/* TABS SELECTION ROLE */}
                     <div className="log-role-tabs">
@@ -121,6 +137,7 @@ function Login() {
                                 <span className="log-forgot-link" onClick={() => navigate("/forgot-password")}>Lupa?</span>
                             </div>
                             <div className="log-input-wrapper">
+
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
@@ -129,6 +146,7 @@ function Login() {
                                     className="log-form-input"
                                     required
                                 />
+
                                 
                                 {/* TOMBOL MATA PERSIS SEPERTI DI GAMBAR EDITED-IMAGE.PNG */}
                                 <button 
@@ -165,15 +183,23 @@ function Login() {
                         </div>
 
                         {/* BUTTONS */}
-                        <button type="submit" className="log-btn-submit">
-                            Masuk sebagai {roleTab}
-                        </button>
-                        
-                        <button type="button" className="log-btn-demo">
-                            Gunakan akun demo {roleTab}
+                        <button
+                            type="submit"
+                            className="log-btn-submit"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <span className="log-btn-loading">
+                                    <span className="log-spinner" aria-hidden="true" />
+                                    Memproses...
+                                </span>
+                            ) : (
+                                `Masuk sebagai ${roleTab}`
+                            )}
                         </button>
 
                         <div className="log-divider">
+
                             <span>atau lanjut dengan</span>
                         </div>
 

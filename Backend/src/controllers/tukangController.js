@@ -435,4 +435,51 @@ exports.getDashboardTukang = (req,res)=>{
 
     });
 
-}
+};
+
+// NEW: Search tukang by keyword + alamat
+exports.searchTukang = (req, res) => {
+
+  const { keyword = "", alamat = "" } = req.query;
+
+  const keywordTrim = String(keyword).trim();
+  const alamatTrim = String(alamat).trim();
+
+  if (!keywordTrim && !alamatTrim) {
+    return res.status(200).json([]);
+  }
+
+  const sql = `
+    SELECT
+      tukang.id,
+      users.nama,
+      kategori.nama_kategori,
+      tukang.telepon,
+      tukang.alamat,
+      tukang.rating
+    FROM tukang
+    JOIN users
+      ON tukang.user_id = users.id
+    JOIN kategori
+      ON tukang.kategori_id = kategori.id
+    WHERE 1=1
+    AND ( ? = '' OR users.nama LIKE ? OR kategori.nama_kategori LIKE ? )
+    AND ( ? = '' OR tukang.alamat LIKE ? )
+    `;
+
+  const params = [
+    keywordTrim,
+    `%${keywordTrim}%`,
+    `%${keywordTrim}%`,
+    alamatTrim,
+    `%${alamatTrim}%`
+  ];
+
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+
+};

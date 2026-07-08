@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import "../../assets/register.css"; // Pastikan path file CSS sesuai tempat kamu menyimpannya
 
 function Register() {
     const navigate = useNavigate();
+
 
     // State pemecahan nama sesuai visual UI desain gambar
     const [namaDepan, setNamaDepan] = useState("");
@@ -16,6 +17,30 @@ function Register() {
     const [nomorHp, setNomorHp] = useState("+62");
     const [setujuSyarat, setSetujuSyarat] = useState(false);
 
+    const passwordStrength = useMemo(() => {
+        const p = password || "";
+        // Heuristic yang lebih “masuk akal” untuk password umum:
+        // - Panjang minimal yang bagus: >= 10
+        // - Variety (huruf besar/kecil/angka/simbol) memberi bobot besar
+        const lengthScore = Math.min(p.length / 10, 1);
+        const hasUpper = /[A-Z]/.test(p);
+        const hasLower = /[a-z]/.test(p);
+        const hasNumber = /\d/.test(p);
+        const hasSymbol = /[^A-Za-z0-9]/.test(p);
+
+        const varietyCount = [hasUpper, hasLower, hasNumber, hasSymbol].filter(Boolean).length;
+        const varietyScore = varietyCount / 4;
+
+        // admin123 = cukup panjang (8? sebenarnya 8) + lower + number + upper -> harusnya minimal “Sedang/Kuat”
+        const score = 0.35 * lengthScore + 0.65 * varietyScore;
+
+        if (!p) return { label: "", score: 0, color: "#94a3b8" };
+        if (score < 0.4) return { label: "Lemah", score, color: "#ef4444" };
+        if (score < 0.7) return { label: "Sedang", score, color: "#f59e0b" };
+        return { label: "Kuat", score, color: "#10b981" };
+
+    }, [password]);
+
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -25,6 +50,7 @@ function Register() {
         }
 
         try {
+
             // Menggabungkan nama depan dan belakang agar masuk ke struktur field 'nama' backend kamu
             const namaLengkap = `${namaDepan} ${namaBelakang}`.trim();
 
@@ -145,6 +171,25 @@ function Register() {
                         {/* Input Password */}
                         <div className="reg-input-group">
                             <label className="reg-form-label">Password</label>
+
+                            <div className="reg-password-strength-row">
+                                <div className="reg-password-strength">
+                                    <span className="reg-password-strength-label">Kekuatan:</span>
+                                    <span className="reg-password-strength-value" style={{ color: passwordStrength.color }}>
+                                        {passwordStrength.label}
+                                    </span>
+                                </div>
+                                <div className="reg-password-meter" aria-hidden="true">
+                                    <div
+                                        className="reg-password-meter-fill"
+                                        style={{
+                                            width: `${Math.round(passwordStrength.score * 100)}%`,
+                                            backgroundColor: passwordStrength.color,
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
                             <input
                                 type="password"
                                 placeholder="Minimal 8 karakter"
@@ -157,6 +202,7 @@ function Register() {
                         </div>
 
                         {/* Checkbox Syarat & Ketentuan */}
+
                         <div className="reg-checkbox-group">
                             <input
                                 type="checkbox"
