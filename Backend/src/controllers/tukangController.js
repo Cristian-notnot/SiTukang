@@ -170,3 +170,269 @@ exports.registerTukang = (req, res) => {
     });
 
 };
+
+exports.getBookingTukang = (req, res) => {
+
+    const userId = req.user.id;
+    const status = req.query.status;
+
+    const sqlCariTukang = `
+        SELECT id
+        FROM tukang
+        WHERE user_id = ?
+    `;
+
+    db.query(sqlCariTukang, [userId], (err, tukang) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        if (tukang.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Tukang tidak ditemukan"
+            });
+        }
+
+        const tukangId = tukang[0].id;
+
+        let sql = `
+            SELECT
+                booking.*,
+                users.nama AS nama_user
+            FROM booking
+            JOIN users
+                ON booking.user_id = users.id
+            WHERE booking.tukang_id = ?
+        `;
+
+        let params = [tukangId];
+
+        if (status) {
+
+            sql += " AND booking.status = ?";
+
+            params.push(status);
+
+        }
+
+        sql += " ORDER BY booking.created_at DESC";
+
+        db.query(sql, params, (err, result) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success:false,
+                    message:err.message
+                });
+            }
+
+            res.json({
+                success:true,
+                data:result
+            });
+
+        });
+
+    });
+
+};
+
+exports.updateStatusBooking = (req, res) => {
+
+    const userId = req.user.id;
+    const bookingId = req.params.id;
+    const { status } = req.body;
+
+    // Validasi status
+    const allowedStatus = [
+    "diterima",
+    "ditolak",
+    "dikerjakan",
+    "selesai"
+];
+
+    if (!allowedStatus.includes(status)) {
+        return res.status(400).json({
+            success: false,
+            message: "Status tidak valid"
+        });
+    }
+
+    // Cari data tukang berdasarkan user login
+    const sqlCariTukang = `
+        SELECT id
+        FROM tukang
+        WHERE user_id = ?
+    `;
+
+    db.query(sqlCariTukang, [userId], (err, tukang) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        if (tukang.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Tukang tidak ditemukan"
+            });
+        }
+
+        const tukangId = tukang[0].id;
+
+        // Pastikan booking memang milik tukang ini
+        const sqlCekBooking = `
+            SELECT *
+            FROM booking
+            WHERE id = ?
+            AND tukang_id = ?
+        `;
+
+        db.query(sqlCekBooking, [bookingId, tukangId], (err, booking) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            if (booking.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Booking tidak ditemukan"
+                });
+            }
+
+            const currentStatus = booking[0].status;
+
+            if (
+    currentStatus === "pending" &&
+    status !== "diterima" &&
+    status !== "ditolak"
+) {
+
+    return res.status(400).json({
+        success:false,
+        message:"Booking pending hanya bisa diterima atau ditolak"
+    });
+
+}
+
+if (
+    currentStatus === "diterima" &&
+    status !== "dikerjakan"
+){
+
+    return res.status(400).json({
+        success:false,
+        message:"Booking diterima hanya bisa menjadi dikerjakan"
+    });
+
+}
+
+if (
+    currentStatus === "dikerjakan" &&
+    status !== "selesai"
+){
+
+    return res.status(400).json({
+        success:false,
+        message:"Booking dikerjakan hanya bisa menjadi selesai"
+    });
+
+}
+
+if (
+    currentStatus === "ditolak" ||
+    currentStatus === "selesai"
+){
+
+    return res.status(400).json({
+        success:false,
+        message:"Status booking tidak dapat diubah lagi"
+    });
+
+}
+
+            // Update status booking
+            const sqlUpdate = `
+                UPDATE booking
+                SET status = ?
+                WHERE id = ?
+            `;
+
+            db.query(sqlUpdate, [status, bookingId], (err) => {
+
+                if (err) {
+                    return res.status(500).json({
+                        success: false,
+                        message: err.message
+                    });
+                }
+
+                res.json({
+                    success: true,
+                    message: "Status booking berhasil diperbarui"
+                });
+
+            });
+
+        });
+
+    });
+
+};
+
+exports.getDashboardTukang = (req,res)=>{
+
+    const userId=req.user.id;
+
+    const sql=`
+    SELECT
+
+    SUM(CASE WHEN booking.status='pending' THEN 1 ELSE 0 END) AS pending,
+
+    SUM(CASE WHEN booking.status='diterima' THEN 1 ELSE 0 END) AS diterima,
+
+    SUM(CASE WHEN booking.status='dikerjakan' THEN 1 ELSE 0 END) AS dikerjakan,
+
+    SUM(CASE WHEN booking.status='selesai' THEN 1 ELSE 0 END) AS selesai,
+
+    AVG(booking.rating) AS rating
+
+    FROM tukang
+
+    LEFT JOIN booking
+    ON booking.tukang_id=tukang.id
+
+    WHERE tukang.user_id=?
+    `;
+
+    db.query(sql,[userId],(err,result)=>{
+
+        if(err){
+
+            return res.status(500).json(err);
+
+        }
+
+        res.json({
+
+            success:true,
+
+            data:result[0]
+
+        });
+
+    });
+
+}
