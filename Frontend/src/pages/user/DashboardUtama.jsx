@@ -15,12 +15,12 @@ function UserDashboard() {
           <span>SiTukang</span>
         </div>
         <ul className="nav-links">
-          <li><a href="#beranda" className="active">Beranda</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Beranda</a></li>
           <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }}>Layanan</a></li>
-          <li><a href="#tentang">Tentang</a></li>
-          <li><a href="#ulasan">Ulasan</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#kontak">Kontak</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/tentang"); }}>Tentang</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/ulasan"); }}>Ulasan</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/faq"); }}>FAQ</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/kontak"); }}>Kontak</a></li>
         </ul>
         <div className="nav-buttons">
           <button className="btn-text" onClick={() => navigate("/login")}>Masuk</button>

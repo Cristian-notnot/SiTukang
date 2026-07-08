@@ -1,0 +1,189 @@
+.kontak-wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* NAVBAR STYLE */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  background-color: white;
+  border-bottom: 1px solid #f3f4f6;
+}
+.nav-logo { display: flex; align-items: center; font-weight: 700; font-size: 20px; color: #026b5e; }
+.logo-badge { margin-right: 8px; }
+.nav-links { display: flex; list-style: none; gap: 32px; margin: 0; padding: 0; }
+.nav-links a { text-decoration: none; color: #4b5563; font-size: 15px; font-weight: 500; transition: all 0.2s; }
+.nav-links a.active { color: #026b5e; font-weight: 700; font-size: 16px; border-bottom: 2px solid #026b5e; padding-bottom: 4px; }
+.nav-buttons { display: flex; gap: 12px; }
+
+/* CONTAINER MAIN GRID */
+.kontak-container-section {
+  padding: 80px 80px 100px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.kontak-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr; /* Kiri sedikit lebih lebar dibanding kanan */
+  gap: 80px;
+  align-items: center;
+}
+
+/* KOLOM KIRI: TEKS & INFO */
+.kontak-tag {
+  color: #026b5e;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.kontak-title {
+  font-size: 46px;
+  font-weight: 800;
+  color: #111827;
+  margin: 16px 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+.kontak-subtitle {
+  color: #64748b;
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+/* DAFTAR DATA INFO */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 48px;
+}
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.info-icon {
+  font-size: 24px;
+  margin-top: 2px;
+}
+.info-text h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.info-text p {
+  margin: 0;
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+/* KOTAK SOSIAL MEDIA */
+.social-media-box h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 16px 0;
+}
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+.social-icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+.social-icon:hover {
+  background-color: #026b5e;
+  border-color: #026b5e;
+  transform: translateY(-2px);
+}
+
+/* KOLOM KANAN: GAYA FORM INPUT */
+.form-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+.form-group input, 
+.form-group textarea {
+  font-family: inherit;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s;
+}
+.form-group input::placeholder, 
+.form-group textarea::placeholder {
+  color: #94a3b8;
+}
+.form-group input:focus, 
+.form-group textarea:focus {
+  border-color: #026b5e;
+  box-shadow: 0 0 0 4px rgba(2, 107, 94, 0.1);
+}
+
+/* TOMBOL SUBMIT */
+.btn-submit-kontak {
+  width: 100%;
+  background-color: #026b5e;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.btn-submit-kontak:hover {
+  background-color: #015248;
+}
+.btn-submit-kontak:active {
+  transform: scale(0.99);
+}
+
+/* FOOTER STYLE */
+.footer-main { background-color: #fafafa; padding: 80px 80px 30px 80px; border-top: 1px solid #f3f4f6; }
+.footer-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
+.footer-brand p { color: #6b7280; font-size: 14px; margin-top: 16px; line-height: 1.6; max-width: 260px; }
+.footer-col h5 { font-size: 15px; font-weight: 700; margin: 0 0 20px 0; color: #111827; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { text-decoration: none; color: #6b7280; font-size: 14px; }
+.footer-col ul li a:hover { color: #026b5e; }
+.footer-bottom { text-align: center; color: #9ca3af; font-size: 13px; border-top: 1px solid #f3f4f6; padding-top: 30px; }

@@ -7,7 +7,11 @@ import DashboardUtama from "./pages/user/DashboardUtama";
 import DetailTukang from "./pages/user/DetailTukang";
 import BookingPage from "./pages/user/BookingPage";
 import MyBooking from "./pages/user/MyBooking";
-import Layanan from './pages/user/Layanan'; // import file baru ini
+import Layanan from "./pages/user/Layanan";
+import Tentang from "./pages/user/Tentang";
+import Ulasan from "./pages/user/Ulasan";
+import FAQ from "./pages/user/FAQ";
+import Kontak from "./pages/user/Kontak";
 
 function App() {
 
@@ -17,6 +21,14 @@ function App() {
 
             <Routes>
                 <Route path="/layanan" element={<Layanan />} />
+
+                <Route path="/kontak" element={<Kontak />} />
+
+                <Route path="/faq" element={<FAQ />} />
+
+                <Route path="/ulasan" element={<Ulasan />} />
+
+                <Route path="/tentang" element={<Tentang />} />
 
                 <Route path="/" element={<DashboardUtama />} />
 

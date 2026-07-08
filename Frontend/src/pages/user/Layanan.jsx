@@ -26,12 +26,12 @@ function Layanan() {
           <span>SiTukang</span>
         </div>
         <ul className="nav-links">
-          <li><a href="#" onClick={() => navigate("/")}>Beranda</a></li>
-          <li><a href="#" className="active" onClick={() => navigate("/layanan")}>Layanan</a></li>
-          <li><a href="#" onClick={() => navigate("/")}>Tentang</a></li>
-          <li><a href="#" onClick={() => navigate("/")}>Ulasan</a></li>
-          <li><a href="#" onClick={() => navigate("/")}>FAQ</a></li>
-          <li><a href="#" onClick={() => navigate("/")}>Kontak</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Beranda</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }}>Layanan</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/tentang"); }}>Tentang</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/ulasan"); }}>Ulasan</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/faq"); }}>FAQ</a></li>
+          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/kontak"); }}>Kontak</a></li>
         </ul>
         <div className="nav-buttons">
           <button className="btn-text" onClick={() => navigate("/login")}>Masuk</button>
