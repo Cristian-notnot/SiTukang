@@ -6,14 +6,47 @@ const verifyToken = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
 
 const {
-    getDashboardStats
+
+    getPendingTukang,
+    approveTukang,
+    rejectTukang
+
 } = require("../controllers/adminController");
 
 router.get(
-    "/dashboard",
+
+    "/tukang/pending",
+
     verifyToken,
+
     roleMiddleware("admin"),
-    getDashboardStats
+
+    getPendingTukang
+
+);
+
+router.put(
+
+    "/tukang/:id/approve",
+
+    verifyToken,
+
+    roleMiddleware("admin"),
+
+    approveTukang
+
+);
+
+router.put(
+
+    "/tukang/:id/reject",
+
+    verifyToken,
+
+    roleMiddleware("admin"),
+
+    rejectTukang
+
 );
 
 module.exports = router;

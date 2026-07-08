@@ -74,3 +74,99 @@ exports.getDetailTukang = (req, res) => {
     });
 
 };
+
+exports.registerTukang = (req, res) => {
+
+    const userId = req.user.id;
+
+    const {
+        kategori_id,
+        telepon,
+        alamat,
+        deskripsi,
+        pengalaman
+    } = req.body;
+
+    // Cek apakah user sudah menjadi tukang
+    const cekSql = `
+        SELECT *
+        FROM tukang
+        WHERE user_id = ?
+    `;
+
+    db.query(cekSql, [userId], (err, result) => {
+
+        if (err) {
+
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+
+        }
+
+        if (result.length > 0) {
+
+            return res.status(400).json({
+                success: false,
+                message: "Anda sudah pernah mendaftar sebagai tukang"
+            });
+
+        }
+
+        const insertSql = `
+            INSERT INTO tukang
+            (
+                user_id,
+                kategori_id,
+                telepon,
+                alamat,
+                deskripsi,
+                pengalaman,
+                rating,
+                status
+            )
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        db.query(
+
+            insertSql,
+
+            [
+                userId,
+                kategori_id,
+                telepon,
+                alamat,
+                deskripsi,
+                pengalaman,
+                0,
+                "pending"
+            ],
+
+            (err) => {
+
+                if (err) {
+
+                    return res.status(500).json({
+                        success: false,
+                        message: err.message
+                    });
+
+                }
+
+                res.status(201).json({
+
+                    success: true,
+                    message: "Pendaftaran tukang berhasil. Menunggu persetujuan admin."
+
+                });
+
+            }
+
+        );
+
+    });
+
+};

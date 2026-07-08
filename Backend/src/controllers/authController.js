@@ -118,3 +118,62 @@ exports.getProfile = (req, res) => {
     });
   });
 };
+
+exports.resetPassword = async (req, res) => {
+
+    const { id } = req.params;
+    const { password } = req.body;
+
+    try {
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const sql = `
+            UPDATE users
+            SET password = ?
+            WHERE id = ?
+        `;
+
+        db.query(
+            sql,
+            [hashedPassword, id],
+            (err, result) => {
+
+                if (err) {
+
+                    return res.status(500).json({
+                        success: false,
+                        message: err.message
+                    });
+
+                }
+
+                if (result.affectedRows === 0) {
+
+                    return res.status(404).json({
+                        success: false,
+                        message: "User tidak ditemukan"
+                    });
+
+                }
+
+                res.json({
+
+                    success: true,
+                    message: "Password berhasil diubah"
+
+                });
+
+            }
+        );
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};

@@ -6,13 +6,19 @@ const verifyToken = require("../middleware/authMiddleware");
 const {
   register,
   login,
-  getProfile
+  getProfile,
+  resetPassword
 } = require("../controllers/authController");
 
 router.get(
     "/profile",
     verifyToken,
     getProfile
+);
+
+router.put(
+    "/reset-password/:id",
+    resetPassword
 );
 
 router.post("/register", register);
