@@ -1,234 +1,333 @@
-/* Login.css */
-
-.login-container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
-    overflow: hidden;
+/* RESET BASE */
+.log-container * {
+    box-sizing: border-box;
 }
 
-/* SISI KIRI (GREEN GRADIENT) */
-.left-panel {
-    flex: 1;
-    background: linear-gradient(135deg, #026b5e 0%, #01423a 100%);
+.log-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #ffffff;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* SISI KIRI */
+.log-left-panel {
+    flex: 1.1; 
+    background: radial-gradient(circle at 20% 30%, #1fa38c 0%, #064e43 100%);
     color: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 40px 60px;
-    box-sizing: border-box;
+    padding: 60px 80px;
 }
 
-.logo-container {
+.log-logo-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-.logo-icon {
-    font-size: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 6px 10px;
-    border-radius: 50%;
-}
-
-.logo-text {
-    font-size: 20px;
-    fontWeight: bold;
-}
-
-.left-content {
-    margin-top: auto;
-    margin-bottom: 40px;
-    max-width: 500px;
-}
-
-.left-heading {
-    font-size: 36px;
+.log-logo-text {
+    font-size: 22px;
     font-weight: 700;
-    line-height: 1.2;
+}
+
+.log-left-content {
+    margin-top: auto;
+    max-width: 540px;
+}
+
+.log-left-heading {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.25;
     margin-bottom: 16px;
 }
 
-.left-subtext {
+.log-left-subtext {
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.5;
-    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 60px;
 }
 
-.stats-container {
+.log-stats-container {
     display: flex;
-    gap: 40px;
+    gap: 50px;
 }
 
-.stat-box {
+.log-stat-box {
     display: flex;
     flex-direction: column;
 }
 
-.stat-number {
-    font-size: 24px;
-    font-weight: bold;
+.log-stat-number {
+    font-size: 26px;
+    font-weight: 700;
 }
 
-.stat-label {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 4px;
+.log-stat-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
 }
 
-/* SISI KANAN (FORM LOGIN WHITE) */
-.right-panel {
+/* SISI KANAN */
+.log-right-panel {
     flex: 1;
-    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 60px;
 }
 
-.form-wrapper {
+.log-form-wrapper {
     width: 100%;
-    max-width: 420px;
+    max-width: 440px; 
 }
 
-.right-heading {
-    font-size: 28px;
+.log-right-heading {
+    font-size: 32px;
     font-weight: 700;
-    color: #111111;
+    color: #0f172a;
     margin-bottom: 8px;
 }
 
-.right-subtext {
+.log-right-subtext {
     font-size: 14px;
-    color: #666666;
-    margin-bottom: 32px;
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+/* TABS SELECTION ROLE */
+.log-role-tabs {
+    display: flex;
+    background-color: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 4px;
+    border-radius: 30px;
+    gap: 4px;
+    margin-bottom: 30px;
+}
+
+.log-tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.log-tab-btn.active {
+    background-color: #ffffff;
+    color: #097261;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
 }
 
-.input-group {
+.log-input-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.label-row {
+.log-label-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.form-label {
+.log-form-label {
     font-size: 14px;
     font-weight: 600;
-    color: #333333;
+    color: #334155;
 }
 
-.forgot-link {
+.log-forgot-link {
     font-size: 13px;
-    color: #026b5e;
-    text-decoration: none;
+    color: #0d7a68;
     font-weight: 600;
+    cursor: pointer;
 }
 
-.form-input {
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    font-size: 14px;
-    outline: none;
-    background-color: #fefefe;
-}
-
-.password-container {
+/* INPUT STRUKTUR */
+.log-input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.form-input-password {
-    width: 100%;
-    padding: 12px 40px 12px 16px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    font-size: 14px;
-    outline: none;
-    box-sizing: border-box;
+.log-input-icon-left {
+    position: absolute;
+    left: 16px;
+    font-size: 16px;
 }
 
-.eye-button {
+.log-form-input {
+    width: 100%;
+    padding: 14px 45px 14px 45px; 
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #ffffff;
+    transition: all 0.2s;
+}
+
+.log-form-input:focus {
+    outline: none;
+    border-color: #1fa38c;
+    box-shadow: 0 0 0 4px rgba(31, 163, 140, 0.12);
+}
+
+.log-valid-icon {
     position: absolute;
-    right: 12px;
+    right: 16px;
+    color: #10b981; 
+    font-weight: bold;
+}
+
+/* TOMBOL MATA KANAN (YANG KAMU MINTA) */
+.log-toggle-password-btn {
+    position: absolute;
+    right: 16px;
     background: none;
     border: none;
-    cursor: pointer;
-    font-size: 14px;
-    color: #666666;
-}
-
-.btn-masuk {
-    background-color: #026b5e;
-    color: #ffffff;
-    padding: 14px;
-    border-radius: 25px;
-    border: none;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.divider-container {
-    display: flex;
-    align-items: center;
-    margin: 24px 0;
-}
-
-.divider-line {
-    flex: 1;
-    height: 1px;
-    background-color: #eeeeee;
-}
-
-.divider-text {
-    padding: 0 12px;
-    color: #999999;
-    font-size: 13px;
-}
-
-.btn-google {
-    width: 100%;
-    background-color: #ffffff;
-    color: #333333;
-    padding: 12px;
-    border-radius: 25px;
-    border: 1px solid #e0e0e0;
-    font-size: 14px;
-    font-weight: 600;
+    padding: 4px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
-.register-text {
+.log-toggle-password-btn:hover svg {
+    stroke: #097261; /* Berubah warna jadi hijau saat disorot */
+}
+
+/* META ROW */
+.log-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.log-remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.log-remember-me input {
+    accent-color: #097261;
+    width: 16px;
+    height: 16px;
+}
+
+/* BUTTONS */
+.log-btn-submit {
+    width: 100%;
+    padding: 14px;
+    background-color: #8bbcb3; 
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.log-btn-submit:hover {
+    background-color: #097261;
+}
+
+.log-btn-demo {
+    width: 100%;
+    padding: 14px;
+    background-color: #ffffff;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* DIVIDER */
+.log-divider {
+    text-align: center;
+    position: relative;
+    margin: 15px 0;
+}
+
+.log-divider::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background-color: #e2e8f0;
+    z-index: 1;
+}
+
+.log-divider span {
+    position: relative;
+    z-index: 2;
+    background-color: #ffffff;
+    padding: 0 15px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* SOSIAL MEDIA */
+.log-social-row {
+    display: flex;
+    gap: 16px;
+}
+
+.log-btn-social {
+    flex: 1;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px; 
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    cursor: pointer;
+}
+
+.log-register-text {
     text-align: center;
     font-size: 14px;
-    color: #666666;
-    margin-top: 24px;
+    color: #64748b;
+    margin-top: 30px;
 }
 
-.register-link {
-    color: #026b5e;
-    text-decoration: none;
-    font-weight: bold;
+.log-register-link {
+    color: #097261;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .log-container { flex-direction: column; }
+    .log-left-panel { padding: 40px 30px; min-height: auto; }
+    .log-left-content { margin-top: 30px; }
+    .log-stats-container { display: none; }
+    .log-right-panel { padding: 40px 24px; }
 }

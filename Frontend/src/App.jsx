@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register"; // 1. DITAMBAHKAN: Import komponen Register kamu
 import Home from "./pages/user/Home";
-import UserDashboard from "./pages/user/UserDashboard";
+import DashboardUtama from "./pages/user/DashboardUtama";
 import DetailTukang from "./pages/user/DetailTukang";
 import BookingPage from "./pages/user/BookingPage";
 import MyBooking from "./pages/user/MyBooking";
@@ -12,14 +12,14 @@ function App() {
 
     return (
 
-        <Router>
+         <Router>
 
             <Routes>
 
-                <Route path="/" element={<UserDashboard />} />
+                <Route path="/" element={<DashboardUtama />} />
 
                 <Route path="/login" element={<Login />} />
-                
+
                 <Route path="/register" element={<Register />} />
 
                 <Route path="/user" element={<Home />} />
@@ -31,10 +31,9 @@ function App() {
                 <Route path="/user/my-booking" element={<MyBooking />} />
 
             </Routes>
+         </Router>
 
-        </Router>
-
-    );
+     );
 
 }
 
