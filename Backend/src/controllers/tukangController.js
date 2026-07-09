@@ -392,45 +392,48 @@ if (
 
 };
 
-exports.getDashboardTukang = (req,res)=>{
+exports.getDashboardTukang = (req, res) => {
 
-    const userId=req.user.id;
+    const userId = req.user.id;
 
-    const sql=`
-    SELECT
+    const sql = `
+        SELECT
+            SUM(CASE WHEN booking.status='pending' THEN 1 ELSE 0 END) AS pending,
 
-    SUM(CASE WHEN booking.status='pending' THEN 1 ELSE 0 END) AS pending,
+            SUM(CASE WHEN booking.status='diterima' THEN 1 ELSE 0 END) AS diterima,
 
-    SUM(CASE WHEN booking.status='diterima' THEN 1 ELSE 0 END) AS diterima,
+            SUM(CASE WHEN booking.status='dikerjakan' THEN 1 ELSE 0 END) AS dikerjakan,
 
-    SUM(CASE WHEN booking.status='dikerjakan' THEN 1 ELSE 0 END) AS dikerjakan,
+            SUM(CASE WHEN booking.status='selesai' THEN 1 ELSE 0 END) AS selesai,
 
-    SUM(CASE WHEN booking.status='selesai' THEN 1 ELSE 0 END) AS selesai,
+            (
+                SELECT ROUND(AVG(reviews.rating),1)
+                FROM reviews
+                WHERE reviews.tukang_id = tukang.id
+            ) AS rating
 
-    AVG(booking.rating) AS rating
+        FROM tukang
 
-    FROM tukang
+        LEFT JOIN booking
+            ON booking.tukang_id = tukang.id
 
-    LEFT JOIN booking
-    ON booking.tukang_id=tukang.id
+        WHERE tukang.user_id = ?
 
-    WHERE tukang.user_id=?
+        GROUP BY tukang.id
     `;
 
-    db.query(sql,[userId],(err,result)=>{
+    db.query(sql, [userId], (err, result) => {
 
-        if(err){
-
-            return res.status(500).json(err);
-
+        if (err) {
+            return res.status(500).json({
+                success:false,
+                message:err.message
+            });
         }
 
         res.json({
-
             success:true,
-
             data:result[0]
-
         });
 
     });
