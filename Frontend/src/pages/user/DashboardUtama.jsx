@@ -1,13 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/css/Dashboard.css"; // Pastikan D-nya KAPITAL sesuai di folder assets!
+import "../../assets/css/Dashboard.css";
 
 function UserDashboard() {
-  const navigate = useNavigate(); 
-  
+  const navigate = useNavigate();
+
   return (
     <div className="dashboard-wrapper">
-      
       {/* 1. NAVBAR SECTION */}
       <nav className="navbar">
         <div className="nav-logo">
@@ -15,20 +14,81 @@ function UserDashboard() {
           <span>SiTukang</span>
         </div>
         <ul className="nav-links">
-          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Beranda</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }}>Layanan</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/tentang"); }}>Tentang</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/ulasan"); }}>Ulasan</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/faq"); }}>FAQ</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/kontak"); }}>Kontak</a></li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/");
+              }}
+            >
+              Beranda
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/layanan");
+              }}
+            >
+              Layanan
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/tentang");
+              }}
+            >
+              Tentang
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/ulasan");
+              }}
+            >
+              Ulasan
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/faq");
+              }}
+            >
+              FAQ
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/kontak");
+              }}
+            >
+              Kontak
+            </a>
+          </li>
         </ul>
         <div className="nav-buttons">
-          <button className="btn-text" onClick={() => navigate("/login")}>Masuk</button>
-          
-          {/* PERBAIKAN 1: Tambah onClick ke halaman register */}
+          <button className="btn-text" onClick={() => navigate("/login")}>
+            Masuk
+          </button>
           <button className="btn-outline" onClick={() => navigate("/register")}>Daftar</button>
-          
-          <button className="btn-filled" onClick={() => navigate("/registertukang")}>Jadi Tukang</button>
+          <button className="btn-filled" onClick={() => navigate("/registertukang")}>
+            Jadi Tukang
+          </button>
         </div>
       </nav>
 
@@ -37,12 +97,14 @@ function UserDashboard() {
         <div className="hero-left">
           <div className="verify-badge">✨ 12.000+ tukang terverifikasi</div>
           <h1 className="hero-title">
-            Tukang andal,<br /><span>satu ketukan</span> jauhnya.
+            Tukang andal,<br />
+            <span>satu ketukan</span> jauhnya.
           </h1>
           <p className="hero-desc">
-            Pesan profesional terpercaya untuk perbaikan rumah, AC, listrik, dan banyak lagi. Harga transparan, garansi pengerjaan.
+            Pesan profesional terpercaya untuk perbaikan rumah, AC, listrik, dan banyak lagi. Harga
+            transparan, garansi pengerjaan.
           </p>
-          
+
           <div className="search-container">
             <div className="search-input-group">
               <span className="search-icon">🔍</span>
@@ -56,9 +118,15 @@ function UserDashboard() {
           </div>
 
           <div className="hero-features">
-            <div className="feature-item"><span>✓</span> Identitas terverifikasi</div>
-            <div className="feature-item"><span>🕒</span> Datang dalam 1 jam</div>
-            <div className="feature-item"><span>✓</span> Garansi 7 hari</div>
+            <div className="feature-item">
+              <span>✓</span> Identitas terverifikasi
+            </div>
+            <div className="feature-item">
+              <span>🕒</span> Datang dalam 1 jam
+            </div>
+            <div className="feature-item">
+              <span>✓</span> Garansi 7 hari
+            </div>
           </div>
         </div>
 
@@ -71,9 +139,13 @@ function UserDashboard() {
             <div className="profile-row">
               <div className="avatar-circle">BS</div>
               <div className="profile-info">
-                <h3>Budi Santoso <span>✓</span></h3>
+                <h3>
+                  Budi Santoso <span>✓</span>
+                </h3>
                 <p>Tukang Listrik • 8 thn pengalaman</p>
-                <div className="rating-span"><span>★</span> 4.9 <span style={{color: '#999', fontWeight: 400}}>(312 job)</span></div>
+                <div className="rating-span">
+                  <span>★</span> 4.9 <span style={{ color: "#999", fontWeight: 400 }}>(312 job)</span>
+                </div>
               </div>
             </div>
             <div className="skills-row">
@@ -85,7 +157,9 @@ function UserDashboard() {
             <div className="price-row">
               <div className="price-info">
                 <p>Mulai dari</p>
-                <div className="price-amount">Rp 75.000<span>/jam</span></div>
+                <div className="price-amount">
+                  Rp 75.000<span>/jam</span>
+                </div>
               </div>
               <button className="btn-booking" onClick={() => navigate("/login")}>Booking Sekarang</button>
             </div>
@@ -100,47 +174,56 @@ function UserDashboard() {
             <h2 className="section-title">Layanan populer</h2>
             <p className="section-subtitle">Pilih kategori tukang yang Anda butuhkan</p>
           </div>
-          <a href="#" className="view-all-link" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }}>Lihat semua ➔</a>
+          <a
+            href="#"
+            className="view-all-link"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/layanan");
+            }}
+          >
+            Lihat semua ➔
+          </a>
         </div>
 
         <div className="services-grid">
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#ff9800'}}>⚡</div>
+            <div className="icon-box" style={{ backgroundColor: "#ff9800" }}>⚡</div>
             <h4>Listrik</h4>
             <p>248 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#03a9f4'}}>💨</div>
+            <div className="icon-box" style={{ backgroundColor: "#03a9f4" }}>💨</div>
             <h4>Service AC</h4>
             <p>184 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#5c6bc0'}}>🔧</div>
+            <div className="icon-box" style={{ backgroundColor: "#5c6bc0" }}>🔧</div>
             <h4>Tukang Pipa</h4>
             <p>162 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#c62828'}}>🔨</div>
+            <div className="icon-box" style={{ backgroundColor: "#c62828" }}>🔨</div>
             <h4>Tukang Kayu</h4>
             <p>137 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#ec407a'}}>🖌️</div>
+            <div className="icon-box" style={{ backgroundColor: "#ec407a" }}>🖌️</div>
             <h4>Tukang Cat</h4>
             <p>198 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#795548'}}>🪖</div>
+            <div className="icon-box" style={{ backgroundColor: "#795548" }}>🪖</div>
             <h4>Bangunan</h4>
             <p>312 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#10b981'}}>🍃</div>
+            <div className="icon-box" style={{ backgroundColor: "#10b981" }}>🍃</div>
             <h4>Tukang Kebun</h4>
             <p>89 tukang tersedia</p>
           </div>
           <div className="service-card">
-            <div className="icon-box" style={{backgroundColor: '#00bfa5'}}>✨</div>
+            <div className="icon-box" style={{ backgroundColor: "#00bfa5" }}>✨</div>
             <h4>Cleaning</h4>
             <p>276 tukang tersedia</p>
           </div>
@@ -181,64 +264,84 @@ function UserDashboard() {
         </div>
         <div className="tukang-cards-row">
           <div className="tukang-list-card">
-            <div className="profile-row" style={{marginBottom: '12px'}}>
+            <div className="profile-row" style={{ marginBottom: "12px" }}>
               <div className="avatar-circle light-teal">BS</div>
               <div className="profile-info">
-                <h3>Budi Santoso <span>✓</span></h3>
+                <h3>
+                  Budi Santoso <span>✓</span>
+                </h3>
                 <p>Tukang Listrik</p>
-                <div className="rating-span"><span>★</span> 4.9 <span style={{color: '#999', fontWeight: 400}}>(312 job)</span></div>
+                <div className="rating-span">
+                  <span>★</span> 4.9 <span style={{ color: "#999", fontWeight: 400 }}>(312 job)</span>
+                </div>
               </div>
             </div>
             <div className="card-divider"></div>
             <div className="card-footer-row">
               <span className="location-text">Jakarta Selatan</span>
-              <span className="price-text-sm">Rp 75.000<span>/jam</span></span>
+              <span className="price-text-sm">
+                Rp 75.000<span>/jam</span>
+              </span>
             </div>
           </div>
 
           <div className="tukang-list-card">
-            <div className="profile-row" style={{marginBottom: '12px'}}>
+            <div className="profile-row" style={{ marginBottom: "12px" }}>
               <div className="avatar-circle light-teal">AW</div>
               <div className="profile-info">
-                <h3>Andi Wijaya <span>✓</span></h3>
+                <h3>
+                  Andi Wijaya <span>✓</span>
+                </h3>
                 <p>Service AC</p>
-                <div className="rating-span"><span>★</span> 4.8 <span style={{color: '#999', fontWeight: 400}}>(256 job)</span></div>
+                <div className="rating-span">
+                  <span>★</span> 4.8 <span style={{ color: "#999", fontWeight: 400 }}>(256 job)</span>
+                </div>
               </div>
             </div>
             <div className="card-divider"></div>
             <div className="card-footer-row">
               <span className="location-text">Jakarta Pusat</span>
-              <span className="price-text-sm">Rp 120.000<span>/jam</span></span>
+              <span className="price-text-sm">
+                Rp 120.000<span>/jam</span>
+              </span>
             </div>
           </div>
 
           <div className="tukang-list-card">
-            <div className="profile-row" style={{marginBottom: '12px'}}>
+            <div className="profile-row" style={{ marginBottom: "12px" }}>
               <div className="avatar-circle light-teal">SR</div>
               <div className="profile-info">
-                <h3>Slamet Riyadi <span>✓</span></h3>
+                <h3>
+                  Slamet Riyadi <span>✓</span>
+                </h3>
                 <p>Tukang Pipa</p>
-                <div className="rating-span"><span>★</span> 4.7 <span style={{color: '#999', fontWeight: 400}}>(189 job)</span></div>
+                <div className="rating-span">
+                  <span>★</span> 4.7 <span style={{ color: "#999", fontWeight: 400 }}>(189 job)</span>
+                </div>
               </div>
             </div>
             <div className="card-divider"></div>
             <div className="card-footer-row">
               <span className="location-text">Tangerang</span>
-              <span className="price-text-sm">Rp 85.000<span>/jam</span></span>
+              <span className="price-text-sm">
+                Rp 85.000<span>/jam</span>
+              </span>
             </div>
           </div>
         </div>
       </section>
 
       {/* 6. TESTIMONI SECTION */}
-      <section className="bg-gray-section" style={{textAlign: 'left'}}>
-        <div className="section-header" style={{justifyContent: 'flex-start'}}>
+      <section className="bg-gray-section" style={{ textAlign: "left" }}>
+        <div className="section-header" style={{ justifyContent: "flex-start" }}>
           <h2 className="section-title">Dipercaya oleh ribuan keluarga</h2>
         </div>
         <div className="testimonial-row">
           <div className="testi-card">
             <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">"Tukangnya cepat, rapi, dan ramah. AC saya dingin lagi seperti baru. Pasti pakai SiTukang lagi!"</p>
+            <p className="testi-comment">
+              "Tukangnya cepat, rapi, dan ramah. AC saya dingin lagi seperti baru. Pasti pakai SiTukang lagi!"
+            </p>
             <div className="user-profile-sm">
               <div className="avatar-sm">SD</div>
               <div className="user-meta">
@@ -250,7 +353,9 @@ function UserDashboard() {
 
           <div className="testi-card">
             <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">"Booking jam 9 pagi, jam 11 sudah datang. Hasil instalasi listrik di kosan saya sangat profesional."</p>
+            <p className="testi-comment">
+              "Booking jam 9 pagi, jam 11 sudah datang. Hasil instalasi listrik di kosan saya sangat profesional."
+            </p>
             <div className="user-profile-sm">
               <div className="avatar-sm">RP</div>
               <div className="user-meta">
@@ -262,7 +367,9 @@ function UserDashboard() {
 
           <div className="testi-card">
             <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">"Saya pakai SiTukang untuk klien-klien kecil. Selalu dapat tukang yang bisa diandalkan dengan harga jelas."</p>
+            <p className="testi-comment">
+              "Saya pakai SiTukang untuk klien-klien kecil. Selalu dapat tukang yang bisa diandalkan dengan harga jelas."
+            </p>
             <div className="user-profile-sm">
               <div className="avatar-sm">MP</div>
               <div className="user-meta">
@@ -274,7 +381,9 @@ function UserDashboard() {
 
           <div className="testi-card">
             <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">"Aplikasinya mudah dipakai, transparansi harga oke. Live tracking-nya membantu."</p>
+            <p className="testi-comment">
+              "Aplikasinya mudah dipakai, transparansi harga oke. Live tracking-nya membantu."
+            </p>
             <div className="user-profile-sm">
               <div className="avatar-sm">DH</div>
               <div className="user-meta">
@@ -288,25 +397,48 @@ function UserDashboard() {
 
       {/* 7. GABUNG SECTION */}
       <section className="section-container">
-        <div style={{textAlign: 'center'}} className="center-header">
-          <span style={{backgroundColor: '#e6f4f2', color: '#026b5e', padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold'}}>Mulai sekarang</span>
-          <h2 style={{marginTop: '10px'}}>Gabung ke SiTukang</h2>
+        <div style={{ textAlign: "center" }} className="center-header">
+          <span
+            style={{
+              backgroundColor: "#e6f4f2",
+              color: "#026b5e",
+              padding: "4px 12px",
+              borderRadius: "12px",
+              fontSize: "12px",
+              fontWeight: "bold",
+            }}
+          >
+            Mulai sekarang
+          </span>
+          <h2 style={{ marginTop: "10px" }}>Gabung ke SiTukang</h2>
           <p>Pilih cara Anda bergabung — sebagai pelanggan atau tukang profesional.</p>
         </div>
-        
+
         <div className="join-container">
           <div className="join-box-left">
             <div className="icon-badge-circle">🔍</div>
             <h3>Saya butuh tukang</h3>
             <p>Daftar sebagai pelanggan, cari tukang terverifikasi, pesan dalam hitungan menit.</p>
             <div className="bullet-list">
-              <div className="bullet-item"><span>✓</span> Pesan tukang 24/7</div>
-              <div className="bullet-item"><span>✓</span> Harga transparan</div>
-              <div className="bullet-item"><span>✓</span> Garansi pengerjaan</div>
-              <div className="bullet-item"><span>✓</span> Pembayaran aman</div>
+              <div className="bullet-item">
+                <span>✓</span> Pesan tukang 24/7
+              </div>
+              <div className="bullet-item">
+                <span>✓</span> Harga transparan
+              </div>
+              <div className="bullet-item">
+                <span>✓</span> Garansi pengerjaan
+              </div>
+              <div className="bullet-item">
+                <span>✓</span> Pembayaran aman
+              </div>
             </div>
+
             <div className="join-actions">
-              {/* PERBAIKAN 2: Tambah onClick ke halaman register */}
+              {/* small portal buttons */}
+              <button className="btn-action-dark" onClick={() => navigate("/login")}>
+                Portal Customer ➔
+              </button>
               <button className="btn-action-dark" onClick={() => navigate("/register")}>Daftar sebagai Pelanggan ➔</button>
               <span className="side-text-link" onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
                 Sudah punya akun?
@@ -319,16 +451,33 @@ function UserDashboard() {
             <h3>Saya seorang tukang</h3>
             <p>Daftar sebagai mitra tukang. Dapatkan order, atur jadwal, kembangkan bisnis.</p>
             <div className="bullet-list">
-              <div className="bullet-item"><span>✓</span> Order setiap hari</div>
-              <div className="bullet-item"><span>✓</span> Atur jadwal sendiri</div>
-              <div className="bullet-item"><span>✓</span> Pencairan cepat</div>
-              <div className="bullet-item"><span>✓</span> Pelatihan & sertifikasi</div>
+              <div className="bullet-item">
+                <span>✓</span> Order setiap hari
+              </div>
+              <div className="bullet-item">
+                <span>✓</span> Atur jadwal sendiri
+              </div>
+              <div className="bullet-item">
+                <span>✓</span> Pencairan cepat
+              </div>
+              <div className="bullet-item">
+                <span>✓</span> Pelatihan & sertifikasi
+              </div>
             </div>
+
             <div className="join-actions">
-              {/* PERBAIKAN 3: Tambah onClick ke halaman register */}
+              <button className="btn-action-outline-white" onClick={() => navigate("/login")}>Portal Tukang ➔</button>
               <button className="btn-action-white" onClick={() => navigate("/register")}>Daftar sebagai Tukang ➔</button>
-              <button className="btn-action-outline-white" onClick={() => navigate("/login")}>
-                Sudah jadi mitra?
+            </div>
+
+            {/* Admin portal small button at bottom */}
+            <div style={{ marginTop: 14, textAlign: "center" }}>
+              <button
+                className="btn-action-dark"
+                onClick={() => navigate("/login-admin")}
+                style={{ borderRadius: 14 }}
+              >
+                Portal Admin ➔
               </button>
             </div>
           </div>
@@ -339,3 +488,4 @@ function UserDashboard() {
 }
 
 export default UserDashboard;
+

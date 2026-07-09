@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RegisterTukang from "./pages/auth/RegisterTukang";
@@ -18,6 +17,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 
 import TukangDashboard from "./pages/tukang/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
+import LoginAdmin from "./pages/admin/LoginAdmin";
 
 function App() {
     return (
@@ -30,6 +30,7 @@ function App() {
                 <Route path="/tentang" element={<Tentang />} />
                 <Route path="/" element={<DashboardUtama />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/login-admin" element={<LoginAdmin />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/registertukang" element={<RegisterTukang />} />
 
