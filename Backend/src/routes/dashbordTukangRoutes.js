@@ -4,14 +4,21 @@ const router = express.Router();
 const verifyToken = require("../middleware/authMiddleware");
 
 const {
-    getBookingMasuk
-} = require("../controller/dashboardTukangController");
+    getDashboard,
+    getBookingMasuk,
+    getRiwayatPekerjaan,
+    getReviewTukang,
+    updateRatingTukang,
+    getProfil,
+    updateProfil
+} = require("../controllers/dashbordTukangController");
 
-// Booking yang masuk untuk tukang yang sedang login
-router.get(
-    "/booking",
-    verifyToken,
-    getBookingMasuk
-);
+router.get("/", verifyToken, getDashboard);
+router.get("/booking", verifyToken, getBookingMasuk);
+router.get("/riwayat", verifyToken, getRiwayatPekerjaan);
+router.get("/review", verifyToken, getReviewTukang);
+router.put("/update-rating", verifyToken, updateRatingTukang);
+router.get("/profil", verifyToken, getProfil);
+router.put("/profil", verifyToken, updateProfil);
 
 module.exports = router;

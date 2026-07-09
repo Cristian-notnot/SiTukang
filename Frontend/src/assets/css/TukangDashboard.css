@@ -1,0 +1,220 @@
+.tukang-dashboard {
+    display: flex;
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.tukang-dashboard .sidebar {
+    width: 240px;
+    background: #1e293b;
+    color: #fff;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.tukang-dashboard .sidebar h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.25rem;
+}
+
+.tukang-dashboard .sidebar .user-name {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.tukang-dashboard .sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tukang-dashboard .sidebar nav button {
+    background: none;
+    border: none;
+    color: #cbd5e1;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: 0.2s;
+}
+
+.tukang-dashboard .sidebar nav button:hover {
+    background: #334155;
+    color: #fff;
+}
+
+.tukang-dashboard .sidebar nav button.active {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.tukang-dashboard .sidebar .btn-logout {
+    margin-top: auto;
+    color: #f87171 !important;
+}
+
+.tukang-dashboard .main-content {
+    flex: 1;
+    padding: 2rem;
+    background: #f8fafc;
+}
+
+.tukang-dashboard .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tukang-dashboard .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.tukang-dashboard .stat-card h3 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.tukang-dashboard .stat-card p {
+    margin: 0.25rem 0 0;
+    color: #64748b;
+    text-transform: capitalize;
+}
+
+.tukang-dashboard .stat-card.pending h3 { color: #f59e0b; }
+.tukang-dashboard .stat-card.diterima h3 { color: #3b82f6; }
+.tukang-dashboard .stat-card.dikerjakan h3 { color: #8b5cf6; }
+.tukang-dashboard .stat-card.selesai h3 { color: #10b981; }
+.tukang-dashboard .stat-card.ditolak h3 { color: #ef4444; }
+.tukang-dashboard .stat-card.rating h3 { color: #f59e0b; }
+
+/* Filter */
+.filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.filter-bar button {
+    background: #e2e8f0;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 0.85rem;
+}
+
+.filter-bar button.active {
+    background: #3b82f6;
+    color: #fff;
+}
+
+/* Table */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge-pending { background: #fef3c7; color: #92400e; }
+.badge-diterima { background: #dbeafe; color: #1e40af; }
+.badge-dikerjakan { background: #ede9fe; color: #5b21b6; }
+.badge-selesai { background: #d1fae5; color: #065f46; }
+.badge-ditolak, .badge-rejected { background: #fee2e2; color: #991b1b; }
+.badge-approved { background: #d1fae5; color: #065f46; }
+.badge-user { background: #e2e8f0; color: #334155; }
+.badge-tukang { background: #dbeafe; color: #1e40af; }
+.badge-admin { background: #fef3c7; color: #92400e; }
+
+/* Review */
+.review-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.review-card {
+    background: #fff;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.review-card p { margin: 0.3rem 0; }
+.review-card small { color: #94a3b8; }
+
+/* Form */
+.profil-form {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+}
+
+.profil-form label {
+    display: block;
+    margin: 0.75rem 0 0.25rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.profil-form input,
+.profil-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.profil-form button {
+    margin-top: 1rem;
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.profil-form button:hover { background: #2563eb; }
