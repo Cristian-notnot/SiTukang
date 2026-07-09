@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/FAQ.css"; 
+import "../../assets/css/FAQ.css"; 
 
 function FAQ() {
   const navigate = useNavigate();

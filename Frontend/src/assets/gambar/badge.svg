@@ -1,0 +1,21 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d7a4f"/>
+      <stop offset="100%" style="stop-color:#1a5c35"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer badge star/circle shape -->
+  <path d="M24 3
+    L27.5 9.5 L34.5 8 L33.5 15 L40 18 L36 24
+    L40 30 L33.5 33 L34.5 40 L27.5 38.5 L24 45
+    L20.5 38.5 L13.5 40 L14.5 33 L8 30 L12 24
+    L8 18 L14.5 15 L13.5 8 L20.5 9.5 Z"
+        fill="url(#badgeGrad)"/>
+  <!-- Inner circle -->
+  <circle cx="24" cy="24" r="12" fill="white" opacity="0.15"/>
+  <!-- Ribbon star or check -->
+  <polyline points="17,24 22,30 31,17"
+            fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

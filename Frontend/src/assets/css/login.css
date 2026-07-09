@@ -1,0 +1,614 @@
+/* ============================================================
+   SiTukang – Login Page CSS
+   File: src/assets/login.css
+   ============================================================ */
+
+.log-container * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.log-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ============================================================
+   PANEL KIRI
+   background-room.png sebagai foto, overlay hijau di atasnya
+   ============================================================ */
+
+.log-left-panel {
+    position: relative;
+    width: 47%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 48px 44px;
+    overflow: hidden;
+    /* Foto ruangan — taruh background-room.png di public/ */
+    background-image: url('/background-room.png');
+    background-size: cover;
+    background-position: center top;
+    background-color: #0a3d20;   /* fallback jika foto belum ada */
+}
+
+/* Overlay gelap hijau di atas foto */
+.log-left-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        145deg,
+        rgba(5, 35, 18, 0.88) 0%,
+        rgba(8, 55, 28, 0.75) 45%,
+        rgba(5, 30, 15, 0.92) 100%
+    );
+    z-index: 0;
+}
+
+/* Semua elemen di atas overlay */
+.log-left-panel > *:not(.log-left-overlay) {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Logo ─────────────────────────────── */
+.log-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.log-logo-icon-wrap {
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.28);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px;
+}
+
+.log-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.log-logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+}
+
+/* ── Badge verifikasi ─────────────────── */
+.log-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.30);
+    color: #86efac;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 15px;
+    border-radius: 999px;
+    width: fit-content;
+    margin-top: 28px;
+}
+
+.log-badge-icon {
+    width: 13px;
+    height: 13px;
+    /* shield jadi hijau muda */
+    filter: brightness(0) saturate(100%) invert(82%) sepia(25%)
+            saturate(600%) hue-rotate(90deg) brightness(108%);
+}
+
+/* ── Konten tengah (headline + stats) ── */
+.log-left-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 0 18px;
+}
+
+.log-left-heading {
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+}
+
+.log-heading-accent {
+    color: #4ade80;
+}
+
+.log-left-subtext {
+    font-size: 14.5px;
+    color: rgba(255,255,255,0.70);
+    line-height: 1.6;
+    max-width: 340px;
+    margin-bottom: 36px;
+}
+
+/* ── Stats ────────────────────────────── */
+.log-stats-container {
+    display: flex;
+    gap: 32px;
+}
+
+.log-stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Lingkaran hijau transparan di belakang ikon stats */
+.log-stat-icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+}
+
+.log-stat-svg {
+    width: 20px;
+    height: 20px;
+    /* SVG jadi hijau cerah */
+    filter: brightness(0) saturate(100%) invert(76%) sepia(55%)
+            saturate(450%) hue-rotate(88deg) brightness(112%);
+}
+
+.log-stat-number {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.log-stat-label {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.58);
+    text-align: center;
+}
+
+/* ── Testimonial card ─────────────────── */
+.log-testimonial-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px 22px 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.20);
+    max-width: 340px;
+    margin-top: 8px;
+}
+
+.log-quote-mark {
+    font-size: 36px;
+    font-family: Georgia, serif;
+    color: #166534;
+    line-height: 1;
+    display: block;
+    margin-bottom: 2px;
+    opacity: 0.55;
+}
+
+.log-testimonial-text {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.55;
+    margin-bottom: 12px;
+}
+
+.log-testimonial-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-testimonial-author {
+    font-size: 12.5px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.log-testimonial-stars {
+    color: #f59e0b;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   PANEL KANAN
+   Tiga kolom: [trust-sidebar] [form-card]
+   Background abu-abu terang seperti mockup
+   ============================================================ */
+
+.log-right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px;
+    background: #f0f4f0;   /* abu-abu hijau sangat muda */
+    gap: 0;
+}
+
+/* ── Trust sidebar (POSISI: kiri dari form, tengah layar) ── */
+.log-trust-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 52px;
+    width: 140px;
+    flex-shrink: 0;
+    margin-right: 32px;
+    /* Sejajarkan dengan tengah form */
+    align-self: center;
+}
+
+.log-trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+/* Lingkaran ikon trust — outline hijau tipis */
+.log-trust-icon {
+    width: 46px;
+    height: 46px;
+    border: 1.5px solid #bbf7d0;
+    border-radius: 50%;
+    background: #f0fdf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.log-trust-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* SVG jadi hijau tua brand */
+    filter: brightness(0) saturate(100%) invert(28%) sepia(70%)
+            saturate(600%) hue-rotate(118deg) brightness(88%);
+}
+
+.log-trust-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+}
+
+.log-trust-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.45;
+}
+
+/* ── Form card ────────────────────────── */
+.log-form-wrapper {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 36px 32px 28px;
+    box-shadow: 0 4px 24px rgba(15,23,42,0.08);
+}
+
+.log-right-heading {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+}
+
+.log-right-subtext {
+    font-size: 13.5px;
+    color: #64748b;
+    margin-bottom: 22px;
+    line-height: 1.5;
+}
+
+/* ── Role tabs ────────────────────────── */
+.log-role-tabs {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 22px;
+}
+
+.log-tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.log-tab-btn.active {
+    background: #ffffff;
+    color: #166534;
+    box-shadow: 0 1px 8px rgba(22,101,52,0.12);
+}
+
+.log-tab-btn:focus         { outline: none; }
+.log-tab-btn:focus-visible { box-shadow: 0 0 0 3px rgba(22,101,52,0.2); }
+.log-tab-btn:active        { transform: scale(0.98); }
+
+/* ── Form ─────────────────────────────── */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.log-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.log-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-form-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.log-forgot-link {
+    font-size: 13px;
+    color: #16a34a;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+.log-forgot-link:hover { color: #15803d; }
+
+/* Input wrapper */
+.log-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.log-input-icon-left {
+    position: absolute;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.log-form-input {
+    width: 100%;
+    padding: 12px 42px 12px 42px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: #0f172a;
+    background: #ffffff;
+    transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.log-form-input::placeholder { color: #94a3b8; }
+
+.log-form-input:focus {
+    outline: none;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22,163,74,0.10);
+}
+
+.log-toggle-password-btn {
+    position: absolute;
+    right: 13px;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+}
+.log-toggle-password-btn:hover { opacity: 1; }
+
+/* Ingat saya row */
+.log-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-remember-me {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #475569;
+    cursor: pointer;
+    font-size: 13.5px;
+}
+
+.log-remember-me input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: #16a34a;
+    cursor: pointer;
+}
+
+/* Tombol submit */
+.log-btn-submit {
+    width: 100%;
+    padding: 13px 20px;
+    background: #166534;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(22,101,52,0.28);
+    letter-spacing: 0.1px;
+}
+
+.log-btn-submit:hover:not(:disabled) {
+    background: #15803d;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(22,101,52,0.36);
+}
+.log-btn-submit:active:not(:disabled) { transform: translateY(0); }
+.log-btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.log-btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.log-spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    animation: log-spin 0.75s linear infinite;
+    display: inline-block;
+}
+
+@keyframes log-spin { to { transform: rotate(360deg); } }
+
+/* Divider */
+.log-divider {
+    position: relative;
+    text-align: center;
+    margin: 2px 0;
+}
+
+.log-divider::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 50%;
+    width: 100%; height: 1px;
+    background: #e2e8f0;
+}
+
+.log-divider span {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+    padding: 0 14px;
+    font-size: 12.5px;
+    color: #94a3b8;
+}
+
+/* Social buttons */
+.log-social-row {
+    display: flex;
+    gap: 10px;
+}
+
+.log-btn-social {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1e293b;
+    cursor: pointer;
+    transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.log-btn-social:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.log-social-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* Daftar link */
+.log-register-text {
+    text-align: center;
+    font-size: 13.5px;
+    color: #64748b;
+    margin-top: 22px;
+}
+
+.log-register-link {
+    color: #16a34a;
+    font-weight: 700;
+    cursor: pointer;
+}
+.log-register-link:hover { text-decoration: underline; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1100px) {
+    .log-trust-sidebar { display: none; }
+    .log-right-panel   { justify-content: center; }
+}
+
+@media (max-width: 820px) {
+    .log-container     { flex-direction: column; }
+    .log-left-panel    { width: 100%; padding: 30px 24px; min-height: 52vh; }
+    .log-left-heading  { font-size: 26px; }
+    .log-right-panel   { padding: 32px 20px; background: #f8faf8; }
+    .log-form-wrapper  { max-width: 100%; padding: 26px 20px 22px; }
+}
+
+@media (max-width: 480px) {
+    .log-stats-container { gap: 20px; }
+    .log-stat-number     { font-size: 18px; }
+    .log-left-heading    { font-size: 22px; }
+}

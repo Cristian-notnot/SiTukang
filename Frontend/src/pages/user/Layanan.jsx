@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/Layanan.css";
+import "../../assets/css/Layanan.css";
 
 function Layanan() {
   const navigate = useNavigate();

@@ -1,41 +1,39 @@
-import { useMemo, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import API from "../../api/axios";
-import "../../assets/login.css";
+import "../../assets/css/login.css";
+
+// ── Import semua gambar dari src/assets/gambar/ ───────────────
+import bgRoom        from "../../assets/gambar/background-room.png";
+import shieldIcon    from "../../assets/gambar/shield.svg";
+import clockIcon     from "../../assets/gambar/clock.svg";
+import badgeIcon     from "../../assets/gambar/badge.svg";
+import googleIcon    from "../../assets/gambar/google.svg";
+import appleIcon     from "../../assets/gambar/apple.svg";
 
 function Login() {
     const navigate = useNavigate();
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail]               = useState("");
+    const [password, setPassword]         = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
-    const { login } = useContext(AuthContext);
-    const [roleTab, setRoleTab] = useState("Customer");
-
-
+    const [isLoading, setIsLoading]       = useState(false);
+    const [rememberMe, setRememberMe]     = useState(true);
+    const { login }                       = useContext(AuthContext);
+    const [roleTab, setRoleTab]           = useState("Customer");
 
     const handleLogin = async (e) => {
         e.preventDefault();
         if (isLoading) return;
         try {
             setIsLoading(true);
-
             const response = await API.post("/auth/login", { email, password });
             const token = response.data.token;
-            const user = response.data.user;
-
+            const user  = response.data.user;
             login(user, token);
-
-            if (user.role === "admin") {
-                navigate("/admin");
-            } else if (user.role === "tukang") {
-                navigate("/tukang");
-            } else {
-                navigate("/user");
-            }
+            if (user.role === "admin")       navigate("/admin");
+            else if (user.role === "tukang") navigate("/tukang");
+            else                             navigate("/user");
         } catch (error) {
             alert(error.response?.data?.message || "Login gagal");
         } finally {
@@ -43,65 +41,126 @@ function Login() {
         }
     };
 
-    const roleCopy =
-        roleTab === "Tukang"
-            ? "Kelola job & penghasilan Anda."
-            : "Pesan tukang untuk kebutuhan rumah.";
-
     return (
         <div className="log-container">
-            {/* SISI KIRI (HIJAU GRADIENT) */}
-            <div className="log-left-panel">
-                <div className="log-logo-container" onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>
-                    <span className="log-logo-icon">🔨</span>
+
+            {/* ═══════════════════════════════
+                PANEL KIRI
+            ═══════════════════════════════ */}
+            <div
+                className="log-left-panel"
+                style={{ backgroundImage: `url(${bgRoom})` }}
+            >
+                <div className="log-left-overlay" />
+
+                {/* Logo */}
+                <div className="log-logo-container" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+                    <div className="log-logo-icon-wrap">
+                        <img src={shieldIcon} alt="logo" className="log-logo-img" />
+                    </div>
                     <span className="log-logo-text">SiTukang</span>
                 </div>
-                
-                
+
+                {/* Badge */}
+                <div className="log-verified-badge">
+                    <img src={shieldIcon} alt="" className="log-badge-icon" />
+                    12.000+ tukang terverifikasi
+                </div>
+
+                {/* Heading + Stats */}
                 <div className="log-left-content">
-                    <h1 className="log-left-heading">Profesional terpercaya di ujung jari Anda</h1>
+                    <h1 className="log-left-heading">
+                        Profesional terpercaya untuk{" "}
+                        <span className="log-heading-accent">rumah Anda</span>
+                    </h1>
                     <p className="log-left-subtext">
-                        Lebih dari 12.000 tukang terverifikasi siap membantu di seluruh Indonesia.
+                        Temukan dan pesan tukang terpercaya untuk segala kebutuhan rumah Anda.
                     </p>
 
-                    
                     <div className="log-stats-container">
                         <div className="log-stat-box">
+                            <div className="log-stat-icon-circle">
+                                <img src={shieldIcon} alt="" className="log-stat-svg" />
+                            </div>
                             <span className="log-stat-number">12K+</span>
-                            <span className="log-stat-label">Tukang aktif</span>
+                            <span className="log-stat-label">Tukang Aktif</span>
                         </div>
                         <div className="log-stat-box">
-                            <span className="log-stat-number">4.9★</span>
-                            <span className="log-stat-label">Rating rata-rata</span>
+                            <div className="log-stat-icon-circle">
+                                <img src={badgeIcon} alt="" className="log-stat-svg" />
+                            </div>
+                            <span className="log-stat-number">4.9</span>
+                            <span className="log-stat-label">Rating Rata-rata</span>
                         </div>
                         <div className="log-stat-box">
+                            <div className="log-stat-icon-circle">
+                                <img src={clockIcon} alt="" className="log-stat-svg" />
+                            </div>
                             <span className="log-stat-number">98%</span>
-                            <span className="log-stat-label">Order selesai</span>
+                            <span className="log-stat-label">Pelanggan Puas</span>
                         </div>
+                    </div>
+                </div>
+
+                {/* Testimonial card */}
+                <div className="log-testimonial-card">
+                    <span className="log-quote-mark">"</span>
+                    <p className="log-testimonial-text">
+                        SiTukang sangat membantu! Tukangnya profesional dan hasilnya memuaskan.
+                    </p>
+                    <div className="log-testimonial-footer">
+                        <span className="log-testimonial-author">– Rina, Jakarta</span>
+                        <span className="log-testimonial-stars">★★★★★</span>
                     </div>
                 </div>
             </div>
 
-            {/* SISI KANAN (FORM LOGIN PUTIH) */}
+            {/* ═══════════════════════════════
+                PANEL KANAN
+            ═══════════════════════════════ */}
             <div className="log-right-panel">
+
+                {/* Trust sidebar — di antara panel kiri dan form */}
+                <div className="log-trust-sidebar">
+                    <div className="log-trust-item">
+                        <div className="log-trust-icon">
+                            <img src={shieldIcon} alt="identitas terverifikasi" />
+                        </div>
+                        <div className="log-trust-title">Identitas terverifikasi</div>
+                        <div className="log-trust-desc">Semua tukang melalui proses verifikasi ketat</div>
+                    </div>
+                    <div className="log-trust-item">
+                        <div className="log-trust-icon">
+                            <img src={clockIcon} alt="datang tepat waktu" />
+                        </div>
+                        <div className="log-trust-title">Datang tepat waktu</div>
+                        <div className="log-trust-desc">Tukang datang sesuai jadwal yang disepakati</div>
+                    </div>
+                    <div className="log-trust-item">
+                        <div className="log-trust-icon">
+                            <img src={badgeIcon} alt="garansi 7 hari" />
+                        </div>
+                        <div className="log-trust-title">Garansi 7 hari</div>
+                        <div className="log-trust-desc">Garansi pengerjaan untuk setiap layanan</div>
+                    </div>
+                </div>
+
+                {/* Form card */}
                 <div className="log-form-wrapper">
-                    
                     <h2 className="log-right-heading">Selamat datang kembali</h2>
-                    <p className="log-right-subtext">Masuk sebagai {roleTab} — {roleCopy}</p>
+                    <p className="log-right-subtext">Masuk untuk melanjutkan ke akun SiTukang Anda</p>
 
-
-
-                    {/* TABS SELECTION ROLE */}
+                    {/* Role tabs */}
                     <div className="log-role-tabs">
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className={`log-tab-btn ${roleTab === "Customer" ? "active" : ""}`}
                             onClick={() => setRoleTab("Customer")}
                         >
                             Customer
                         </button>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className={`log-tab-btn ${roleTab === "Tukang" ? "active" : ""}`}
                             onClick={() => setRoleTab("Tukang")}
                         >
@@ -109,62 +168,71 @@ function Login() {
                         </button>
                     </div>
 
-                    {/* FORM LOGIN UTAMA */}
                     <form onSubmit={handleLogin} className="login-form">
-                        
-                        {/* INPUT EMAIL */}
+
+                        {/* Email */}
                         <div className="log-input-group">
-                            <div className="log-label-row">
-                                <label className="log-form-label">Email</label>
-                            </div>
+                            <label className="log-form-label">Email</label>
                             <div className="log-input-wrapper">
+                                <span className="log-input-icon-left">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                </span>
                                 <input
                                     type="email"
-                                    placeholder="Masukkan@email.com"
+                                    placeholder="Masukkan email Anda"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="log-form-input"
                                     required
                                 />
-                                {email.includes("@") && <span className="log-valid-icon">✓</span>}
                             </div>
                         </div>
 
-                        {/* INPUT PASSWORD */}
+                        {/* Password */}
                         <div className="log-input-group">
                             <div className="log-label-row">
                                 <label className="log-form-label">Password</label>
-                                <span className="log-forgot-link" onClick={() => navigate("/forgot-password")}>Lupa?</span>
+                                <span className="log-forgot-link" onClick={() => navigate("/forgot-password")}>
+                                    Lupa password?
+                                </span>
                             </div>
                             <div className="log-input-wrapper">
-
+                                <span className="log-input-icon-left">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </span>
                                 <input
                                     type={showPassword ? "text" : "password"}
-                                    placeholder="••••••••"
+                                    placeholder="Masukkan password Anda"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="log-form-input"
                                     required
                                 />
-
-                                
-                                {/* TOMBOL MATA PERSIS SEPERTI DI GAMBAR EDITED-IMAGE.PNG */}
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="log-toggle-password-btn"
+                                    aria-label={showPassword ? "Sembunyikan" : "Tampilkan"}
                                 >
                                     {showPassword ? (
-                                        /* Ikon Mata Dicoret (Hide) */
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
                                             <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
                                             <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
                                             <line x1="2" y1="2" x2="22" y2="22"/>
                                         </svg>
                                     ) : (
-                                        /* Ikon Mata Minimalis (Show) */
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                                             <circle cx="12" cy="12" r="3"/>
                                         </svg>
@@ -173,46 +241,62 @@ function Login() {
                             </div>
                         </div>
 
-                        {/* META ROW */}
+                        {/* Ingat saya + Butuh bantuan */}
                         <div className="log-meta-row">
                             <label className="log-remember-me">
-                                <input type="checkbox" defaultChecked />
+                                <input
+                                    type="checkbox"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                />
                                 Ingat saya
                             </label>
-                            <span>Sesi aman 30 hari</span>
+                            <span className="log-forgot-link">Butuh bantuan?</span>
                         </div>
 
-                        {/* BUTTONS */}
-                        <button
-                            type="submit"
-                            className="log-btn-submit"
-                            disabled={isLoading}
-                        >
+                        {/* Submit */}
+                        <button type="submit" className="log-btn-submit" disabled={isLoading}>
                             {isLoading ? (
                                 <span className="log-btn-loading">
                                     <span className="log-spinner" aria-hidden="true" />
                                     Memproses...
                                 </span>
                             ) : (
-                                `Masuk sebagai ${roleTab}`
+                                <>
+                                    Masuk sekarang
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                        <polyline points="12 5 19 12 12 19"/>
+                                    </svg>
+                                </>
                             )}
                         </button>
 
+                        {/* Divider */}
                         <div className="log-divider">
-
                             <span>atau lanjut dengan</span>
                         </div>
 
+                        {/* Social */}
                         <div className="log-social-row">
-                            <button type="button" className="log-btn-social">Google</button>
-                            <button type="button" class="log-btn-social">Apple</button>
+                            <button type="button" className="log-btn-social">
+                                <img src={googleIcon} alt="Google" className="log-social-icon" />
+                                Google
+                            </button>
+                            <button type="button" className="log-btn-social">
+                                <img src={appleIcon} alt="Apple" className="log-social-icon" />
+                                Apple
+                            </button>
                         </div>
                     </form>
 
                     <div className="log-register-text">
-                        Belum punya akun? <span className="log-register-link" onClick={() => navigate("/register")}>Daftar sekarang</span>
+                        Belum punya akun?{" "}
+                        <span className="log-register-link" onClick={() => navigate("/register")}>
+                            Daftar sekarang
+                        </span>
                     </div>
-
                 </div>
             </div>
         </div>

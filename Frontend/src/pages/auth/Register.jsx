@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
-import "../../assets/register.css"; // Pastikan path file CSS sesuai tempat kamu menyimpannya
+import "../../assets/css/register.css"; // Pastikan path file CSS sesuai tempat kamu menyimpannya
 
 function Register() {
     const navigate = useNavigate();

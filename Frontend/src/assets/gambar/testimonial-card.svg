@@ -1,0 +1,40 @@
+<svg viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#00000022"/>
+    </filter>
+  </defs>
+
+  <!-- Card background -->
+  <rect x="0" y="0" width="320" height="130" rx="16" ry="16"
+        fill="white" filter="url(#shadow)"/>
+
+  <!-- Quote mark -->
+  <text x="20" y="42" font-family="Georgia, serif" font-size="40"
+        fill="#2d7a4f" opacity="0.5">"</text>
+
+  <!-- Testimonial text -->
+  <text x="50" y="34" font-family="Arial, sans-serif" font-size="12" fill="#333333">
+    SiTukang sangat membantu!
+  </text>
+  <text x="50" y="52" font-family="Arial, sans-serif" font-size="12" fill="#333333">
+    Tukangnya profesional dan
+  </text>
+  <text x="50" y="70" font-family="Arial, sans-serif" font-size="12" fill="#333333">
+    hasilnya memuaskan.
+  </text>
+
+  <!-- Divider -->
+  <line x1="20" y1="88" x2="300" y2="88" stroke="#e8e8e8" stroke-width="1"/>
+
+  <!-- Author -->
+  <circle cx="36" cy="110" r="12" fill="#2d7a4f" opacity="0.2"/>
+  <text x="36" y="114" font-family="Arial, sans-serif" font-size="10"
+        fill="#2d7a4f" text-anchor="middle" font-weight="bold">R</text>
+  <text x="56" y="107" font-family="Arial, sans-serif" font-size="11"
+        fill="#333333" font-weight="bold">Rina</text>
+  <text x="56" y="120" font-family="Arial, sans-serif" font-size="10" fill="#888888">Jakarta</text>
+
+  <!-- Stars -->
+  <text x="210" y="115" font-family="Arial" font-size="14" fill="#f5a623">★★★★★</text>
+</svg>

@@ -1,0 +1,376 @@
+.layanan-page-wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menggunakan basis struktur navbar dashboard utama */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: #026b5e;
+}
+
+.logo-badge {
+  margin-right: 8px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav-links a.active {
+  color: #026b5e;
+  font-weight: 600;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #111827;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.btn-outline {
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-filled {
+  background-color: #026b5e;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* HEADER STYLE */
+.layanan-header-section {
+  padding: 60px 80px 40px 80px;
+  max-width: 800px;
+}
+
+.layanan-tag {
+  color: #026b5e;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.layanan-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 12px 0;
+  color: #0f172a;
+}
+
+.layanan-subtitle {
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* CARDS GRID SYSTEM */
+.layanan-grid-container {
+  padding: 0 80px 100px 80px;
+  flex: 1;
+}
+
+.layanan-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.layanan-card-item {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 160px;
+}
+
+.layanan-card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.layanan-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.layanan-card-item h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.layanan-card-item p {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0;
+}
+
+.lihat-tukang-link {
+  margin-top: auto;
+  padding-top: 16px;
+  color: #026b5e;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lihat-tukang-link .arrow {
+  transition: transform 0.2s ease;
+}
+
+.lihat-tukang-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* FOOTER STYLING */
+.footer-main {
+  background-color: #fafafa;
+  padding: 80px 80px 30px 80px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.footer-brand p {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 16px;
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+.footer-col h5 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: #111827;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 12px;
+}
+
+.footer-col ul li a {
+  text-decoration: none;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.footer-col ul li a:hover {
+  color: #026b5e;
+}
+
+.footer-bottom {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 30px;
+}
+/* =========================================
+   CARDS GRID SYSTEM (ANIMATED & LIVELY)
+   ========================================= */
+.layanan-grid-container {
+  padding: 0 80px 100px 80px;
+  flex: 1;
+}
+
+.layanan-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Base style untuk kartu */
+.layanan-card-item {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 160px;
+  cursor: pointer; /* Ubah kursor jadi tangan biar berasa bisa diklik */
+  
+  /* Animasi mulus saat di-hover */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efek saat kartu disentuh kursor (Hover) */
+.layanan-card-item:hover {
+  transform: translateY(-8px); /* Kartu naik ke atas */
+  box-shadow: 0 15px 35px rgba(2, 107, 94, 0.12); /* Bayangan hijau tipis muncul */
+  border-color: #d1fae5; /* Border sedikit menghijau */
+}
+
+/* Style ikon */
+.layanan-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: white;
+  margin-bottom: 20px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Animasi membal */
+}
+
+/* Efek ikon saat kartu di-hover */
+.layanan-card-item:hover .layanan-icon-box {
+  transform: scale(1.15) rotate(5deg); /* Ikon membesar dan sedikit miring */
+}
+
+.layanan-card-item h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.layanan-card-item p {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Style link "Lihat tukang" */
+.lihat-tukang-link {
+  margin-top: auto;
+  padding-top: 16px;
+  color: #026b5e;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.85; /* Sedikit transparan saat diam */
+  transition: all 0.3s ease;
+}
+
+/* Efek teks "Lihat tukang" saat kartu di-hover */
+.layanan-card-item:hover .lihat-tukang-link {
+  opacity: 1; /* Warnanya jadi lebih tegas */
+  color: #014d44;
+}
+
+/* Efek Panah bergerak maju mundur */
+.lihat-tukang-link .arrow {
+  transition: transform 0.3s ease;
+}
+
+.layanan-card-item:hover .lihat-tukang-link .arrow {
+  transform: translateX(8px); /* Panahnya maju ke kanan saat kartu disentuh! */
+}
+/* =========================================
+   STYLE LINK "LIHAT TUKANG" (SEMBUNYI -> MUNCUL)
+   ========================================= */
+
+.lihat-tukang-link {
+  margin-top: auto;
+  padding-top: 16px;
+  color: #026b5e;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  
+  /* Bikin sembunyi dan agak turun ke bawah di awal */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px); 
+  
+  /* Efek transisi yang smooth */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efek teks "Lihat tukang" MUNCUL saat kartu di-hover */
+.layanan-card-item:hover .lihat-tukang-link {
+  opacity: 1; /* Jadi kelihatan */
+  visibility: visible; /* Bisa diklik */
+  transform: translateY(0); /* Naik ke posisi normal */
+  color: #014d44; /* Warnanya sedikit lebih gelap */
+}
+
+/* Efek Panah bergerak maju saat disentuh */
+.lihat-tukang-link .arrow {
+  transition: transform 0.3s ease;
+}
+
+.layanan-card-item:hover .lihat-tukang-link .arrow {
+  transform: translateX(6px); /* Panahnya maju sedikit */
+  transition-delay: 0.1s; /* Dikasih jeda sedikit biar efeknya estetik */
+}

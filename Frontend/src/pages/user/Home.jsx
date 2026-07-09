@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../../assets/HomeLanding.css";
+import "../../assets/css/HomeLanding.css";
 
 import { getAllTukang, getSearchTukang } from "../../api/tukangApi";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/Tentang.css"; 
+import "../../assets//css/Tentang.css"; 
 
 // IMPORT FOTO TIM (Pastikan file foto ada di folder assets)
 import imgAde from "../../assets/gambar/ade.jpeg";

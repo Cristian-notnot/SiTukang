@@ -1,0 +1,155 @@
+.ulasan-wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+  background-color: #f9fafb; /* Latar belakang abu-abu sangat muda/bersih */
+  min-height: 100vh;
+}
+
+/* NAVBAR (Sama dengan sebelumnya) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  background-color: white;
+}
+.nav-logo { display: flex; align-items: center; font-weight: 700; font-size: 20px; color: #026b5e; }
+.logo-badge { margin-right: 8px; }
+.nav-links { display: flex; list-style: none; gap: 32px; margin: 0; padding: 0; }
+.nav-links a { text-decoration: none; color: #4b5563; font-size: 15px; font-weight: 500; transition: all 0.2s; }
+.nav-links a.active { color: #026b5e; font-weight: 700; font-size: 16px; border-bottom: 2px solid #026b5e; padding-bottom: 4px; }
+.nav-buttons { display: flex; gap: 12px; }
+
+/* HERO SECTION (Background Hijau Full) */
+.ulasan-hero {
+  background-color: #026b5e;
+  padding: 60px 80px;
+  color: white;
+}
+.ulasan-hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.ulasan-tag {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+.ulasan-title {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 12px 0 40px 0;
+  letter-spacing: -0.5px;
+}
+
+/* Row Statistik di Hero */
+.ulasan-stats-row {
+  display: flex;
+  gap: 80px;
+}
+.stat-item h2 {
+  font-size: 40px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+}
+.stat-item h2 span {
+  font-size: 32px;
+  margin-left: 6px;
+}
+.stat-item p {
+  font-size: 15px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* GRID ULASAN SECTION */
+.ulasan-grid-section {
+  padding: 60px 80px 100px 80px;
+  background-color: #ffffff;
+}
+.ulasan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* STYLE KARTU ULASAN */
+.ulasan-card {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+}
+.stars-row {
+  color: #fbbf24; /* Warna kuning emas untuk bintang */
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.ulasan-teks {
+  color: #334155;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1; /* Supaya isi mendorong footer ke bawah jika text pendek */
+}
+.ulasan-divider {
+  border-top: 1px solid #f1f5f9;
+  margin: 24px 0 20px 0;
+}
+.ulasan-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ulasan-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ulasan-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #e6f4f2;
+  color: #026b5e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.ulasan-user-meta h4 {
+  margin: 0 0 2px 0;
+  font-size: 15px;
+  color: #0f172a;
+}
+.ulasan-user-meta p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+.ulasan-waktu {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* FOOTER (Sama dengan sebelumnya) */
+.footer-main { background-color: #fafafa; padding: 80px 80px 30px 80px; border-top: 1px solid #f3f4f6; }
+.footer-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+.footer-brand p { color: #6b7280; font-size: 14px; margin-top: 16px; line-height: 1.6; max-width: 260px; }
+.footer-col h5 { font-size: 15px; font-weight: 700; margin: 0 0 20px 0; color: #111827; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { text-decoration: none; color: #6b7280; font-size: 14px; }
+.footer-col ul li a:hover { color: #026b5e; }
+.footer-bottom { text-align: center; color: #9ca3af; font-size: 13px; border-top: 1px solid #f3f4f6; padding-top: 30px; }

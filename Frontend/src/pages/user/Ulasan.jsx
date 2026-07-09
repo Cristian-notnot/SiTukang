@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/Ulasan.css"; 
+import "../../assets/css/Ulasan.css"; 
 
 function Ulasan() {
   const navigate = useNavigate();

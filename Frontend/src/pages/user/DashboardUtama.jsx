@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/Dashboard.css"; // Pastikan D-nya KAPITAL sesuai di folder assets!
+import "../../assets/css/Dashboard.css"; // Pastikan D-nya KAPITAL sesuai di folder assets!
 
 function UserDashboard() {
   const navigate = useNavigate(); 

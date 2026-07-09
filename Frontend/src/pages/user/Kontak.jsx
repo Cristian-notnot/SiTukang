@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/Kontak.css"; 
+import "../../assets/css/Kontak.css"; 
 
 function Kontak() {
   const navigate = useNavigate();
