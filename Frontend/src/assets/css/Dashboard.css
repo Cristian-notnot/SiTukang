@@ -64,6 +64,12 @@ html {
   box-shadow: 0 4px 10px rgba(2, 107, 94, 0.3);
 }
 
+.nav-logo .logo-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+
 .nav-links {
   display: flex;
   gap: 30px;

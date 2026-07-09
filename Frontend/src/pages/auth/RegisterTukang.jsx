@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/RegisterTukang.css";
+import logoImg from "../../assets/gambar/logo.jpeg";
 
 function RegisterTukang() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function RegisterTukang() {
       {/* BAGIAN KIRI: BRANDING & STATS */}
       <div className="register-left">
         <div className="logo-section">
-          <span className="logo-icon">🔨</span> SiTukang
+          <img src={logoImg} alt="SiTukang" className="logo-img" />
         </div>
         <div className="hero-text">
           <h1>Dapatkan order, atur jadwal, kembangkan bisnis</h1>

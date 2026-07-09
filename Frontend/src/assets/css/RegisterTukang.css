@@ -24,6 +24,12 @@
 }
 
 .logo-section { font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+.logo-section .logo-img {
+  height: 44px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 8px;
+}
 .hero-text h1 { font-size: 48px; line-height: 1.1; margin-bottom: 20px; }
 .hero-text p { font-size: 16px; opacity: 0.9; }
 

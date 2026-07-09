@@ -8,6 +8,7 @@ import {
     BarChart3, Ticket, MessageSquare, Settings, UserCircle
 } from "lucide-react";
 import ToastProvider from "../components/admin/Toast";
+import logoImg from "../assets/gambar/logo.jpeg";
 
 import "../assets/css/AdminLayout.css";
 
@@ -92,7 +93,7 @@ function AdminLayout() {
                     <div className="search-container">
                         <form onSubmit={handleSearch} className="search-form">
                             <button type="submit" className="search-icon-btn">
-                                <Search size={18} />
+                                <Search size={20} />
                             </button>
                             <input
                                 type="text"
@@ -106,7 +107,7 @@ function AdminLayout() {
 
                 <div className="navbar-right">
                     <button className="notification-btn">
-                        <Bell size={20} />
+                        <Bell size={22} />
                     </button>
 
                     <div className="user-menu">
@@ -129,8 +130,7 @@ function AdminLayout() {
             <aside className={`sidebar ${sidebarOpen ? "open" : "closed"} ${drawerOpen ? "drawer-open" : ""}`}>
                 <div className="sidebar-header">
                     <div className="logo">
-                        <div className="logo-icon">S</div>
-                        <span className="logo-text">SiTukang</span>
+                        <img src={logoImg} alt="SiTukang" className="logo-img" />
                     </div>
                 </div>
 
@@ -138,7 +138,7 @@ function AdminLayout() {
                     <ul>
                         <li>
                             <button onClick={() => navigate("/admin")} className={location.pathname === "/admin" ? "active" : ""}>
-                                <span className="nav-icon"><LayoutDashboard size={18} /></span>
+                                <span className="nav-icon"><LayoutDashboard size={22} /></span>
                                 <span className="nav-label">Dashboard</span>
                             </button>
                         </li>
@@ -147,7 +147,7 @@ function AdminLayout() {
 
                         <li>
                             <button onClick={() => navigate("/admin/users")} className={location.pathname.includes("/admin/users") ? "active" : ""}>
-                                <span className="nav-icon"><Users size={18} /></span>
+                                <span className="nav-icon"><Users size={22} /></span>
                                 <span className="nav-label">Users</span>
                             </button>
                         </li>

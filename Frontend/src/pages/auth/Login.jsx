@@ -11,6 +11,7 @@ import clockIcon     from "../../assets/gambar/clock.svg";
 import badgeIcon     from "../../assets/gambar/badge.svg";
 import googleIcon    from "../../assets/gambar/google.svg";
 import appleIcon     from "../../assets/gambar/apple.svg";
+import logoImg       from "../../assets/gambar/logo.jpeg";
 
 function Login() {
     const navigate = useNavigate();
@@ -57,7 +58,7 @@ function Login() {
                 {/* Logo */}
                 <div className="log-logo-container" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                     <div className="log-logo-icon-wrap">
-                        <img src={shieldIcon} alt="logo" className="log-logo-img" />
+                        <img src={logoImg} alt="logo" className="log-logo-img" />
                     </div>
                     <span className="log-logo-text">SiTukang</span>
                 </div>

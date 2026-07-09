@@ -7,6 +7,7 @@ import "../../assets/css/LoginAdmin.css";
 
 // Gambar/ikon branding yang sudah ada di project
 import shieldIcon from "../../assets/gambar/shield.svg";
+import logoImg from "../../assets/gambar/logo.jpeg";
 
 function LoginAdmin() {
     const navigate = useNavigate();
@@ -129,7 +130,7 @@ function LoginAdmin() {
                     <div className="admin-login-card">
                         <div className="admin-login-brand" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                             <div className="admin-login-brand-icon">
-                                <img src={shieldIcon} alt="SiTukang" />
+                                <img src={logoImg} alt="SiTukang" />
                             </div>
                             <div className="admin-login-brand-text">SiTukang</div>
                         </div>

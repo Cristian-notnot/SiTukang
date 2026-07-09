@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/Ulasan.css";
+import logoImg from "../../assets/gambar/logo.jpeg";
 
 function Ulasan() {
   const navigate = useNavigate();
@@ -48,8 +49,7 @@ function Ulasan() {
       {/* NAVBAR */}
       <nav className="navbar">
         <div className="nav-logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-          <span className="logo-badge">🔨</span>
-          <span>SiTukang</span>
+          <img src={logoImg} alt="SiTukang" className="logo-img" />
         </div>
         <ul className="nav-links">
           <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Beranda</a></li>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/Dashboard.css";
+import logoImg from "../../assets/gambar/logo.jpeg";
 
 function UserDashboard() {
   const navigate = useNavigate();
@@ -10,8 +11,7 @@ function UserDashboard() {
       {/* 1. NAVBAR SECTION */}
       <nav className="navbar">
         <div className="nav-logo">
-          <span className="logo-badge">🔨</span>
-          <span>SiTukang</span>
+          <img src={logoImg} alt="SiTukang" className="logo-img" />
         </div>
         <ul className="nav-links">
           <li>

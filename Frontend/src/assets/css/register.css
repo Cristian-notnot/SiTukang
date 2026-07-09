@@ -32,6 +32,11 @@
     font-size: 26px;
 }
 
+.reg-logo-container .logo-img {
+  height: 44px;
+  width: auto;
+}
+
 .reg-logo-text {
     font-size: 22px;
     font-weight: 700;

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import "../../assets/css/register.css"; // Pastikan path file CSS sesuai tempat kamu menyimpannya
+import logoImg from "../../assets/gambar/logo.jpeg";
 
 function Register() {
     const navigate = useNavigate();
@@ -81,8 +82,7 @@ function Register() {
             {/* SISI KIRI: PANEL GRADIENT HIJAU */}
             <div className="reg-left-panel">
                 <div className="reg-logo-container" onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>
-                    <span className="reg-logo-icon">🔨</span>
-                    <span className="reg-logo-text">SiTukang</span>
+                    <img src={logoImg} alt="SiTukang" className="logo-img" />
                 </div>
                 
                 <div className="reg-left-content">

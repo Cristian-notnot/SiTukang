@@ -42,10 +42,10 @@ function AdminDashboard() {
 
     // 4 stat cards sesuai referensi
     const iconMap = {
-        primary: <TrendingUp size={22} color="#fff" />,
-        success: <Package size={22} color="#fff" />,
-        warning: <Wrench size={22} color="#fff" />,
-        danger: <Users size={22} color="#fff" />,
+        primary: <TrendingUp size={24} color="#fff" />,
+        success: <Package size={24} color="#fff" />,
+        warning: <Wrench size={24} color="#fff" />,
+        danger: <Users size={24} color="#fff" />,
     };
 
     const statCards = [
@@ -110,7 +110,7 @@ function AdminDashboard() {
                     <Card key={s.label}>
                         <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
                             <div style={{
-                                width: 48, height: 48, borderRadius: "14px",
+                                width: 54, height: 54, borderRadius: "14px",
                                 background: s.gradient === "primary"
                                     ? "linear-gradient(135deg, #14b8a6, #0f766c)"
                                     : s.gradient === "success"
