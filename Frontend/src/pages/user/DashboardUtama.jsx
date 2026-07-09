@@ -28,7 +28,7 @@ function UserDashboard() {
           {/* PERBAIKAN 1: Tambah onClick ke halaman register */}
           <button className="btn-outline" onClick={() => navigate("/register")}>Daftar</button>
           
-          <button className="btn-filled">Jadi Tukang</button>
+          <button className="btn-filled" onClick={() => navigate("/registertukang")}>Jadi Tukang</button>
         </div>
       </nav>
 
@@ -334,59 +334,6 @@ function UserDashboard() {
           </div>
         </div>
       </section>
-
-      {/* 8. FOOTER SECTION */}
-      <footer className="footer-main">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <div className="nav-logo">
-              <span className="logo-badge">🔨</span>
-              <span>SiTukang</span>
-            </div>
-            <p>Marketplace tukang terpercaya untuk rumah dan bisnis Anda di seluruh Indonesia.</p>
-          </div>
-          <div className="footer-col">
-            <h5>Layanan</h5>
-            <ul>
-              <li><a href="#listrik">Listrik</a></li>
-              <li><a href="#ac">AC</a></li>
-              <li><a href="#pipa">Pipa</a></li>
-              <li><a href="#cat">Cat</a></li>
-              <li><a href="#kebersihan">Kebersihan</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Perusahaan</h5>
-            <ul>
-              <li><a href="#tentang">Tentang</a></li>
-              <li><a href="#karir">Karir</a></li>
-              <li><a href="#press">Press</a></li>
-              <li><a href="#blog">Blog</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Bantuan</h5>
-            <ul>
-              <li><a href="#bantuan">Pusat Bantuan</a></li>
-              <li><a href="#faq">FAQ</a></li>
-              <li><a href="#hubungi">Hubungi</a></li>
-              <li><a href="#kebijakan">Kebijakan</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Portal</h5>
-            <ul>
-              <li><a href="#admin">Admin</a></li>
-              <li><a href="#tukang">Tukang</a></li>
-              <li><a href="#customer">Customer</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          © 2026 SiTukang. Dibuat dengan ❤️ di Indonesia.
-        </div>
-      </footer>
-
     </div>
   );
 }

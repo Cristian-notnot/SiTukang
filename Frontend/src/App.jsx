@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import RegisterTukang from "./pages/auth/RegisterTukang";
 import Home from "./pages/user/Home";
 import DashboardUtama from "./pages/user/DashboardUtama";
 import DetailTukang from "./pages/user/DetailTukang";
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/" element={<DashboardUtama />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/registertukang" element={<RegisterTukang />} />
 
                 <Route path="/user" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path="/user/tukang/:id" element={<ProtectedRoute><DetailTukang /></ProtectedRoute>} />

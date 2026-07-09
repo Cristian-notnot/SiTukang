@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"; // Menggunakan useState untuk kontrol slider
 import { useNavigate } from "react-router-dom";
 import "../../assets//css/Tentang.css"; 
 
@@ -12,14 +12,57 @@ import imgCarly from "../../assets/gambar/carly.jpeg";
 function Tentang() {
   const navigate = useNavigate();
 
-  // Data Tim (5 Orang)
+  // State untuk melacak indeks slide tim yang sedang aktif
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Data Tim (5 Orang) + Ditambahkan Deskripsi sesuai instruksi "DESKRIPSI + NAMA + ROLE"
   const teamMembers = [
-    { id: 1, name: "Nouval Al Ghifary", role: "Backend dan keseluruhan", img: imgNouval },
-    { id: 2, name: "Ade Nizar Septian", role: "Backend dan UI/UX", img: imgAde },
-    { id: 3, name: "Charly Agusta C.", role: "Frontend", img: imgCarly },
-    { id: 4, name: "Bruno Claudio S.", role: "Ketua Project", img: imgBruno },
-    { id: 5, name: "Annas Khoirul Amri", role: "Frontend", img: imgAnnas },
+    { 
+      id: 1, 
+      name: "Nouval Al Ghifary", 
+      role: "Backend dan keseluruhan", 
+      img: imgNouval,
+      description: "Fokus mengoptimalkan performa arsitektur server, manajemen database relasional, serta menjamin stabilitas integrasi seluruh sistem utama di SiTukang."
+    },
+    { 
+      id: 2, 
+      name: "Ade Nizar Septian", 
+      role: "Backend dan UI/UX", 
+      img: imgAde,
+      description: "Menyelaraskan keindahan fungsionalitas antarmuka dengan efisiensi logika sistem backend untuk melahirkan alur pengguna yang mulus."
+    },
+    { 
+      id: 3, 
+      name: "Charly Agusta C.", 
+      role: "Frontend", 
+      img: imgCarly,
+      description: "Bertanggung jawab mengubah desain UI/UX menjadi komponen kode web yang interaktif, responsif, serta nyaman diakses dari perangkat apa pun."
+    },
+    { 
+      id: 4, 
+      name: "Bruno Claudio S.", 
+      role: "Ketua Project", 
+      img: imgBruno,
+      description: "Mengoordinasi manajemen proyek secara keseluruhan, menyinkronkan kerja antar-divisi, dan memastikan visi produk tercapai tepat waktu."
+    },
+    { 
+      id: 5, 
+      name: "Annas Khoirul Amri", 
+      role: "Frontend", 
+      img: imgAnnas,
+      description: "Berfokus pada pemeliharaan performa sisi klien, optimasi rendering halaman, serta kelancaran konsumsi data dari API backend."
+    },
   ];
+
+  // Fungsi untuk menggeser slide ke kanan (Next)
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === teamMembers.length - 1 ? 0 : prev + 1));
+  };
+
+  // Fungsi untuk menggeser slide ke kiri (Prev)
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? teamMembers.length - 1 : prev - 1));
+  };
 
   return (
     <div className="tentang-wrapper">
@@ -41,7 +84,7 @@ function Tentang() {
         <div className="nav-buttons">
           <button className="btn-text" onClick={() => navigate("/login")}>Masuk</button>
           <button className="btn-outline" onClick={() => navigate("/register")}>Daftar</button>
-          <button className="btn-filled">Jadi Tukang</button>
+          <button className="btn-filled" onClick={() => navigate("/registertukang")}>Jadi Tukang</button>
         </div>
       </nav>
 
@@ -113,70 +156,45 @@ function Tentang() {
         </div>
       </section>
 
-      {/* TEAM SECTION */}
-      <section className="team-section">
-        <h2>Tim kami</h2>
-        <div className="team-grid">
-          {teamMembers.map((member) => (
-            <div key={member.id} className="team-card">
-              <img src={member.img} alt={member.name} className="team-photo" />
-              <h4>{member.name}</h4>
-              <p>{member.role}</p>
+      {/* TEAM SECTION (SLIDER TERBELAH DIAGONAL SATU GARIS) */}
+      <section className="team-slider-section">
+        <div className="slider-header-centered">
+          <h2>Tim kami</h2>
+        </div>
+
+        <div className="slider-wrapper-container">
+          {/* Tombol Kiri */}
+          <button className="slider-arrow prev-btn" onClick={prevSlide} aria-label="Previous">❮</button>
+
+          {/* Card Slider */}
+          <div className="team-slider-card">
+            <div className="slider-photo-side">
+              <img src={teamMembers[currentSlide].img} alt={teamMembers[currentSlide].name} className="slider-photo" />
             </div>
+            <div className="slider-info-side">
+              <div className="info-content-box">
+                <h3 className="member-name">{teamMembers[currentSlide].name}</h3>
+                <span className="member-role">{teamMembers[currentSlide].role}</span>
+                <div className="member-divider"></div>
+                <p className="member-description">"{teamMembers[currentSlide].description}"</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Tombol Kanan */}
+          <button className="slider-arrow next-btn" onClick={nextSlide} aria-label="Next">❯</button>
+        </div>
+
+        <div className="slider-dots">
+          {teamMembers.map((_, index) => (
+            <span 
+              key={index} 
+              className={`dot ${index === currentSlide ? "active" : ""}`}
+              onClick={() => setCurrentSlide(index)}
+            ></span>
           ))}
         </div>
       </section>
-
-      {/* CTA BANNER */}
-      <section className="cta-section">
-        <div className="cta-banner">
-          <div className="cta-icon">💼</div>
-          <h2>Bergabunglah dengan tim kami</h2>
-          <p>Kami sedang merekrut di Jakarta, Bandung, dan Surabaya.</p>
-          <button className="btn-cta-white">Lihat lowongan</button>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="footer-main">
-        {/* Konten Footer sama seperti halaman lainnya */}
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <div className="nav-logo">
-              <span className="logo-badge">🔨</span><span>SiTukang</span>
-            </div>
-            <p>Marketplace tukang terpercaya untuk rumah dan bisnis Anda di seluruh Indonesia.</p>
-          </div>
-          <div className="footer-col">
-            <h5>Layanan</h5>
-            <ul>
-              <li><a href="#">Listrik</a></li><li><a href="#">AC</a></li><li><a href="#">Pipa</a></li><li><a href="#">Cat</a></li><li><a href="#">Kebersihan</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Perusahaan</h5>
-            <ul>
-              <li><a href="#">Tentang</a></li><li><a href="#">Karir</a></li><li><a href="#">Press</a></li><li><a href="#">Blog</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Bantuan</h5>
-            <ul>
-              <li><a href="#">Pusat Bantuan</a></li><li><a href="#">FAQ</a></li><li><a href="#">Hubungi</a></li><li><a href="#">Kebijakan</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Portal</h5>
-            <ul>
-              <li><a href="#">Admin</a></li><li><a href="#">Tukang</a></li><li><a href="#">Customer</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          © 2026 SiTukang. Dibuat dengan ❤️ di Indonesia.
-        </div>
-      </footer>
-
     </div>
   );
 }

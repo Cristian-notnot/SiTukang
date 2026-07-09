@@ -1,0 +1,96 @@
+/* ANIMASI: Agar elemen muncul dengan halus */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.register-page {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: 'Inter', -apple-system, sans-serif;
+  animation: fadeIn 0.6s ease-out; /* Animasi seluruh halaman */
+}
+
+/* --- KIRI: BRANDING --- */
+.register-left {
+  flex: 1;
+  background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%);
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo-section { font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+.hero-text h1 { font-size: 48px; line-height: 1.1; margin-bottom: 20px; }
+.hero-text p { font-size: 16px; opacity: 0.9; }
+
+/* Stats dengan sedikit hover effect */
+.stats-row { display: flex; gap: 40px; }
+.stat-item { transition: transform 0.3s ease; }
+.stat-item:hover { transform: translateY(-5px); }
+.stat-item h3 { font-size: 28px; margin: 0; }
+.stat-item p { font-size: 14px; opacity: 0.8; margin: 0; }
+
+/* --- KANAN: FORM & INTERAKSI --- */
+.register-right {
+  flex: 1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.form-container { width: 100%; max-width: 450px; }
+
+/* INPUT: Menjadi lebih "hidup" saat di-klik */
+.field-group input, .field-group select {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition: all 0.3s ease; /* Transisi halus */
+}
+
+.field-group input:focus, .field-group select:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1); /* Glow efek */
+}
+
+/* BUTTON: Hover efek */
+.btn-register {
+  width: 100%;
+  padding: 15px;
+  background: #064e3b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.btn-register:hover {
+  background: #04392b;
+  transform: translateY(-2px); /* Tombol sedikit terangkat */
+  box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+}
+
+.btn-register:active { transform: scale(0.98); }
+
+/* Vibe Check: Verification Box */
+.verification-box {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #edf2f7;
+  transition: background 0.3s;
+}
+.verification-box:hover { background: #f1f5f9; }
