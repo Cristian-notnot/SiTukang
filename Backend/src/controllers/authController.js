@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
 const jwt = require("jsonwebtoken");
 
 exports.login = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, loginAs } = req.body;
 
   const sql = "SELECT * FROM users WHERE email = ?";
 
@@ -69,6 +69,18 @@ exports.login = (req, res) => {
     if (!isMatch) {
       return res.status(401).json({
         message: "Password salah",
+      });
+    }
+
+    if (loginAs === "tukang" && user.role !== "tukang") {
+      return res.status(403).json({
+        message: "Akun ini bukan tukang. Silakan login sebagai Customer.",
+      });
+    }
+
+    if (loginAs === "customer" && user.role === "tukang") {
+      return res.status(403).json({
+        message: "Akun tukang tidak bisa login sebagai Customer. Gunakan tab Tukang.",
       });
     }
 

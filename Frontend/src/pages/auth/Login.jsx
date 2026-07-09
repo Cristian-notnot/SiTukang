@@ -27,7 +27,8 @@ function Login() {
         if (isLoading) return;
         try {
             setIsLoading(true);
-            const response = await API.post("/auth/login", { email, password });
+            const loginAs = roleTab === "Tukang" ? "tukang" : "customer";
+            const response = await API.post("/auth/login", { email, password, loginAs });
             const token = response.data.token;
             const user  = response.data.user;
             login(user, token);
