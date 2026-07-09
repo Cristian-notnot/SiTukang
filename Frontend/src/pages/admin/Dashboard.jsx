@@ -4,7 +4,7 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import { Card, TableSkeleton } from "../../components/admin/Card";
-import { TrendingUp, Package, Wrench, Users } from "lucide-react";
+import { TrendingUp, FileText, Building2, Users } from "lucide-react";
 
 const COLORS = ["#14b8a6", "#059669", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"];
 
@@ -43,8 +43,8 @@ function AdminDashboard() {
     // 4 stat cards sesuai referensi
     const iconMap = {
         primary: <TrendingUp size={24} color="#fff" />,
-        success: <Package size={24} color="#fff" />,
-        warning: <Wrench size={24} color="#fff" />,
+        success: <FileText size={24} color="#fff" />,
+        warning: <Building2 size={24} color="#fff" />,
         danger: <Users size={24} color="#fff" />,
     };
 
