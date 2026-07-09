@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getAdminDashboard, getDashboardCharts } from "../../api/adminApi";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    BarChart, Bar
 } from "recharts";
 import { Card, TableSkeleton } from "../../components/admin/Card";
+import { TrendingUp, Package, Wrench, Users } from "lucide-react";
 
 const COLORS = ["#14b8a6", "#059669", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"];
 
@@ -41,11 +41,18 @@ function AdminDashboard() {
     }
 
     // 4 stat cards sesuai referensi
+    const iconMap = {
+        primary: <TrendingUp size={22} color="#fff" />,
+        success: <Package size={22} color="#fff" />,
+        warning: <Wrench size={22} color="#fff" />,
+        danger: <Users size={22} color="#fff" />,
+    };
+
     const statCards = [
-        { label: "Total Revenue", value: `Rp ${(stats?.revenue_hari_ini || 0).toLocaleString()}`, icon: "💰", gradient: "primary" },
-        { label: "Order Hari Ini", value: stats?.booking_hari_ini || 0, icon: "📦", gradient: "success" },
-        { label: "Tukang Aktif", value: stats?.tukang_aktif || 0, icon: "👨‍🔧", gradient: "warning" },
-        { label: "Customer Baru", value: stats?.user_hari_ini || 0, icon: "👥", gradient: "danger" },
+        { label: "Total Revenue", value: `Rp ${(stats?.revenue_hari_ini || 0).toLocaleString()}`, gradient: "primary" },
+        { label: "Order Hari Ini", value: stats?.booking_hari_ini || 0, gradient: "success" },
+        { label: "Tukang Aktif", value: stats?.tukang_aktif || 0, gradient: "warning" },
+        { label: "Customer Baru", value: stats?.user_hari_ini || 0, gradient: "danger" },
     ];
 
     // Data dummy untuk chart kalo kosong (biar ada visual)
@@ -112,9 +119,9 @@ function AdminDashboard() {
                                     ? "linear-gradient(135deg, #f59e0b, #d97706)"
                                     : "linear-gradient(135deg, #ef4444, #dc2626)",
                                 display: "flex", alignItems: "center", justifyContent: "center",
-                                fontSize: "1.4rem", flexShrink: 0
+                                flexShrink: 0
                             }}>
-                                {s.icon}
+                                {iconMap[s.gradient]}
                             </div>
                             <div>
                                 <h3 style={{ fontSize: "1.35rem", fontWeight: 700, margin: 0, color: "var(--text)" }}>

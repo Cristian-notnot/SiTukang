@@ -1,7 +1,12 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { Menu, Bell, Search, User, ChevronDown } from "lucide-react";
+import {
+    Menu, Bell, Search, User, ChevronDown,
+    LayoutDashboard, Users, ClipboardCheck, Wrench,
+    Calendar, CreditCard, DollarSign, FolderTree,
+    BarChart3, Ticket, MessageSquare, Settings, UserCircle
+} from "lucide-react";
 import ToastProvider from "../components/admin/Toast";
 
 import "../assets/css/AdminLayout.css";
@@ -133,7 +138,7 @@ function AdminLayout() {
                     <ul>
                         <li>
                             <button onClick={() => navigate("/admin")} className={location.pathname === "/admin" ? "active" : ""}>
-                                <span className="nav-icon">📊</span>
+                                <span className="nav-icon"><LayoutDashboard size={18} /></span>
                                 <span className="nav-label">Dashboard</span>
                             </button>
                         </li>
@@ -142,43 +147,43 @@ function AdminLayout() {
 
                         <li>
                             <button onClick={() => navigate("/admin/users")} className={location.pathname.includes("/admin/users") ? "active" : ""}>
-                                <span className="nav-icon">👥</span>
+                                <span className="nav-icon"><Users size={18} /></span>
                                 <span className="nav-label">Users</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/tukang/pending")} className={location.pathname.includes("/admin/tukang/pending") ? "active" : ""}>
-                                <span className="nav-icon">📋</span>
+                                <span className="nav-icon"><ClipboardCheck size={18} /></span>
                                 <span className="nav-label">Verifikasi Tukang</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/tukang")} className={location.pathname === "/admin/tukang" ? "active" : ""}>
-                                <span className="nav-icon">👨‍🔧</span>
+                                <span className="nav-icon"><Wrench size={18} /></span>
                                 <span className="nav-label">Tukang</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/booking")} className={location.pathname.includes("/admin/booking") ? "active" : ""}>
-                                <span className="nav-icon">📅</span>
+                                <span className="nav-icon"><Calendar size={18} /></span>
                                 <span className="nav-label">Booking</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/pembayaran")} className={location.pathname.includes("/admin/pembayaran") ? "active" : ""}>
-                                <span className="nav-icon">💰</span>
+                                <span className="nav-icon"><CreditCard size={18} /></span>
                                 <span className="nav-label">Pembayaran</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/komisi")} className={location.pathname.includes("/admin/komisi") ? "active" : ""}>
-                                <span className="nav-icon">💵</span>
+                                <span className="nav-icon"><DollarSign size={18} /></span>
                                 <span className="nav-label">Komisi</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/kategori")} className={location.pathname.includes("/admin/kategori") ? "active" : ""}>
-                                <span className="nav-icon">📂</span>
+                                <span className="nav-icon"><FolderTree size={18} /></span>
                                 <span className="nav-label">Kategori</span>
                             </button>
                         </li>
@@ -187,19 +192,19 @@ function AdminLayout() {
 
                         <li>
                             <button onClick={() => navigate("/admin/laporan")} className={location.pathname.includes("/admin/laporan") ? "active" : ""}>
-                                <span className="nav-icon">📈</span>
+                                <span className="nav-icon"><BarChart3 size={18} /></span>
                                 <span className="nav-label">Laporan</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/ticket")} className={location.pathname.includes("/admin/ticket") ? "active" : ""}>
-                                <span className="nav-icon">🎫</span>
+                                <span className="nav-icon"><Ticket size={18} /></span>
                                 <span className="nav-label">Ticket Support</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/review")} className={location.pathname.includes("/admin/review") ? "active" : ""}>
-                                <span className="nav-icon">💬</span>
+                                <span className="nav-icon"><MessageSquare size={18} /></span>
                                 <span className="nav-label">Moderasi Review</span>
                             </button>
                         </li>
@@ -208,13 +213,13 @@ function AdminLayout() {
 
                         <li>
                             <button onClick={() => navigate("/admin/pengaturan")} className={location.pathname.includes("/admin/pengaturan") ? "active" : ""}>
-                                <span className="nav-icon">⚙️</span>
+                                <span className="nav-icon"><Settings size={18} /></span>
                                 <span className="nav-label">Pengaturan</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => navigate("/admin/profil")} className={location.pathname.includes("/admin/profil") ? "active" : ""}>
-                                <span className="nav-icon">👤</span>
+                                <span className="nav-icon"><UserCircle size={18} /></span>
                                 <span className="nav-label">Profil Admin</span>
                             </button>
                         </li>
