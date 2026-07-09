@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import {
   FiBell,
   FiCalendar,
@@ -6,295 +8,306 @@ import {
   FiClock,
   FiCreditCard,
   FiGrid,
-  FiHome,
   FiMapPin,
   FiMenu,
-  FiMessageCircle,
+  FiMessageSquare,
   FiSearch,
   FiSettings,
   FiStar,
   FiTool,
-  FiUser,
+  FiZap,
+  FiAward,
+  FiChevronRight,
+  FiShield,
+  FiHome,
 } from "react-icons/fi";
 import "../../assets/css/UserDashboard.css";
 
 const stats = [
-  { label: "Booking aktif", value: "3", note: "2 tukang dalam perjalanan", icon: FiCalendar },
-  { label: "Selesai", value: "18", note: "Pekerjaan berhasil ditutup", icon: FiCheckCircle },
-  { label: "Rating rata-rata", value: "4.8", note: "Dari ulasan terakhir", icon: FiStar },
-  { label: "Total hemat", value: "Rp420K", note: "Dari promo dan paket", icon: FiCreditCard },
-];
-
-const quickServices = [
-  { title: "Listrik", count: "248 tukang", tone: "amber", icon: FiTool },
-  { title: "Service AC", count: "184 tukang", tone: "sky", icon: FiHome },
-  { title: "Pipa Bocor", count: "162 tukang", tone: "indigo", icon: FiSettings },
-  { title: "Cleaning", count: "276 tukang", tone: "emerald", icon: FiCheckCircle },
-];
-
-const workers = [
-  {
-    name: "Budi Santoso",
-    role: "Tukang Listrik",
-    rating: "4.9",
-    jobs: "312 job",
-    area: "Jakarta Selatan",
-    price: "Rp75.000/jam",
-    initials: "BS",
-    status: "Tersedia hari ini",
+  { 
+    label: "ORDER AKTIF", 
+    value: "2", 
+    note: "", 
+    icon: FiCheckCircle, 
+    iconColor: "#026b5e", 
+    iconBg: "#e6f4f2" 
   },
-  {
-    name: "Andi Wijaya",
-    role: "Service AC",
-    rating: "4.8",
-    jobs: "256 job",
-    area: "Jakarta Pusat",
-    price: "Rp120.000/jam",
-    initials: "AW",
-    status: "Respons 10 menit",
+  { 
+    label: "TOTAL PENGELUARAN", 
+    value: "Rp 2.450.000", 
+    note: "+12% bulan ini", 
+    noteColor: "#026b5e",
+    icon: FiCreditCard, 
+    iconColor: "#026b5e", 
+    iconBg: "#e6f4f2" 
   },
-  {
-    name: "Slamet Riyadi",
-    role: "Tukang Pipa",
-    rating: "4.7",
-    jobs: "189 job",
-    area: "Tangerang",
-    price: "Rp85.000/jam",
-    initials: "SR",
-    status: "Garansi 7 hari",
+  { 
+    label: "BOOKING DIJADWALKAN", 
+    value: "3", 
+    note: "", 
+    icon: FiCalendar, 
+    iconColor: "#f59e0b", 
+    iconBg: "#fef3c7" 
+  },
+  { 
+    label: "RATING DIBERIKAN", 
+    value: "14", 
+    note: "", 
+    icon: FiStar, 
+    iconColor: "#3b82f6", 
+    iconBg: "#dbeafe" 
   },
 ];
 
-const activities = [
-  {
-    title: "Booking service AC dikonfirmasi",
-    description: "Andi Wijaya akan datang pukul 14.00",
-    time: "10 menit lalu",
-    icon: FiCheckCircle,
-  },
-  {
-    title: "Pembayaran berhasil",
-    description: "Invoice ST-2048 sudah lunas",
-    time: "Kemarin",
-    icon: FiCreditCard,
-  },
-  {
-    title: "Ulasan terkirim",
-    description: "Anda memberi rating 5.0 untuk Budi Santoso",
-    time: "2 hari lalu",
-    icon: FiStar,
-  },
+const popularServices = [
+  { title: "Listrik", icon: FiZap, color: "#f59e0b" },
+  { title: "AC", icon: FiHome, color: "#3b82f6" },
+  { title: "Pipa", icon: FiTool, color: "#6366f1" },
+  { title: "Cat", icon: FiTool, color: "#ec4899" },
+  { title: "Bersih", icon: FiShield, color: "#10b981" },
+  { title: "Bangunan", icon: FiHome, color: "#6b7280" },
+  { title: "Kebun", icon: FiShield, color: "#84cc16" },
+  { title: "Lainnya", icon: FiSettings, color: "#4b5563" },
 ];
 
 function UserDashboard() {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
+  const displayName = user?.nama || user?.name || "Pelanggan";
+  const profileInitials = displayName
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "U";
 
   return (
     <div className="customer-dashboard">
+      
+      {/* ===================== SIDEBAR ===================== */}
       <aside className="customer-sidebar">
-        <button className="sidebar-brand" type="button" onClick={() => navigate("/")}>
+        <button className="sidebar-brand" type="button" onClick={() => navigate("/")} style={{ background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
           <span className="brand-mark">
             <FiTool />
           </span>
-          <span>SiTukang</span>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ lineHeight: 1 }}>SiTukang</span>
+            <small style={{ fontSize: "10px", color: "var(--muted)", letterSpacing: "1px", fontWeight: "bold", marginTop: "4px" }}>CUSTOMER</small>
+          </div>
         </button>
 
-        <nav className="sidebar-nav" aria-label="Dashboard customer">
-          <button className="sidebar-link active" type="button">
-            <FiGrid />
-            <span>Dashboard</span>
-          </button>
-          <button className="sidebar-link" type="button" onClick={() => navigate("/layanan")}>
-            <FiTool />
-            <span>Layanan</span>
-          </button>
-          <button className="sidebar-link" type="button" onClick={() => navigate("/user/my-booking")}>
-            <FiCalendar />
-            <span>Booking Saya</span>
-          </button>
-          <button className="sidebar-link" type="button">
-            <FiMessageCircle />
-            <span>Pesan</span>
-          </button>
-          <button className="sidebar-link" type="button">
-            <FiSettings />
-            <span>Pengaturan</span>
-          </button>
+        <nav className="sidebar-nav" aria-label="Dashboard customer" style={{ flex: 1 }}>
+          <div className="sidebar-section" style={{ marginBottom: "20px" }}>
+            <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--soft)", textTransform: "uppercase", paddingLeft: "16px", marginBottom: "8px" }}>Menu</p>
+            <button className="sidebar-link active" type="button">
+              <FiGrid />
+              <span>Beranda</span>
+            </button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/layanan")}>
+              <FiSearch />
+              <span>Cari Tukang</span>
+            </button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/user/my-booking")}>
+              <FiCalendar />
+              <span>Booking</span>
+            </button>
+            <button className="sidebar-link" type="button">
+              <FiCheckCircle />
+              <span>Order Aktif</span>
+            </button>
+            <button className="sidebar-link" type="button">
+              <FiClock />
+              <span>Riwayat</span>
+            </button>
+          </div>
+
+          <div className="sidebar-section" style={{ marginBottom: "20px" }}>
+            <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--soft)", textTransform: "uppercase", paddingLeft: "16px", marginBottom: "8px" }}>Komunikasi</p>
+            <button className="sidebar-link" type="button">
+              <FiMessageSquare />
+              <span>Chat</span>
+            </button>
+            <button className="sidebar-link" type="button">
+              <FiBell />
+              <span>Notifikasi</span>
+            </button>
+          </div>
+
+          <div className="sidebar-section">
+            <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--soft)", textTransform: "uppercase", paddingLeft: "16px", marginBottom: "8px" }}>Akun</p>
+            <button className="sidebar-link" type="button">
+              <FiCreditCard />
+              <span>Pembayaran</span>
+            </button>
+            <button className="sidebar-link" type="button">
+              <FiStar />
+              <span>Ulasan Saya</span>
+            </button>
+            <button className="sidebar-link" type="button">
+              <FiSettings />
+              <span>Pengaturan</span>
+            </button>
+          </div>
         </nav>
 
-        <div className="sidebar-help">
-          <span className="help-icon">
-            <FiClock />
-          </span>
-          <h3>Bantuan cepat</h3>
-          <p>Butuh tukang darurat? Tim kami siap bantu memilih layanan.</p>
-          <button type="button" onClick={() => navigate("/kontak")}>Hubungi CS</button>
+        <div className="sidebar-profile-card" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", borderRadius: "14px", background: "var(--canvas)", marginTop: "auto" }}>
+          <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#026b5e", color: "white", display: "grid", placeItems: "center", fontWeight: "bold" }}>{profileInitials}</div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--ink)" }}>{displayName}</span>
+            <small style={{ fontSize: "12px", color: "#026b5e", fontWeight: "600" }}>Pelanggan Premium</small>
+          </div>
         </div>
       </aside>
 
+      {/* ===================== MAIN CONTENT ===================== */}
       <main className="customer-main">
+        
+        {/* TOPBAR */}
         <header className="customer-topbar">
-          <div>
-            <p className="topbar-kicker">Dashboard Customer</p>
-            <h1>Selamat datang, Pelanggan</h1>
+          <div className="welcome-text" style={{ fontSize: "24px" }}>
+            <h1 style={{ fontSize: "28px", fontWeight: "800", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              Halo, {displayName} <span style={{ color: "inherit" }}>👋</span>
+            </h1>
+            <p style={{ fontSize: "14px", color: "var(--muted)", margin: "4px 0 0 0", fontWeight: "500" }}>
+              Selamat datang kembali. Apa yang bisa kami bantu hari ini?
+            </p>
           </div>
 
-          <div className="topbar-actions">
-            <label className="dashboard-search">
-              <FiSearch />
-              <input type="search" placeholder="Cari layanan atau tukang" />
-            </label>
-            <button className="icon-button" type="button" aria-label="Notifikasi">
-              <FiBell />
+          <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <div className="dashboard-search" style={{ display: "flex", alignItems: "center", background: "white", padding: "10px 16px", borderRadius: "20px", border: "1px solid var(--line)", width: "260px", gap: "10px" }}>
+              <FiSearch style={{ color: "var(--muted)" }} />
+              <input
+                type="text"
+                placeholder="Cari order, tukang, customer..."
+                style={{ border: "none", outline: "none", width: "100%", fontSize: "14px" }}
+              />
+            </div>
+
+            <button className="icon-button" style={{ position: "relative", background: "white", border: "1px solid var(--line)", width: "42px", height: "42px", borderRadius: "50%", display: "grid", placeItems: "center", cursor: "pointer" }}>
+              <FiBell style={{ color: "var(--ink)" }} />
+              <span style={{ position: "absolute", top: "12px", right: "12px", width: "8px", height: "8px", background: "#ef4444", borderRadius: "50%" }}></span>
             </button>
-            <button className="profile-button" type="button">
-              <FiUser />
-              <span>Customer</span>
-            </button>
-            <button className="mobile-menu-button" type="button" aria-label="Menu">
-              <FiMenu />
+
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#e2e8f0", color: "var(--ink)", display: "grid", placeItems: "center", fontWeight: "600", fontSize: "14px" }}>
+              {profileInitials}
+            </div>
+
+            <button 
+              className="primary-action" 
+              type="button" 
+              onClick={() => navigate("/layanan")}
+              style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer" }}
+            >
+              Cari tukang
             </button>
           </div>
         </header>
 
+        {/* HERO BANNER */}
         <section className="welcome-hero">
           <div className="hero-copy">
-            <span className="hero-badge">Tukang terverifikasi di sekitar Anda</span>
-            <h2>Pesan layanan rumah dengan alur yang lebih rapi dan cepat.</h2>
-            <p>
-              Pantau booking aktif, temukan tukang rekomendasi, dan lanjutkan pekerjaan rumah
-              dari satu dashboard yang tenang dan mudah dipindai.
-            </p>
-            <div className="hero-actions">
-              <button className="primary-action" type="button" onClick={() => navigate("/layanan")}>
-                Cari Layanan
-              </button>
-              <button className="secondary-action" type="button" onClick={() => navigate("/user/my-booking")}>
-                Lihat Booking
+            <span className="hero-badge" style={{ background: "rgba(255,255,255,0.15)", padding: "6px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: "600", display: "inline-block" }}>
+              # Member sejak 2024
+            </span>
+            <h2 style={{ maxWidth: "550px" }}>Butuh perbaikan rumah? Cari tukang terpercaya dalam hitungan menit.</h2>
+            
+            <div style={{ display: "flex", background: "white", padding: "6px 6px 6px 16px", borderRadius: "24px", alignItems: "center", width: "100%", maxWidth: "500px", gap: "10px", margin: "24px 0 16px" }}>
+              <FiSearch style={{ color: "var(--muted)" }} />
+              <input 
+                type="text" 
+                placeholder="Mau perbaiki apa hari ini?" 
+                style={{ border: "none", outline: "none", flex: 1, fontSize: "14px", color: "var(--ink)" }}
+              />
+              <button style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                Cari sekarang <FiChevronRight />
               </button>
             </div>
+
+            <p className="hero-location" style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", margin: 0 }}>
+              <FiMapPin style={{ color: "white" }} /> Jl. Sudirman No. 21, Jakarta Selatan - <span style={{ textDecoration: "underline", cursor: "pointer", fontWeight: "600" }}>Ubah</span>
+            </p>
           </div>
 
-          <div className="hero-panel" aria-label="Ringkasan booking berikutnya">
-            <div className="panel-status">Booking berikutnya</div>
-            <h3>Service AC ruang tamu</h3>
-            <p>Hari ini, 14.00 - Jakarta Selatan</p>
-            <div className="panel-worker">
-              <span>AW</span>
+          <div className="hero-features-panel" style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "16px", background: "rgba(255, 255, 255, 0.06)", padding: "20px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <FiCheckCircle style={{ fontSize: "20px", flexShrink: 0 }} />
               <div>
-                <strong>Andi Wijaya</strong>
-                <small>Dalam perjalanan</small>
+                <strong style={{ display: "block", fontSize: "14px" }}>100% Terverifikasi</strong>
+                <small style={{ opacity: 0.8, fontSize: "11px" }}>Semua tukang lulus screening</small>
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <FiClock style={{ fontSize: "20px", flexShrink: 0 }} />
+              <div>
+                <strong style={{ display: "block", fontSize: "14px" }}>Respon &lt; 15 menit</strong>
+                <small style={{ opacity: 0.8, fontSize: "11px" }}>Datang sesuai jadwal Anda</small>
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <FiAward style={{ fontSize: "20px", flexShrink: 0 }} />
+              <div>
+                <strong style={{ display: "block", fontSize: "14px" }}>Garansi 7 hari</strong>
+                <small style={{ opacity: 0.8, fontSize: "11px" }}>Tidak puas, kerjakan ulang gratis</small>
               </div>
             </div>
           </div>
         </section>
 
+        {/* STATS GRID */}
         <section className="stats-grid" aria-label="Statistik customer">
-          {stats.map((item) => {
+          {stats.map((item, index) => {
             const Icon = item.icon;
             return (
-              <article className="stat-card" key={item.label}>
-                <div className="stat-icon">
-                  <Icon />
-                </div>
+              <article className="stat-card" key={index} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
-                  <p>{item.label}</p>
-                  <strong>{item.value}</strong>
-                  <span>{item.note}</span>
+                  <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--muted)", margin: "0 0 6px 0", letterSpacing: "0.5px" }}>{item.label}</p>
+                  <strong style={{ fontSize: "22px", fontWeight: "800", color: "var(--ink)", display: "block" }}>{item.value}</strong>
+                  {item.note && (
+                    <span style={{ fontSize: "12px", fontWeight: "600", color: item.noteColor, display: "inline-block", marginTop: "4px" }}>
+                      {item.note}
+                    </span>
+                  )}
+                </div>
+                <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: item.iconBg, color: item.iconColor, display: "grid", placeItems: "center", fontSize: "18px" }}>
+                  <Icon />
                 </div>
               </article>
             );
           })}
         </section>
 
-        <div className="dashboard-content-grid">
-          <section className="dashboard-section quick-services-section">
-            <div className="section-heading">
-              <div>
-                <span>Quick Services</span>
-                <h2>Layanan cepat</h2>
-              </div>
-              <button type="button" onClick={() => navigate("/layanan")}>Semua</button>
-            </div>
-
-            <div className="quick-services-grid">
-              {quickServices.map((service) => {
-                const Icon = service.icon;
-                return (
-                  <button className="quick-service-card" type="button" key={service.title}>
-                    <span className={`service-icon ${service.tone}`}>
-                      <Icon />
-                    </span>
-                    <strong>{service.title}</strong>
-                    <small>{service.count}</small>
-                  </button>
-                );
-              })}
-            </div>
-          </section>
-
-          <section className="dashboard-section activity-section">
-            <div className="section-heading">
-              <div>
-                <span>Recent Activity</span>
-                <h2>Aktivitas terbaru</h2>
-              </div>
-            </div>
-
-            <div className="activity-list">
-              {activities.map((activity) => {
-                const Icon = activity.icon;
-                return (
-                  <article className="activity-item" key={activity.title}>
-                    <span className="activity-icon">
-                      <Icon />
-                    </span>
-                    <div>
-                      <h3>{activity.title}</h3>
-                      <p>{activity.description}</p>
-                    </div>
-                    <time>{activity.time}</time>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-        </div>
-
-        <section className="dashboard-section recommended-section">
-          <div className="section-heading">
+        {/* LAYANAN POPULER */}
+        <section className="dashboard-section" style={{ marginTop: "32px" }}>
+          <div className="section-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "16px" }}>
             <div>
-              <span>Recommended Workers</span>
-              <h2>Rekomendasi tukang</h2>
+              <h2 style={{ fontSize: "18px", fontWeight: "800", margin: "0 0 4px 0" }}>Layanan populer</h2>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0 }}>Pilih kategori untuk lihat tukang tersedia di area Anda.</p>
             </div>
-            <button type="button" onClick={() => navigate("/user")}>Lihat daftar</button>
+            <button 
+              type="button" 
+              onClick={() => navigate("/layanan")}
+              style={{ background: "none", border: "none", color: "var(--primary)", fontWeight: "600", fontSize: "14px", cursor: "pointer" }}
+            >
+              Semua kategori
+            </button>
           </div>
 
-          <div className="worker-grid">
-            {workers.map((worker) => (
-              <article className="worker-card" key={worker.name}>
-                <div className="worker-top">
-                  <span className="worker-avatar">{worker.initials}</span>
-                  <span className="worker-status">{worker.status}</span>
-                </div>
-                <h3>{worker.name}</h3>
-                <p>{worker.role}</p>
-                <div className="worker-meta">
-                  <span>
-                    <FiStar /> {worker.rating} ({worker.jobs})
-                  </span>
-                  <span>
-                    <FiMapPin /> {worker.area}
-                  </span>
-                </div>
-                <div className="worker-footer">
-                  <strong>{worker.price}</strong>
-                  <button type="button">Booking</button>
-                </div>
-              </article>
-            ))}
+          <div className="quick-services-grid">
+            {popularServices.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <button className="quick-service-card" type="button" key={index} style={{ cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+                  <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--canvas)", color: service.color, display: "grid", placeItems: "center", fontSize: "20px" }}>
+                    <Icon />
+                  </div>
+                  <span style={{ fontSize: "13px", fontWeight: "600", color: "var(--ink)" }}>{service.title}</span>
+                </button>
+              );
+            })}
           </div>
         </section>
+
       </main>
     </div>
   );

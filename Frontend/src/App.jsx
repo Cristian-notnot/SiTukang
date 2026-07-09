@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import Home from "./pages/user/Home";
+import UserDashboard from "./pages/user/UserDashboard";
 import DashboardUtama from "./pages/user/DashboardUtama";
 import DetailTukang from "./pages/user/DetailTukang";
 import BookingPage from "./pages/user/BookingPage";
@@ -30,7 +30,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
-                <Route path="/user" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                <Route path="/user" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
                 <Route path="/user/tukang/:id" element={<ProtectedRoute><DetailTukang /></ProtectedRoute>} />
                 <Route path="/user/booking/:id" element={<ProtectedRoute><BookingPage /></ProtectedRoute>} />
                 <Route path="/user/my-booking" element={<ProtectedRoute><MyBooking /></ProtectedRoute>} />
