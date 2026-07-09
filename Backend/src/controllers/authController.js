@@ -72,6 +72,12 @@ exports.login = (req, res) => {
       });
     }
 
+    if (loginAs === "admin" && user.role !== "admin") {
+      return res.status(403).json({
+        message: "Akun ini bukan admin.",
+      });
+    }
+
     if (loginAs === "tukang" && user.role !== "tukang") {
       return res.status(403).json({
         message: "Akun ini bukan tukang. Silakan login sebagai Customer.",

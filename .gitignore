@@ -1,0 +1,54 @@
+# ================================
+# Root .gitignore
+# ================================
+
+# dependencies
+node_modules/
+
+# build outputs
+dist/
+build/
+coverage/
+
+# dotenv / env files (sensitif)
+.env
+.env.*
+!.env.example
+
+# cache
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# local database dumps & secrets
+*.sql
+*.sqlite
+*.db
+
+# misc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Backend (jika ada)
+Backend/.env
+Backend/.env.*
+
+# Frontend
+Frontend/.env
+Frontend/.env.*
+
+# referensi (gambar/dokumen internal)
+referensi/
+
+

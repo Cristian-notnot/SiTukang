@@ -16,8 +16,21 @@ import Kontak from "./pages/user/Kontak";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 import TukangDashboard from "./pages/tukang/Dashboard";
-import AdminDashboard from "./pages/admin/Dashboard";
 import LoginAdmin from "./pages/admin/LoginAdmin";
+import AdminLayout from "./layout/AdminLayout";
+import AdminDashboard from "./pages/admin/Dashboard";
+import UsersPage from "./pages/admin/Users";
+import VerifikasiTukang from "./pages/admin/VerifikasiTukang";
+import TukangPage from "./pages/admin/Tukang";
+import BookingPageAdmin from "./pages/admin/Booking";
+import PembayaranPage from "./pages/admin/Pembayaran";
+import KomisiPage from "./pages/admin/Komisi";
+import KategoriPage from "./pages/admin/Kategori";
+import LaporanPage from "./pages/admin/Laporan";
+import TicketPage from "./pages/admin/Ticket";
+import ModerasiReview from "./pages/admin/ModerasiReview";
+import PengaturanPage from "./pages/admin/Pengaturan";
+import ProfilAdmin from "./pages/admin/ProfilAdmin";
 
 function App() {
     return (
@@ -40,7 +53,24 @@ function App() {
                 <Route path="/user/my-booking" element={<ProtectedRoute><MyBooking /></ProtectedRoute>} />
 
                 <Route path="/tukang" element={<ProtectedRoute><TukangDashboard /></ProtectedRoute>} />
-                <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+
+                <Route path="/login-admin" element={<LoginAdmin />} />
+
+                <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="users" element={<UsersPage />} />
+                    <Route path="tukang/pending" element={<VerifikasiTukang />} />
+                    <Route path="tukang" element={<TukangPage />} />
+                    <Route path="booking" element={<BookingPageAdmin />} />
+                    <Route path="pembayaran" element={<PembayaranPage />} />
+                    <Route path="komisi" element={<KomisiPage />} />
+                    <Route path="kategori" element={<KategoriPage />} />
+                    <Route path="laporan" element={<LaporanPage />} />
+                    <Route path="ticket" element={<TicketPage />} />
+                    <Route path="review" element={<ModerasiReview />} />
+                    <Route path="pengaturan" element={<PengaturanPage />} />
+                    <Route path="profil" element={<ProfilAdmin />} />
+                </Route>
             </Routes>
         </Router>
     );
