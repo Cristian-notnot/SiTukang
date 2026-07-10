@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import { useToast } from "../../components/admin/Toast";
 import { ConfirmModal } from "../../components/admin/Modal";
 import { getAllKategori, createKategori, updateKategori, deleteKategori } from "../../api/adminApi";
-import DataTable from "../../components/admin/DataTable";
+import { Plus, Edit3, Trash2 } from "lucide-react";
+
+const ICONS = ["🔧", "⚡", "🔌", "🔨", "❄️", "🎨", "🪟", "🔩"];
 
 function KategoriPage() {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [newName, setNewName] = useState("");
+    const [newCommission, setNewCommission] = useState("");
     const { success, error } = useToast();
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
-    const [editId, setEditId] = useState(null);
-    const [editName, setEditName] = useState("");
 
     useEffect(() => { load(); }, []);
 
@@ -24,14 +25,8 @@ function KategoriPage() {
 
     const handleCreate = async () => {
         if (!newName.trim()) return;
-        try { await createKategori(newName); setNewName(""); success("Kategori berhasil ditambahkan"); load(); }
+        try { await createKategori(newName.trim()); setNewName(""); setNewCommission(""); success("Kategori berhasil ditambahkan"); load(); }
         catch (e) { error("Gagal menambah kategori"); }
-    };
-
-    const handleUpdate = async (id) => {
-        if (!editName.trim()) return;
-        try { await updateKategori(id, editName); setEditId(null); setEditName(""); success("Kategori berhasil diubah"); load(); }
-        catch (e) { error("Gagal mengubah kategori"); }
     };
 
     const handleDelete = async () => {
@@ -40,30 +35,56 @@ function KategoriPage() {
         finally { setShowConfirm(false); setSelectedRow(null); }
     };
 
-    const columns = [
-        { header: "No", accessor: "id", render: row => list.findIndex(x => x.id === row.id) + 1 },
-        { header: "Nama Kategori", accessor: "nama_kategori", render: row => (
-            editId === row.id ? <input type="text" value={editName} onChange={e => setEditName(e.target.value)} className="edit-input" /> : row.nama_kategori
-        )},
-    ];
-
-    const actions = [
-        { label: editId ? "Simpan" : "Edit", onClick: row => {
-            if (editId === row.id) handleUpdate(row.id);
-            else { setEditId(row.id); setEditName(row.nama_kategori); }
-        }},
-        ...(editId ? [{ label: "Batal", onClick: () => { setEditId(null); setEditName(""); }}] : []),
-        { label: "Hapus", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
-    ];
-
     return (
         <div className="page-content">
-            <div className="page-header"><h1>Kategori</h1></div>
+            <div className="page-header">
+                <h1>Manajemen Kategori</h1>
+                <p className="page-subtitle">Kelola kategori jasa tukang</p>
+            </div>
+
             <div className="card-add">
                 <input type="text" placeholder="Nama kategori baru..." value={newName} onChange={e => setNewName(e.target.value)} />
-                <button className="btn-primary" onClick={handleCreate}>Tambah</button>
+                <input type="number" placeholder="Komisi %" value={newCommission} onChange={e => setNewCommission(e.target.value)} style={{ width: 120 }} />
+                <button className="btn btn-primary" onClick={handleCreate}>
+                    <Plus size={18} /> Tambah
+                </button>
             </div>
-            <DataTable columns={columns} data={list} loading={loading} actions={actions} searchable={false} pageSize={10} emptyMessage="Belum ada kategori" />
+
+            {loading ? (
+                <div className="loading-state"><div className="spinner"></div></div>
+            ) : list.length === 0 ? (
+                <div className="page-state empty-state">
+                    <p>Belum ada kategori</p>
+                </div>
+            ) : (
+                <div className="kategori-grid">
+                    {list.map((k, i) => (
+                        <div key={k.id} className="kategori-card">
+                            <div className="kategori-card-top">
+                                <div className="kategori-card-icon" style={{ background: `linear-gradient(135deg, ${["#14b8a6","#3b82f6","#f59e0b","#8b5cf6","#ef4444","#06b6d4","#10b981","#ec4899"][i % 8]}, ${["#0f766c","#1d4ed8","#d97706","#6d28d9","#dc2626","#0891b2","#059669","#db2777"][i % 8]})`, color: "#fff" }}>
+                                    {ICONS[i % ICONS.length]}
+                                </div>
+                                <div>
+                                    <div className="kategori-card-name">{k.nama_kategori}</div>
+                                    <div className="kategori-card-stats">
+                                        <span>{k.jumlah_tukang || 0} tukang aktif</span>
+                                        <span className={`badge badge-${k.status || "aktif"}`}>{k.status || "aktif"}</span>
+                                        <span style={{ color: "var(--primary)", fontWeight: 600 }}>{k.komisi || 10}% komisi</span>
+                                    </div>
+                                </div>
+                                <div className="kategori-card-actions">
+                                    <button onClick={() => {
+                                        const newName = prompt("Edit nama kategori:", k.nama_kategori);
+                                        if (newName && newName.trim()) updateKategori(k.id, newName.trim()).then(() => { success("Kategori diubah"); load(); }).catch(() => error("Gagal"));
+                                    }}><Edit3 size={14} /></button>
+                                    <button className="danger" onClick={() => { setSelectedRow(k); setShowConfirm(true); }}><Trash2 size={14} /></button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
             <ConfirmModal open={showConfirm} onClose={() => { setShowConfirm(false); setSelectedRow(null); }} onConfirm={handleDelete} title="Konfirmasi Hapus" message={`Yakin hapus kategori "${selectedRow?.nama_kategori}"?`} />
         </div>
     );

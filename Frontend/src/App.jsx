@@ -31,6 +31,7 @@ import TicketPage from "./pages/admin/Ticket";
 import ModerasiReview from "./pages/admin/ModerasiReview";
 import PengaturanPage from "./pages/admin/Pengaturan";
 import ProfilAdmin from "./pages/admin/ProfilAdmin";
+import AnalyticsPage from "./pages/admin/Analytics";
 
 function App() {
     return (
@@ -58,6 +59,7 @@ function App() {
 
                 <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
                     <Route index element={<AdminDashboard />} />
+                    <Route path="analytics" element={<AnalyticsPage />} />
                     <Route path="users" element={<UsersPage />} />
                     <Route path="tukang/pending" element={<VerifikasiTukang />} />
                     <Route path="tukang" element={<TukangPage />} />
