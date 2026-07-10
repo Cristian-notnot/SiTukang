@@ -35,7 +35,7 @@ function PengaturanPage() {
                     <label>Deskripsi</label>
                     <textarea rows={4} value={data.deskripsi} onChange={e => setData({ ...data, deskripsi: e.target.value })} />
                 </div>
-                <button className="btn-primary" onClick={handleSave}>Simpan Pengaturan</button>
+                <button className="btn btn-primary btn-lg" onClick={handleSave}>Simpan Pengaturan</button>
             </div>
         </div>
     );

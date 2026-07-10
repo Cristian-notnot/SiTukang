@@ -241,19 +241,25 @@
 .reg-btn-daftar {
     width: 100%;
     padding: 15px;
-    background-color: #097261;
+    background: linear-gradient(135deg, #026b5e, #01423a);
     color: #ffffff;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3);
     margin-top: 15px;
 }
 
 .reg-btn-daftar:hover {
-    background-color: #065044;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4);
+}
+
+.reg-btn-daftar:active {
+    transform: translateY(0);
 }
 
 /* FOOTER TEXT UNTUK NAVIGASI MASUK */

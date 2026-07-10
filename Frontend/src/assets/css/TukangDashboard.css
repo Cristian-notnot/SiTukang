@@ -54,7 +54,25 @@
 
 .tukang-dashboard .sidebar .btn-logout {
     margin-top: auto;
-    color: #f87171 !important;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white !important;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    text-align: center;
+}
+
+.tukang-dashboard .sidebar .btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+}
+
+.tukang-dashboard .sidebar .btn-logout:active {
+    transform: translateY(0);
 }
 
 .tukang-dashboard .main-content {

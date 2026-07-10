@@ -43,7 +43,7 @@ function ProfilAdmin() {
                         <label>Role</label>
                         <input type="text" value={data.role} disabled />
                     </div>
-                    <button className="btn-primary" onClick={handleSave}>Update Profil</button>
+                    <button className="btn btn-primary btn-lg" onClick={handleSave}>Update Profil</button>
                 </div>
             </div>
         </div>

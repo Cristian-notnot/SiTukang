@@ -27,8 +27,8 @@ function VerifikasiTukang() {
                             <tr key={t.id}>
                                 <td>{t.nama}</td><td>{t.email}</td><td>{t.nama_kategori}</td><td>{t.telepon}</td><td>{t.pengalaman} th</td>
                                 <td className="action-cell">
-                                    <button className="btn-approve" onClick={() => handleApprove(t.id)}>Setujui</button>
-                                    <button className="btn-reject" onClick={() => handleReject(t.id)}>Tolak</button>
+                                    <button className="btn btn-sm btn-success" onClick={() => handleApprove(t.id)}>Setujui</button>
+                                    <button className="btn btn-sm btn-danger" onClick={() => handleReject(t.id)}>Tolak</button>
                                 </td>
                             </tr>
                         ))}

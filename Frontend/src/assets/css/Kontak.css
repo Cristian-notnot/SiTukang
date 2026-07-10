@@ -22,6 +22,18 @@
 .nav-links a.active { color: #026b5e; font-weight: 700; font-size: 16px; border-bottom: 2px solid #026b5e; padding-bottom: 4px; }
 .nav-buttons { display: flex; gap: 12px; }
 
+.btn-text { background: linear-gradient(135deg, #026b5e, #01423a); color: white; border: none; padding: 10px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-text:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4); }
+.btn-text:active { transform: translateY(0); }
+
+.btn-outline { background: transparent; border: 2px solid #026b5e; color: #026b5e; padding: 8px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-outline:hover { background: linear-gradient(135deg, #026b5e, #01423a); color: white; border-color: transparent; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2, 107, 94, 0.3); }
+.btn-outline:active { transform: translateY(0); }
+
+.btn-filled { background: linear-gradient(135deg, #026b5e, #038a79); color: white; border: none; padding: 10px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-filled:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4); }
+.btn-filled:active { transform: translateY(0); }
+
 /* CONTAINER MAIN GRID */
 .kontak-container-section {
   padding: 80px 80px 100px 80px;
@@ -161,21 +173,23 @@
 /* TOMBOL SUBMIT */
 .btn-submit-kontak {
   width: 100%;
-  background-color: #026b5e;
+  background: linear-gradient(135deg, #026b5e, #01423a);
   color: white;
   border: none;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3);
 }
 .btn-submit-kontak:hover {
-  background-color: #015248;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4);
 }
 .btn-submit-kontak:active {
-  transform: scale(0.99);
+  transform: translateY(0);
 }
 
 /* FOOTER STYLE */

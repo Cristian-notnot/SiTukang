@@ -443,9 +443,10 @@
     align-items: center;
     z-index: 2;
     opacity: 0.7;
-    transition: opacity 0.15s;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.log-toggle-password-btn:hover { opacity: 1; }
+.log-toggle-password-btn:hover { opacity: 1; transform: translateY(-2px); }
+.log-toggle-password-btn:active { transform: translateY(0); }
 
 /* Ingat saya row */
 .log-meta-row {
@@ -474,7 +475,7 @@
 .log-btn-submit {
     width: 100%;
     padding: 13px 20px;
-    background: #166534;
+    background: linear-gradient(135deg, #026b5e, #01423a);
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -485,16 +486,16 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
-    box-shadow: 0 4px 14px rgba(22,101,52,0.28);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3);
     letter-spacing: 0.1px;
 }
 
 .log-btn-submit:hover:not(:disabled) {
-    background: #15803d;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(22,101,52,0.36);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4);
 }
+
 .log-btn-submit:active:not(:disabled) { transform: translateY(0); }
 .log-btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
@@ -560,12 +561,17 @@
     font-weight: 600;
     color: #1e293b;
     cursor: pointer;
-    transition: border-color 0.18s, box-shadow 0.18s;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .log-btn-social:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-color: #026b5e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(2, 107, 94, 0.15);
+}
+
+.log-btn-social:active {
+    transform: translateY(0);
 }
 
 .log-social-icon {

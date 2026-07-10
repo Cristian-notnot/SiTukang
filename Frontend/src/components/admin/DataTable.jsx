@@ -161,7 +161,6 @@ return (
                 <div className="action-menu">
                     {actions.map((action, i) => (
                         <button key={i} className={action.className || ""} onClick={() => { setOpen(false); action.onClick(row); }}>
-                            {action.icon && <span className="action-icon">{action.icon}</span>}
                             {action.label}
                         </button>
                     ))}

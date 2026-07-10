@@ -72,23 +72,22 @@
 .btn-register {
   width: 100%;
   padding: 15px;
-  background: #064e3b;
+  background: linear-gradient(135deg, #026b5e, #01423a);
   color: white;
   border: none;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  transform: scale(1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3);
 }
 
 .btn-register:hover {
-  background: #04392b;
-  transform: translateY(-2px); /* Tombol sedikit terangkat */
-  box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4);
 }
 
-.btn-register:active { transform: scale(0.98); }
+.btn-register:active { transform: translateY(0); }
 
 /* Vibe Check: Verification Box */
 .verification-box {

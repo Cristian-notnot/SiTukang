@@ -34,8 +34,8 @@ function TukangPage() {
     ];
 
     const actions = [
-        { label: "Lihat Detail", icon: "👁", onClick: row => console.log("Detail", row.id) },
-        { label: "Hapus", icon: "🗑", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
+        { label: "Lihat Detail", onClick: row => console.log("Detail", row.id) },
+        { label: "Hapus", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
     ];
 
     return (

@@ -21,9 +21,17 @@
 .nav-links a { text-decoration: none; color: #4b5563; font-size: 15px; font-weight: 500; transition: all 0.2s; }
 .nav-links a.active { color: #026b5e; font-weight: 700; font-size: 16px; border-bottom: 2px solid #026b5e; padding-bottom: 4px; }
 .nav-buttons { display: flex; gap: 12px; }
-.btn-text { background: none; border: none; font-weight: 600; cursor: pointer; padding: 8px 16px; }
-.btn-outline { border: 1px solid #e5e7eb; background: white; border-radius: 20px; padding: 8px 20px; font-weight: 600; cursor: pointer; }
-.btn-filled { background-color: #026b5e; color: white; border: none; border-radius: 20px; padding: 8px 20px; font-weight: 600; cursor: pointer; }
+.btn-text { background: linear-gradient(135deg, #026b5e, #01423a); color: white; border: none; padding: 10px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-text:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4); }
+.btn-text:active { transform: translateY(0); }
+
+.btn-outline { background: transparent; border: 2px solid #026b5e; color: #026b5e; padding: 8px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-outline:hover { background: linear-gradient(135deg, #026b5e, #01423a); color: white; border-color: transparent; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2, 107, 94, 0.3); }
+.btn-outline:active { transform: translateY(0); }
+
+.btn-filled { background: linear-gradient(135deg, #026b5e, #038a79); color: white; border: none; padding: 10px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-filled:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4); }
+.btn-filled:active { transform: translateY(0); }
 
 /* HERO SECTION */
 .tentang-hero {

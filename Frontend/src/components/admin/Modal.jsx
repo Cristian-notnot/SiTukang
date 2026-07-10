@@ -29,8 +29,8 @@ export function ConfirmModal({ open, onClose, onConfirm, title, message, loading
         <Modal open={open} onClose={onClose} title={title || "Konfirmasi"} size="sm">
             <p className="modal-message">{message || "Apakah Anda yakin?"}</p>
             <div className="modal-actions">
-                <button className="btn-cancel" onClick={onClose}>Batal</button>
-                <button className="btn-danger" onClick={onConfirm} disabled={loading}>
+                <button className="btn btn-secondary" onClick={onClose}>Batal</button>
+                <button className="btn btn-danger" onClick={onConfirm} disabled={loading}>
                     {loading ? "Memproses..." : "Ya, Hapus"}
                 </button>
             </div>

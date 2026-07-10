@@ -47,9 +47,9 @@ function ModerasiReview() {
     ];
 
     const actions = [
-        { label: "Setujui", icon: "✅", onClick: row => handleModerate(row.id, "approved") },
-        { label: "Tolak", icon: "❌", onClick: row => handleModerate(row.id, "rejected") },
-        { label: "Hapus", icon: "🗑", className: "danger", onClick: confirmDelete },
+        { label: "Setujui", onClick: row => handleModerate(row.id, "approved") },
+        { label: "Tolak", onClick: row => handleModerate(row.id, "rejected") },
+        { label: "Hapus", className: "danger", onClick: confirmDelete },
     ];
 
     return (

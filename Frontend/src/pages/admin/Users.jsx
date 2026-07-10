@@ -50,8 +50,8 @@ function AdminUsers() {
     ];
 
     const actions = [
-        { label: "Ubah Role", icon: "🔄", onClick: row => console.log("Role", row.id) },
-        { label: "Hapus", icon: "🗑", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
+        { label: "Ubah Role", onClick: row => console.log("Role", row.id) },
+        { label: "Hapus", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
     ];
 
     return (

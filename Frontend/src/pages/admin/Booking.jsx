@@ -74,12 +74,12 @@ function AdminBooking() {
     ];
 
     const actions = [
-        { label: "Lihat Detail", icon: "👁", onClick: row => console.log("Detail", row.id) },
-        { label: "Ubah Status", icon: "🔄", onClick: row => {
+        { label: "Lihat Detail", onClick: row => console.log("Detail", row.id) },
+        { label: "Ubah Status", onClick: row => {
             const newStatus = statusOptions.find(s => s !== row.status) || "pending";
             handleStatus(row.id, newStatus);
         } },
-        { label: "Hapus", icon: "🗑", className: "danger", onClick: confirmDelete }
+        { label: "Hapus", className: "danger", onClick: confirmDelete }
     ];
 
     return (

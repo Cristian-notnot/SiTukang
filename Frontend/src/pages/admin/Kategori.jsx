@@ -48,12 +48,12 @@ function KategoriPage() {
     ];
 
     const actions = [
-        { label: editId ? "Simpan" : "Edit", icon: "✏️", onClick: row => {
+        { label: editId ? "Simpan" : "Edit", onClick: row => {
             if (editId === row.id) handleUpdate(row.id);
             else { setEditId(row.id); setEditName(row.nama_kategori); }
         }},
-        ...(editId ? [{ label: "Batal", icon: "✕", onClick: () => { setEditId(null); setEditName(""); }}] : []),
-        { label: "Hapus", icon: "🗑", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
+        ...(editId ? [{ label: "Batal", onClick: () => { setEditId(null); setEditName(""); }}] : []),
+        { label: "Hapus", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); } },
     ];
 
     return (
