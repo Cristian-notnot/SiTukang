@@ -4,10 +4,10 @@ import "../../assets//css/Tentang.css";
 
 // IMPORT FOTO TIM (Pastikan file foto ada di folder assets)
 import imgAde from "../../assets/gambar/ade.jpeg";
-import imgBruno from "../../assets/gambar/bruno.jpeg";
+import imgBruno from "../../assets/gambar/bruno1.jpeg";
 import imgAnnas from "../../assets/gambar/annas.jpeg";
-import imgNouval from "../../assets/gambar/nouval.jpeg";
-import imgCarly from "../../assets/gambar/carly.jpeg";
+import imgNouval from "../../assets/gambar/agy.jpeg";
+import imgCarly from "../../assets/gambar/charly.jpeg";
 import logoImg from "../../assets/gambar/logo.jpeg";
 
 function Tentang() {
