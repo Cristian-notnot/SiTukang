@@ -6,6 +6,7 @@ const verifyToken = require("../middleware/authMiddleware");
 const {
   register,
   login,
+  registerTukang,
   getProfile,
   resetPassword
 } = require("../controllers/authController");
@@ -22,6 +23,7 @@ router.put(
 );
 
 router.post("/register", register);
+router.post("/register-tukang", registerTukang);
 router.post("/login", login);
 
 module.exports = router;

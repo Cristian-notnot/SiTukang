@@ -8,6 +8,11 @@ export const getAllTukang = async () => {
     return response.data;
 };
 
+export const getRekomendasiTukang = async () => {
+    const response = await API.get("/tukang/rekomendasi");
+    return response.data;
+};
+
 export const getSearchTukang = async (keyword, alamat) => {
     const params = new URLSearchParams();
     if (keyword) params.append("keyword", keyword);

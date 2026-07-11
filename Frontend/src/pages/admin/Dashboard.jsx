@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAdminDashboard, getDashboardCharts } from "../../api/adminApi";
+import { getAdminDashboard, getDashboardCharts, getRecentBooking } from "../../api/adminApi";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
@@ -11,6 +11,7 @@ const COLORS = ["#14b8a6", "#059669", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"
 function AdminDashboard() {
     const [stats, setStats] = useState(null);
     const [charts, setCharts] = useState(null);
+    const [recentOrders, setRecentOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => { loadData(); }, []);
@@ -18,12 +19,14 @@ function AdminDashboard() {
     const loadData = async () => {
         setLoading(true);
         try {
-            const [rStats, rCharts] = await Promise.all([
+            const [rStats, rCharts, rRecent] = await Promise.all([
                 getAdminDashboard(),
-                getDashboardCharts()
+                getDashboardCharts(),
+                getRecentBooking()
             ]);
             setStats(rStats.data || {});
             setCharts(rCharts.data || {});
+            setRecentOrders(rRecent.data || []);
         } catch (e) { console.error(e); }
         setLoading(false);
     };
@@ -49,10 +52,10 @@ function AdminDashboard() {
     };
 
     const statCards = [
-        { label: "Total Revenue", value: `Rp ${(stats?.revenue_hari_ini || 0).toLocaleString()}`, gradient: "primary" },
-        { label: "Order Hari Ini", value: stats?.booking_hari_ini || 0, gradient: "success" },
+        { label: "Total User", value: stats?.total_user || 0, gradient: "primary" },
+        { label: "Total Booking", value: stats?.total_booking || 0, gradient: "success" },
         { label: "Tukang Aktif", value: stats?.tukang_aktif || 0, gradient: "warning" },
-        { label: "Customer Baru", value: stats?.user_hari_ini || 0, gradient: "danger" },
+        { label: "Total Review", value: stats?.total_review || 0, gradient: "danger" },
     ];
 
     // Data dummy untuk chart kalo kosong (biar ada visual)
@@ -83,23 +86,7 @@ function AdminDashboard() {
 
     const maxTop = Math.max(1, ...topKategori.map(x => x.total));
 
-    // Recent orders table
-    const recentOrders = charts?.monthlyBooking?.slice(0, 5).map((b, i) => ({
-        id: i + 1,
-        customer: `Customer ${i + 1}`,
-        tukang: "Tukang",
-        kategori: "Kategori",
-        status: "selesai",
-        tanggal: b.bulan
-    })) || [];
-
-    if (recentOrders.length === 0) {
-        recentOrders.push(
-            { id: 1, customer: "Asep", service: "Perbaikan Listrik", tukang: "Budi", status: "selesai", tanggal: "2026-07-10" },
-            { id: 2, customer: "Rina", service: "Pasang AC", tukang: "Annas", status: "dikerjakan", tanggal: "2026-07-09" },
-            { id: 3, customer: "Dedi", service: "Renovasi Kamar", tukang: "Nouval", status: "pending", tanggal: "2026-07-08" },
-        );
-    }
+    // Recent orders from API
 
     return (
         <div className="page-content">
@@ -191,7 +178,7 @@ function AdminDashboard() {
                             <thead>
                                 <tr>
                                     <th style={{ padding: "0.65rem 0.8rem", textAlign: "left", fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--border)" }}>Customer</th>
-                                    <th style={{ padding: "0.65rem 0.8rem", textAlign: "left", fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--border)" }}>Layanan</th>
+                                    <th style={{ padding: "0.65rem 0.8rem", textAlign: "left", fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--border)" }}>Keluhan</th>
                                     <th style={{ padding: "0.65rem 0.8rem", textAlign: "left", fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--border)" }}>Tukang</th>
                                     <th style={{ padding: "0.65rem 0.8rem", textAlign: "left", fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--border)" }}>Status</th>
                                     <th style={{ padding: "0.65rem 0.8rem", textAlign: "left", fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--border)" }}>Tanggal</th>
@@ -200,14 +187,14 @@ function AdminDashboard() {
                             <tbody>
                                 {recentOrders.map((o, i) => (
                                     <tr key={i}>
-                                        <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>{o.customer || o.nama_user}</td>
-                                        <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>{o.service || o.keluhan || "-"}</td>
-                                        <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>{o.tukang || o.nama_tukang}</td>
+                                        <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>{o.nama_user}</td>
+                                        <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>{o.keluhan || "-"}</td>
+                                        <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>{o.nama_tukang}</td>
                                         <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem" }}>
                                             <span className={`badge badge-${o.status}`}>{o.status}</span>
                                         </td>
                                         <td style={{ padding: "0.65rem 0.8rem", borderBottom: "1px solid var(--border)", fontSize: "0.85rem", color: "var(--text-secondary)" }}>
-                                            {o.tanggal ? new Date(o.tanggal).toLocaleDateString() : o.bulan || o.tanggal_booking}
+                                            {o.tanggal_booking ? new Date(o.tanggal_booking).toLocaleDateString() : "-"}
                                         </td>
                                     </tr>
                                 ))}

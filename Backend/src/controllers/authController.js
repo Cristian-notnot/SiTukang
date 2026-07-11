@@ -109,6 +109,70 @@ exports.login = (req, res) => {
   });
 };
 
+exports.registerTukang = async (req, res) => {
+  const { nama, email, password, no_hp, kategori_id } = req.body;
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userSql = "INSERT INTO users (nama, email, password, role) VALUES (?, ?, ?, 'tukang')";
+
+    db.query(userSql, [nama, email, hashedPassword], (err, result) => {
+      if (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+          return res.status(400).json({
+            success: false,
+            message: "Email sudah terdaftar"
+          });
+        }
+        return res.status(500).json({
+          success: false,
+          message: err.sqlMessage
+        });
+      }
+
+      const userId = result.insertId;
+
+      const tukangSql = `
+        INSERT INTO tukang (user_id, kategori_id, telepon, rating, status)
+        VALUES (?, ?, ?, 0, 'pending')
+      `;
+
+      db.query(tukangSql, [userId, kategori_id, no_hp], (err) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: err.message
+          });
+        }
+
+        const token = jwt.sign(
+          { id: userId, email, role: 'tukang' },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        res.status(201).json({
+          success: true,
+          message: "Pendaftaran tukang berhasil. Menunggu persetujuan admin.",
+          token,
+          user: {
+            id: userId,
+            nama,
+            email,
+            role: 'tukang'
+          }
+        });
+      });
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 exports.getProfile = (req, res) => {
   const userId = req.user.id;
 

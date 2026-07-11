@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 exports.createBooking = (req, res) => {
-    const { tukang_id, alamat, keluhan } = req.body;
+    const { tukang_id, tanggal_booking, alamat, keluhan } = req.body;
     const user_id = req.user.id;
 
     if (!tukang_id || !alamat) {
@@ -10,10 +10,19 @@ exports.createBooking = (req, res) => {
 
     const sql = `
         INSERT INTO booking (user_id, tukang_id, tanggal_booking, alamat, keluhan)
-        VALUES (?, ?, NOW(), ?, ?)
+        VALUES (?, ?, ?, ?, ?)
     `;
 
-    db.query(sql, [user_id, tukang_id, alamat, keluhan], (err, result) => {
+    let bookingDate;
+    if (tanggal_booking) {
+        const d = new Date(tanggal_booking);
+        const pad = (n) => String(n).padStart(2, '0');
+        bookingDate = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    } else {
+        bookingDate = new Date();
+    }
+
+    db.query(sql, [user_id, tukang_id, bookingDate, alamat, keluhan], (err, result) => {
         if (err) return res.status(500).json({ success: false, message: err.message });
 
         res.status(201).json({

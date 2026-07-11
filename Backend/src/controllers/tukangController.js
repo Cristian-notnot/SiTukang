@@ -440,7 +440,31 @@ exports.getDashboardTukang = (req, res) => {
 
 };
 
-// NEW: Search tukang by keyword + alamat
+exports.getRekomendasiTukang = (req, res) => {
+  const sql = `
+    SELECT
+      tukang.id,
+      users.nama,
+      kategori.nama_kategori,
+      tukang.telepon,
+      tukang.alamat,
+      tukang.rating,
+      tukang.pengalaman
+    FROM tukang
+    JOIN users ON tukang.user_id = users.id
+    JOIN kategori ON tukang.kategori_id = kategori.id
+    WHERE tukang.status = 'approved'
+    ORDER BY tukang.rating DESC
+    LIMIT 4
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    res.json({ success: true, data: result });
+  });
+};
+
+// Search tukang by keyword + alamat
 exports.searchTukang = (req, res) => {
 
   const { keyword = "", alamat = "" } = req.query;

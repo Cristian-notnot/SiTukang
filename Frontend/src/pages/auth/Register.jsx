@@ -13,6 +13,7 @@ function Register() {
     const [namaBelakang, setNamaBelakang] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [konfirmasiPassword, setKonfirmasiPassword] = useState("");
     
     // State tambahan pendukung UI gambar
     const [nomorHp, setNomorHp] = useState("+62");
@@ -44,6 +45,11 @@ function Register() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        if (password !== konfirmasiPassword) {
+            alert("Konfirmasi password tidak sama dengan password");
+            return;
+        }
 
         if (!setujuSyarat) {
             alert("Kamu harus menyetujui Syarat & Privasi terlebih dahulu.");
@@ -199,6 +205,23 @@ function Register() {
                                 minLength={8}
                                 required
                             />
+                        </div>
+
+                        {/* Input Konfirmasi Password */}
+                        <div className="reg-input-group">
+                            <label className="reg-form-label">Konfirmasi Password</label>
+                            <input
+                                type="password"
+                                placeholder="Ulangi password"
+                                value={konfirmasiPassword}
+                                onChange={(e) => setKonfirmasiPassword(e.target.value)}
+                                className="reg-form-input"
+                                style={konfirmasiPassword && password !== konfirmasiPassword ? { borderColor: "#dc2626" } : {}}
+                                required
+                            />
+                            {konfirmasiPassword && password !== konfirmasiPassword && (
+                                <small style={{ color: "#dc2626", fontSize: "12px" }}>Password tidak sama</small>
+                            )}
                         </div>
 
                         {/* Checkbox Syarat & Ketentuan */}

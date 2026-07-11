@@ -5,7 +5,6 @@ import { ConfirmModal } from "../../components/admin/Modal";
 import DataTable from "../../components/admin/DataTable";
 
 const roleOptions = ["user", "tukang", "admin"];
-const statusOptions = ["semua", "aktif", "diblokir", "pending"];
 
 function AdminUsers() {
     const [list, setList] = useState([]);
@@ -13,22 +12,43 @@ function AdminUsers() {
     const { success, error } = useToast();
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
-    const [statusFilter, setStatusFilter] = useState("semua");
     const [roleFilter, setRoleFilter] = useState("semua");
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => { load(); }, []);
 
-    const load = async () => {
+    const load = async (params = {}) => {
         setLoading(true);
-        try { const r = await getAllUsersAdmin(); setList(r.data || []); } catch (e) { error("Gagal memuat data"); }
+        try {
+            const r = await getAllUsersAdmin(params);
+            setList(r.data || []);
+        } catch (e) {
+            error("Gagal memuat data");
+        }
         setLoading(false);
+    };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const params = {};
+        if (searchQuery.trim()) params.search = searchQuery.trim();
+        if (roleFilter !== "semua") params.role = roleFilter;
+        load(params);
+    };
+
+    const handleRoleFilter = (role) => {
+        setRoleFilter(role);
+        const params = {};
+        if (searchQuery.trim()) params.search = searchQuery.trim();
+        if (role !== "semua") params.role = role;
+        load(params);
     };
 
     const handleDelete = async () => {
         try {
             await deleteUserAdmin(selectedRow.id);
             success("User berhasil dihapus");
-            load();
+            load({ search: searchQuery.trim() || undefined, role: roleFilter !== "semua" ? roleFilter : undefined });
         } catch (e) { error("Gagal menghapus user"); }
         finally { setShowConfirm(false); setSelectedRow(null); }
     };
@@ -37,7 +57,7 @@ function AdminUsers() {
         try {
             await updateUserRole(id, role);
             success("Role berhasil diubah");
-            load();
+            load({ search: searchQuery.trim() || undefined, role: roleFilter !== "semua" ? roleFilter : undefined });
         } catch (e) { error("Gagal mengubah role"); }
     };
 
@@ -45,12 +65,6 @@ function AdminUsers() {
         if (!name) return "U";
         return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
     };
-
-    const filtered = list.filter(row => {
-        if (statusFilter !== "semua" && row.status !== statusFilter) return false;
-        if (roleFilter !== "semua" && row.role !== roleFilter) return false;
-        return true;
-    });
 
     const columns = [
         { header: "User", accessor: "nama", render: row => (
@@ -64,9 +78,6 @@ function AdminUsers() {
         )},
         { header: "Role", accessor: "role", render: row => (
             <span className={`badge badge-${row.role}`}>{row.role}</span>
-        )},
-        { header: "Status", accessor: "status", render: row => (
-            <span className={`badge badge-${row.status || "aktif"}`}>{row.status || "aktif"}</span>
         )},
         { header: "Bergabung", accessor: "created_at", render: row => new Date(row.created_at).toLocaleDateString() },
     ];
@@ -83,15 +94,17 @@ function AdminUsers() {
         <div className="page-content">
             <div className="page-header"><h1>Manajemen User</h1><p className="page-subtitle">Kelola seluruh pengguna platform</p></div>
             <div className="page-toolbar">
-                <input type="text" className="search-input" placeholder="Cari nama/email..." />
+                <form onSubmit={handleSearch} style={{ display: "contents" }}>
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Cari nama/email..."
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                    />
+                </form>
                 <div className="filter-select-wrapper">
-                    <select className="filter-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
-                        <option value="semua">Status: Semua</option>
-                        <option value="aktif">Aktif</option>
-                        <option value="diblokir">Diblokir</option>
-                        <option value="pending">Pending</option>
-                    </select>
-                    <select className="filter-select" value={roleFilter} onChange={e => setRoleFilter(e.target.value)}>
+                    <select className="filter-select" value={roleFilter} onChange={e => handleRoleFilter(e.target.value)}>
                         <option value="semua">Role: Semua</option>
                         <option value="user">User</option>
                         <option value="tukang">Tukang</option>
@@ -99,7 +112,7 @@ function AdminUsers() {
                     </select>
                 </div>
             </div>
-            <DataTable columns={columns} data={filtered} loading={loading} actions={actions} searchable={false} pageSize={10} emptyMessage="Belum ada user" />
+            <DataTable columns={columns} data={list} loading={loading} actions={actions} searchable={false} pageSize={10} emptyMessage="Belum ada user" />
             <ConfirmModal open={showConfirm} onClose={() => { setShowConfirm(false); setSelectedRow(null); }} onConfirm={handleDelete} title="Konfirmasi Hapus" message={`Yakin hapus user "${selectedRow?.nama}"?`} />
         </div>
     );

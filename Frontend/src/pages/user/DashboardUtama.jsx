@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getRekomendasiTukang } from "../../api/tukangApi";
 import "../../assets/css/Dashboard.css";
 import logoImg from "../../assets/gambar/logo.jpeg";
 
 function UserDashboard() {
   const navigate = useNavigate();
+  const [rekomendasi, setRekomendasi] = useState([]);
+
+  useEffect(() => {
+    getRekomendasiTukang()
+      .then(res => setRekomendasi(res.data || []))
+      .catch(() => {});
+  }, []);
+
+  const getInitials = (name) => {
+    if (!name) return "TK";
+    return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+  };
 
   return (
     <div className="dashboard-wrapper">
@@ -257,77 +270,36 @@ function UserDashboard() {
 
       {/* 5. TUKANG TERATAS SECTION */}
       <section className="section-container">
-        <div className="section-header">
+        <div className="section-header" style={{ justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <h2 className="section-title">Tukang teratas minggu ini</h2>
+            <h2 className="section-title">Rekomendasi tukang terbaik</h2>
           </div>
+          <button className="btn-cta btn-primary" onClick={() => navigate("/layanan")} style={{ padding: "8px 16px", borderRadius: 10, fontSize: 13 }}>
+            Lihat semua
+          </button>
         </div>
         <div className="tukang-cards-row">
-          <div className="tukang-list-card">
-            <div className="profile-row" style={{ marginBottom: "12px" }}>
-              <div className="avatar-circle light-teal">BS</div>
-              <div className="profile-info">
-                <h3>
-                  Budi Santoso <span>✓</span>
-                </h3>
-                <p>Tukang Listrik</p>
-                <div className="rating-span">
-                  <span>★</span> 4.9 <span style={{ color: "#999", fontWeight: 400 }}>(312 job)</span>
+          {rekomendasi.length === 0 ? (
+            <p style={{ color: "#94a3b8" }}>Belum ada tukang tersedia.</p>
+          ) : rekomendasi.map(t => (
+            <div key={t.id} className="tukang-list-card" onClick={() => navigate(`/user/tukang/${t.id}`)} style={{ cursor: "pointer" }}>
+              <div className="profile-row" style={{ marginBottom: "12px" }}>
+                <div className="avatar-circle light-teal">{getInitials(t.nama)}</div>
+                <div className="profile-info">
+                  <h3>{t.nama} <span>✓</span></h3>
+                  <p>{t.nama_kategori}</p>
+                  <div className="rating-span">
+                    <span>★</span> {t.rating || "0.0"} <span style={{ color: "#999", fontWeight: 400 }}>({t.pengalaman || 0} thn pengalaman)</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="card-divider"></div>
-            <div className="card-footer-row">
-              <span className="location-text">Jakarta Selatan</span>
-              <span className="price-text-sm">
-                Rp 75.000<span>/jam</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="tukang-list-card">
-            <div className="profile-row" style={{ marginBottom: "12px" }}>
-              <div className="avatar-circle light-teal">AW</div>
-              <div className="profile-info">
-                <h3>
-                  Andi Wijaya <span>✓</span>
-                </h3>
-                <p>Service AC</p>
-                <div className="rating-span">
-                  <span>★</span> 4.8 <span style={{ color: "#999", fontWeight: 400 }}>(256 job)</span>
-                </div>
+              <div className="card-divider"></div>
+              <div className="card-footer-row">
+                <span className="location-text">{t.alamat || "-"}</span>
+                <span className="price-text-sm">{t.telepon || "-"}</span>
               </div>
             </div>
-            <div className="card-divider"></div>
-            <div className="card-footer-row">
-              <span className="location-text">Jakarta Pusat</span>
-              <span className="price-text-sm">
-                Rp 120.000<span>/jam</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="tukang-list-card">
-            <div className="profile-row" style={{ marginBottom: "12px" }}>
-              <div className="avatar-circle light-teal">SR</div>
-              <div className="profile-info">
-                <h3>
-                  Slamet Riyadi <span>✓</span>
-                </h3>
-                <p>Tukang Pipa</p>
-                <div className="rating-span">
-                  <span>★</span> 4.7 <span style={{ color: "#999", fontWeight: 400 }}>(189 job)</span>
-                </div>
-              </div>
-            </div>
-            <div className="card-divider"></div>
-            <div className="card-footer-row">
-              <span className="location-text">Tangerang</span>
-              <span className="price-text-sm">
-                Rp 85.000<span>/jam</span>
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 

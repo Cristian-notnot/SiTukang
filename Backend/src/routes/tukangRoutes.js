@@ -9,6 +9,7 @@ const {
   getBookingTukang,
   updateStatusBooking,
   getDashboardTukang,
+  getRekomendasiTukang,
   searchTukang
 } = require("../controllers/tukangController");
 
@@ -31,9 +32,9 @@ router.get(
     getDashboardTukang
 );
 
+router.get("/rekomendasi", getRekomendasiTukang);
 router.get("/:id", getDetailTukang);
 
-// NEW: search tukang
 router.get("/search", searchTukang);
 
 router.post(

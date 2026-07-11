@@ -49,9 +49,9 @@ function AdminBooking() {
         { header: "ID", accessor: "id" },
         { header: "Customer", accessor: "nama_user" },
         { header: "Tukang", accessor: "nama_tukang" },
-        { header: "Layanan", accessor: "keluhan", render: row => row.keluhan || row.layanan || "-" },
+        { header: "Keluhan", accessor: "keluhan", render: row => row.keluhan || "-" },
+        { header: "Alamat", accessor: "alamat", render: row => row.alamat || "-" },
         { header: "Tanggal", accessor: "tanggal_booking", render: row => new Date(row.tanggal_booking).toLocaleDateString() },
-        { header: "Nilai", accessor: "total_harga", render: row => `Rp ${Number(row.total_harga || 0).toLocaleString()}` },
         { header: "Status", accessor: "status", render: row => <span className={`badge badge-${row.status}`}>{row.status}</span> },
     ];
 
