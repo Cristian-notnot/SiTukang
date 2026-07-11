@@ -1,309 +1,48 @@
-import { useEffect, useState } from "react";
-import { getPengaturan, updatePengaturan } from "../../api/adminApi";
+import { useState } from "react";
+import {
+  Settings, Palette, CreditCard, Bell, Mail, KeyRound, ShieldCheck, DatabaseBackup,
+  Copy, RefreshCw, Trash2, Download
+} from "lucide-react";
 import { useToast } from "../../components/admin/Toast";
+import Section from "../../components/admin/Section";
+import ToggleRow from "../../components/admin/ToggleRow";
 
-const TABS = [
-    { key: "Umum", icon: "settings" },
-    { key: "Brand", icon: "palette" },
-    { key: "Pembayaran", icon: "credit-card" },
-    { key: "Notifikasi", icon: "bell" },
-    { key: "Email", icon: "mail" },
-    { key: "API", icon: "code" },
-    { key: "Keamanan", icon: "shield" },
-    { key: "Backup", icon: "database" },
+const tabs = [
+  { name: "Umum", icon: Settings }, { name: "Brand", icon: Palette }, { name: "Pembayaran", icon: CreditCard },
+  { name: "Notifikasi", icon: Bell }, { name: "Email", icon: Mail }, { name: "API", icon: KeyRound },
+  { name: "Keamanan", icon: ShieldCheck }, { name: "Backup", icon: DatabaseBackup },
 ];
 
-const TAB_ICONS = {
-    settings: "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 0v2.5M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.36.15.69.38.97.68s.53.61.68.97Z",
-    palette: "M12 22a10 10 0 1 1 10-10c0 1.93-1.57 3.5-3.5 3.5H17a2 2 0 0 0 0 4 2 2 0 0 1 0 4H12Zm-7-7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm14-4a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM12 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
-    "credit-card": "M2 8h20M2 8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2M2 8v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8M6 16h4",
-    bell: "M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9Zm5 13a2 2 0 0 0 4 0",
-    mail: "M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 0 8 8 8-8",
-    code: "m16 18 6-6-6-6M8 6l-6 6 6 6",
-    shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z",
-    database: "M4 6c0-1.66 3.58-3 8-3s8 1.34 8 3M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6",
-};
+const Input = ({ label, ...props }) => <div className="settings-field"><label>{label}</label><input {...props} /></div>;
+const Textarea = ({ label, ...props }) => <div className="settings-field full"><label>{label}</label><textarea {...props} /></div>;
 
 function PengaturanPage() {
-    const [data, setData] = useState({
-        nama_platform: "SiTukang",
-        email_support: "halo@situkang.id",
-        mata_uang: "IDR",
-        zona_waktu: "Asia/Jakarta (WIB)",
-        deskripsi: "Marketplace tukang terpercaya untuk rumah dan bisnis Anda di seluruh Indonesia.",
-    });
-    const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState("Umum");
-    const [toggles, setToggles] = useState({
-        regis_tukang: true,
-        regis_customer: true,
-        maintenance: false,
-        notif_email: true,
-    });
-    const { success, error } = useToast();
+  const [active, setActive] = useState("Umum");
+  const [toggles, setToggles] = useState({
+    regTukang: true, regCustomer: true, maintenance: false, emailNotif: true,
+    bank: true, wallet: true, qris: true, cc: false, cod: true,
+    c1: true, c2: true, c3: true, c4: false, t1: true, t2: true, t3: true, t4: true,
+    ch1: true, ch2: true, ch3: true, ch4: false, rate: true, whitelist: false,
+    twofa: true, sso: false, verifyEmail: true, otp: true, uppercase: true, special: false,
+    idle: true, audit: true, suspicious: true, dbBackup: true, fileBackup: true, encrypt: true,
+  });
+  const { success, error, info } = useToast();
+  const toast = (m) => info(m);
+  const toggle = (k) => setToggles((p) => ({ ...p, [k]: !p[k] }));
+  const row = (k, t, d) => <ToggleRow title={t} description={d} checked={toggles[k]} onChange={() => toggle(k)} />;
 
-    useEffect(() => { load(); }, []);
+  const render = () => {
+    if (active === "Umum") return <><Section title="Pengaturan umum"><div className="settings-grid"><Input label="Nama platform" defaultValue="SiTukang" /><Input label="Email support" defaultValue="halo@situkang.id" /><Input label="Mata uang" defaultValue="IDR" /><Input label="Zona waktu" defaultValue="Asia/Jakarta (WIB)" /><Textarea label="Deskripsi platform" defaultValue="Marketplace jasa tukang profesional dan terpercaya." rows={4} /></div></Section><Section title="Mode operasional">{row("regTukang", "Pendaftaran tukang", "Izinkan tukang baru mendaftar")}{row("regCustomer", "Pendaftaran customer", "Izinkan customer baru mendaftar")}{row("maintenance", "Mode pemeliharaan", "Nonaktifkan akses publik sementara")}{row("emailNotif", "Notifikasi email", "Kirim notifikasi via email")}</Section></>;
+    if (active === "Brand") return <><Section title="Identitas brand"><div className="settings-grid"><div><div className="logo-preview">ST</div><button className="btn btn-primary" style={{marginTop:12}} onClick={() => toast("Buka pemilih file untuk ganti logo")}>Ganti logo</button></div><div className="settings-grid"><Input label="Nama brand" defaultValue="SiTukang" /><Input label="Tagline" defaultValue="Solusi Tukang Terpercaya" /><Input label="Font heading" defaultValue="Plus Jakarta Sans" /><Input label="Font body" defaultValue="Inter" /></div></div></Section><Section title="Palet warna"><div className="color-grid">{[["Primary","#F97316"],["Secondary","#0F172A"],["Accent","#FACC15"],["Background","#FFFFFF"]].map(([l,h])=><div className="color-card" key={l}><div className="color-box" style={{background:h}}></div><div className="color-label">{l}</div><div className="color-hex">{h}</div></div>)}</div></Section></>;
+    if (active === "Pembayaran") return <><Section title="Metode pembayaran aktif">{row("bank","Transfer Bank","Pembayaran melalui rekening bank")}{row("wallet","E-Wallet","OVO, DANA, GoPay, ShopeePay")}{row("qris","QRIS","Pembayaran QR nasional")}{row("cc","Kartu Kredit","Visa dan Mastercard")}{row("cod","Tunai COD","Pembayaran langsung ke tukang")}</Section><Section title="Konfigurasi gateway"><div className="settings-grid"><Input label="Payment Gateway" defaultValue="Midtrans" /><Input label="Mode" defaultValue="Production" /><Input label="Merchant ID" defaultValue="M123456" /><Input label="Server Key" type="password" defaultValue="server-key" /><Input label="Komisi platform %" type="number" defaultValue="10" /><Input label="Min. penarikan tukang" defaultValue="Rp50.000" /></div></Section></>;
+    if (active === "Notifikasi") return <><Section title="Notifikasi customer">{row("c1","Order dikonfirmasi","Customer mendapat status order")}{row("c2","Tukang dalam perjalanan","Notifikasi saat tukang menuju lokasi")}{row("c3","Pekerjaan selesai","Notifikasi setelah pekerjaan selesai")}{row("c4","Promo","Kirim promo ke customer")}</Section><Section title="Notifikasi tukang">{row("t1","Order baru","Tukang menerima order baru")}{row("t2","Pembayaran diterima","Info pembayaran masuk")}{row("t3","Review baru","Info ulasan customer")}{row("t4","Pengumuman","Pengumuman platform")}</Section><Section title="Channel">{row("ch1","Email","Aktifkan email")}{row("ch2","Push","Aktifkan push notification")}{row("ch3","WhatsApp","Aktifkan WhatsApp")}{row("ch4","SMS","Aktifkan SMS")}</Section></>;
+    if (active === "Email") { const templates=["Welcome customer","Welcome tukang","Verifikasi email","Reset password","Konfirmasi order","Invoice pembayaran","Reminder rating"]; return <><Section title="Konfigurasi SMTP"><div className="settings-grid"><Input label="Provider" defaultValue="SendGrid" /><Input label="From name" defaultValue="SiTukang" /><Input label="From email" defaultValue="halo@situkang.id" /><Input label="Reply-to" defaultValue="support@situkang.id" /><Input label="SMTP host" defaultValue="smtp.sendgrid.net" /><Input label="Port" defaultValue="587" /><Input label="Username" defaultValue="apikey" /><Input label="Password" type="password" defaultValue="password" /></div><div><button className="btn btn-primary" onClick={()=>success("Koneksi SMTP berhasil")}>Test koneksi</button> <button className="btn btn-secondary" onClick={()=>success("Email tes dikirim ke halo@situkang.id")}>Kirim email tes</button></div></Section><Section title="Template email">{templates.map(n=><div className="backup-card" key={n}><div className="backup-name">{n}</div><button className="btn btn-secondary" onClick={()=>toast(`Edit template: ${n}`)}>Edit</button></div>)}</Section></>; }
+    if (active === "API") { const keys=[["Production API","sk_live_••••3f9a","11 Jul 2026"],["Mobile App iOS","sk_live_••••8b21","10 Jul 2026"],["Sandbox","sk_test_••••11de","08 Jul 2026"]]; return <><Section title="API Keys"><button className="btn btn-primary" onClick={()=>success("API key baru dibuat")}>Buat API key</button>{keys.map(([n,k,d])=><div className="api-key-card" key={n}><div className="api-key-info"><div className="api-key-name">{n} <span className="backup-badge">Aktif</span></div><div className="api-key-value">{k} · {d}</div></div><div className="api-key-actions"><button className="api-key-btn" onClick={()=>{navigator.clipboard?.writeText(k);success("API key disalin")}}><Copy size={16}/></button><button className="api-key-btn" onClick={()=>success(`${n} di-rotate`)}><RefreshCw size={16}/></button><button className="api-key-btn" onClick={()=>error(`${n} dihapus`)}><Trash2 size={16}/></button></div></div>)}</Section><Section title="Webhooks"><div className="settings-grid"><Input label="Order webhook" defaultValue="https://situkang.id/webhooks/order" /><Input label="Payment webhook" defaultValue="https://situkang.id/webhooks/payment" /></div>{row("rate","Rate limiting","Batasi request API")}{row("whitelist","IP whitelist","Hanya izinkan IP tertentu")}</Section></>; }
+    if (active === "Keamanan") return <><Section title="Autentikasi">{row("twofa","2FA","Wajibkan autentikasi dua faktor")}{row("sso","Google SSO","Login dengan Google")}{row("verifyEmail","Verifikasi email","Wajib verifikasi email")}{row("otp","OTP HP","Verifikasi nomor HP")}</Section><Section title="Kebijakan password"><div className="settings-grid"><Input label="Min. panjang" type="number" defaultValue="8" /><Input label="Masa berlaku" type="number" defaultValue="90" /><Input label="Maks. percobaan" type="number" defaultValue="5" /><Input label="Durasi lockout" type="number" defaultValue="30" /></div>{row("uppercase","Huruf besar & angka","Wajib kombinasi huruf besar dan angka")}{row("special","Karakter spesial","Wajib karakter spesial")}</Section><Section title="Sesi & audit">{row("idle","Auto-logout idle","Logout otomatis jika tidak aktif")}{row("audit","Audit log","Catat aktivitas admin")}{row("suspicious","Notifikasi login mencurigakan","Kirim alert keamanan")}</Section></>;
+    const backups=[["situkang-2026-07-11.sql.gz","128 MB","03:00 WIB","Otomatis"],["situkang-2026-07-10.sql.gz","126 MB","03:00 WIB","Otomatis"],["situkang-manual-2026-07-09.sql.gz","124 MB","15:32 WIB","Manual"],["situkang-2026-07-08.sql.gz","122 MB","03:00 WIB","Otomatis"]]; return <><Section title="Jadwal backup otomatis"><div className="settings-grid"><Input label="Frekuensi" defaultValue="Harian" /><Input label="Jam" defaultValue="03:00 WIB" /><Input label="Retensi" defaultValue="30" /><Input label="Lokasi" defaultValue="AWS S3 — ap-southeast-1" /></div>{row("dbBackup","Backup database","Backup data utama")}{row("fileBackup","File upload","Backup file upload")}{row("encrypt","Enkripsi","Enkripsi file backup")}</Section><Section title="Backup terbaru"><div><button className="btn btn-primary" onClick={()=>success("Backup dimulai — akan selesai beberapa menit")}>Backup sekarang</button> <button className="btn btn-secondary" onClick={()=>toast("Pilih file backup untuk restore")}>Restore dari file</button></div>{backups.map(([n,s,w,b])=><div className="backup-card" key={n}><div className="backup-info"><div className="backup-name">{n}<span className="backup-badge">{b}</span></div><div className="backup-meta">{s} · {w}</div></div><div className="backup-actions"><button className="backup-btn" onClick={()=>success(`Unduh ${n}`)}><Download size={16}/></button><button className="backup-btn" onClick={()=>toast(`Restore dari ${n}`)}><RefreshCw size={16}/></button><button className="backup-btn" onClick={()=>error(`${n} dihapus`)}><Trash2 size={16}/></button></div></div>)}</Section></>;
+  };
 
-    const load = async () => {
-        setLoading(true);
-        try { const r = await getPengaturan(); if (r.data) setData(prev => ({ ...prev, ...r.data })); } catch (e) { console.error(e); }
-        setLoading(false);
-    };
-
-    const handleSave = async () => {
-        try { await updatePengaturan(data); success("Pengaturan disimpan!"); } catch (e) { error("Gagal menyimpan"); }
-    };
-
-    const toggle = (key) => setToggles(prev => ({ ...prev, [key]: !prev[key] }));
-
-    if (loading) return <div className="page-content"><div className="loading-state"><div className="spinner"></div></div></div>;
-
-    const renderTabContent = () => {
-        switch (activeTab) {
-            case "Umum":
-                return (
-                    <>
-                        <div className="settings-section">
-                            <h4 className="settings-section-title">Pengaturan umum</h4>
-                            <div className="settings-grid">
-                                <div className="settings-field">
-                                    <label>Nama platform</label>
-                                    <input type="text" value={data.nama_platform} onChange={e => setData({ ...data, nama_platform: e.target.value })} />
-                                </div>
-                                <div className="settings-field">
-                                    <label>Email support</label>
-                                    <input type="email" value={data.email_support} onChange={e => setData({ ...data, email_support: e.target.value })} />
-                                </div>
-                                <div className="settings-field">
-                                    <label>Mata uang</label>
-                                    <input type="text" value={data.mata_uang} onChange={e => setData({ ...data, mata_uang: e.target.value })} />
-                                </div>
-                                <div className="settings-field">
-                                    <label>Zona waktu</label>
-                                    <input type="text" value={data.zona_waktu} onChange={e => setData({ ...data, zona_waktu: e.target.value })} />
-                                </div>
-                                <div className="settings-field full">
-                                    <label>Deskripsi platform</label>
-                                    <textarea rows="3" value={data.deskripsi} onChange={e => setData({ ...data, deskripsi: e.target.value })} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="settings-section">
-                            <h4 className="settings-section-title">Mode operasional</h4>
-                            <div className="settings-toggle-list">
-                                <div className="settings-toggle-row">
-                                    <div className="settings-toggle-info">
-                                        <div className="settings-toggle-label">Pendaftaran tukang baru</div>
-                                        <div className="settings-toggle-desc">Untuk tukang baru mendaftar di platform</div>
-                                    </div>
-                                    <button className={`settings-toggle ${toggles.regis_tukang ? "on" : ""}`} onClick={() => toggle("regis_tukang")} aria-label="Toggle pendaftaran tukang"></button>
-                                </div>
-                                <div className="settings-toggle-row">
-                                    <div className="settings-toggle-info">
-                                        <div className="settings-toggle-label">Pendaftaran customer baru</div>
-                                        <div className="settings-toggle-desc">Untuk customer baru membuat akun</div>
-                                    </div>
-                                    <button className={`settings-toggle ${toggles.regis_customer ? "on" : ""}`} onClick={() => toggle("regis_customer")} aria-label="Toggle pendaftaran customer"></button>
-                                </div>
-                                <div className="settings-toggle-row">
-                                    <div className="settings-toggle-info">
-                                        <div className="settings-toggle-label">Mode pemeliharaan</div>
-                                        <div className="settings-toggle-desc">Tampilkan halaman maintenance untuk semua user</div>
-                                    </div>
-                                    <button className={`settings-toggle ${toggles.maintenance ? "on" : ""}`} onClick={() => toggle("maintenance")} aria-label="Toggle mode pemeliharaan"></button>
-                                </div>
-                                <div className="settings-toggle-row">
-                                    <div className="settings-toggle-info">
-                                        <div className="settings-toggle-label">Notifikasi email</div>
-                                        <div className="settings-toggle-desc">Kirim notifikasi otomatis via email</div>
-                                    </div>
-                                    <button className={`settings-toggle ${toggles.notif_email ? "on" : ""}`} onClick={() => toggle("notif_email")} aria-label="Toggle notifikasi email"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                );
-            case "Brand":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Identitas brand</h4>
-                        <div className="settings-grid">
-                            <div className="settings-field">
-                                <label>Logo platform</label>
-                                <input type="file" accept="image/*" />
-                            </div>
-                            <div className="settings-field">
-                                <label>Favicon</label>
-                                <input type="file" accept="image/*" />
-                            </div>
-                            <div className="settings-field">
-                                <label>Warna utama</label>
-                                <input type="color" defaultValue="#0F766E" style={{ width: 60, height: 40, padding: 2, cursor: "pointer" }} />
-                            </div>
-                            <div className="settings-field">
-                                <label>Warna aksen</label>
-                                <input type="color" defaultValue="#14b8a6" style={{ width: 60, height: 40, padding: 2, cursor: "pointer" }} />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "Pembayaran":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Konfigurasi pembayaran</h4>
-                        <div className="settings-grid">
-                            <div className="settings-field">
-                                <label>Metode pembayaran</label>
-                                <select>
-                                    <option>Transfer Bank</option>
-                                    <option>E-Wallet</option>
-                                    <option>Kartu Kredit</option>
-                                </select>
-                            </div>
-                            <div className="settings-field">
-                                <label>Biaya layanan (%)</label>
-                                <input type="number" defaultValue={2.5} />
-                            </div>
-                            <div className="settings-field">
-                                <label>Minimal penarikan</label>
-                                <input type="number" defaultValue={50000} />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "Notifikasi":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Notifikasi</h4>
-                        <div className="settings-toggle-list">
-                            <div className="settings-toggle-row">
-                                <div className="settings-toggle-info">
-                                    <div className="settings-toggle-label">Notifikasi email</div>
-                                    <div className="settings-toggle-desc">Kirim notifikasi via email</div>
-                                </div>
-                                <button className={`settings-toggle ${toggles.notif_email ? "on" : ""}`} onClick={() => toggle("notif_email")} aria-label="Toggle notifikasi email"></button>
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "Email":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Konfigurasi SMTP</h4>
-                        <div className="settings-grid">
-                            <div className="settings-field">
-                                <label>SMTP Host</label>
-                                <input type="text" defaultValue="smtp.gmail.com" />
-                            </div>
-                            <div className="settings-field">
-                                <label>SMTP Port</label>
-                                <input type="number" defaultValue={587} />
-                            </div>
-                            <div className="settings-field">
-                                <label>SMTP Username</label>
-                                <input type="email" defaultValue="admin@situkang.com" />
-                            </div>
-                            <div className="settings-field">
-                                <label>SMTP Password</label>
-                                <input type="password" defaultValue="********" />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "API":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Akses API</h4>
-                        <div className="settings-grid">
-                            <div className="settings-field full">
-                                <label>API Key</label>
-                                <input type="text" readOnly value="sk-situkang-xxxxxxxx" style={{ background: "#f8fafc", fontFamily: "monospace" }} />
-                            </div>
-                            <div className="settings-field">
-                                <label>Rate Limit (req/min)</label>
-                                <input type="number" defaultValue={60} />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "Keamanan":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Pengaturan keamanan</h4>
-                        <div className="settings-grid">
-                            <div className="settings-field">
-                                <label>Sesi kadaluarsa (menit)</label>
-                                <input type="number" defaultValue={120} />
-                            </div>
-                            <div className="settings-field">
-                                <label>Maksimal percobaan login</label>
-                                <input type="number" defaultValue={5} />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "Backup":
-                return (
-                    <div className="settings-section">
-                        <h4 className="settings-section-title">Backup data</h4>
-                        <div className="settings-grid">
-                            <div className="settings-field">
-                                <label>Periode backup</label>
-                                <select>
-                                    <option>Setiap Hari</option>
-                                    <option>Setiap Minggu</option>
-                                    <option>Setiap Bulan</option>
-                                </select>
-                            </div>
-                            <div className="settings-field">
-                                <label>Backup terakhir</label>
-                                <input type="text" readOnly value="10 Juli 2026" style={{ background: "#f8fafc" }} />
-                            </div>
-                        </div>
-                        <div style={{ marginTop: "1rem" }}>
-                            <button className="btn btn-primary" onClick={() => success("Backup database dimulai (simulasi)")}>
-                                Backup Sekarang
-                            </button>
-                        </div>
-                    </div>
-                );
-            default:
-                return null;
-        }
-    };
-
-    return (
-        <div className="page-content">
-            <h1 className="page-title">Pengaturan Sistem</h1>
-
-            <div className="settings-layout">
-                <div className="settings-tabs-vertical">
-                    {TABS.map(tab => (
-                        <button
-                            key={tab.key}
-                            className={`settings-tab-v ${activeTab === tab.key ? "active" : ""}`}
-                            onClick={() => setActiveTab(tab.key)}
-                        >
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d={TAB_ICONS[tab.icon]} />
-                            </svg>
-                            <span>{tab.key}</span>
-                        </button>
-                    ))}
-                </div>
-
-                <div className="settings-content">
-                    {renderTabContent()}
-
-                    <div className="settings-actions">
-                        <button className="btn btn-secondary">Batal</button>
-                        <button className="btn btn-primary" onClick={handleSave}>Simpan perubahan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+  return <div className="page-content"><h1 className="page-title">Pengaturan Sistem</h1><p className="page-subtitle">Kelola konfigurasi marketplace SiTukang.</p><div className="settings-layout"><aside className="settings-sidebar-tabs">{tabs.map(({name,icon:Icon})=><button key={name} className={`settings-tab-btn ${active===name?"active":""}`} onClick={()=>setActive(name)}><Icon size={18}/><span>{name}</span></button>)}</aside><main className="settings-content">{render()}<div className="settings-actions"><button className="btn-cancel" onClick={()=>toast("Perubahan dibatalkan")}>Batal</button><button className="btn-save" onClick={()=>success("Perubahan pengaturan tersimpan")}>Simpan perubahan</button></div></main></div></div>;
 }
 
 export default PengaturanPage;
