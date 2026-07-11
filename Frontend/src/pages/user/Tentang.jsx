@@ -195,6 +195,41 @@ function Tentang() {
           ))}
         </div>
       </section>
+
+            {/* 8. FOOTER SECTION (KONTAK KAMI) */}
+      <footer className="dashboard-footer" style={{ backgroundColor: "#1e293b", color: "#f8fafc", padding: "40px 60px", marginTop: "60px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "30px", maxWidth: "1200px", margin: "0 auto" }}>
+          <div style={{ flex: "1", minWidth: "250px" }}>
+            <h3 style={{ color: "#2dd4bf", fontSize: "20px", marginBottom: "15px" }}>SiTukang</h3>
+            <p style={{ fontSize: "14px", color: "#94a3b8", lineHeight: "1.6" }}>
+              Solusi digital untuk memenuhi segala kebutuhan perbaikan rumah Anda dengan cepat, aman, dan bergaransi.
+            </p>
+          </div>
+          
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <h4 style={{ fontSize: "16px", marginBottom: "15px", fontWeight: "600" }}>Kontak Kami</h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: "14px", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "10px" }}>
+              <li>📍 Jl. Merdeka No. 45, Jakarta Selatan</li>
+              <li>📞 +62 812-3456-7890 (WhatsApp)</li>
+              <li>✉️ support@situkang.com</li>
+              <li>🕒 Senin - Minggu: 08.00 - 20.00 WIB</li>
+            </ul>
+          </div>
+
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <h4 style={{ fontSize: "16px", marginBottom: "15px", fontWeight: "600" }}>Bantuan & Navigasi</h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/faq"); }} style={{ color: "#94a3b8", textDecoration: "none" }}>FAQ</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/kontak"); }} style={{ color: "#94a3b8", textDecoration: "none" }}>Hubungi Support</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); navigate("/layanan"); }} style={{ color: "#94a3b8", textDecoration: "none" }}>Semua Layanan</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style={{ borderTop: "1px solid #334155", marginTop: "40px", paddingTop: "20px", textAlign: "center", fontSize: "12px", color: "#64748b" }}>
+          &copy; {new Date().getFullYear()} SiTukang. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }
