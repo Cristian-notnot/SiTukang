@@ -1,3 +1,5 @@
+import ghostBooking from "../../assets/gambar/ghost.image.png";
+import "../../assets/css/MyBooking.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyBooking, cancelBooking } from "../../api/bookingApi";
@@ -74,20 +76,67 @@ function MyBooking() {
     if (loading) return <h2>Loading...</h2>;
 
     return (
-        <div style={{ padding: "20px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h1>Booking Saya</h1>
-                <button onClick={() => navigate("/user")} style={{ padding: "8px 16px" }}>Cari Tukang</button>
+        <div className="booking-page">
+            <div className="booking-header">
+                <div>
+                    <span className="booking-tag">Dashboard Customer</span>
+                    <h1>Booking Saya</h1>
+                    <p className="booking-description">
+                        Kelola semua pemesanan tukang Anda dengan mudah.
+                    </p>
+                </div>
+
+                <button
+                    className="booking-top-button"
+                    onClick={() => navigate("/user")}
+                >
+                    Cari Tukang
+                </button>
             </div>
 
-            {booking.length === 0 ? <p>Belum ada booking.</p> : (
+            {booking.length === 0 ? (
+                <div className="booking-empty">
+                    <div className="booking-empty-left">
+                        <h2>Belum ada booking</h2>
+
+                        <p>
+                            Anda belum memiliki riwayat pemesanan tukang.
+                            Cari tukang terbaik dan lakukan booking pertama Anda.
+                        </p>
+
+                        <div className="booking-empty-actions">
+                            <button
+                                className="primary-btn"
+                                onClick={() => navigate("/user")}
+                            >
+                                Cari Tukang
+                            </button>
+
+                            <button
+                                className="secondary-btn"
+                                onClick={() => navigate("/layanan")}
+                            >
+                                Lihat Layanan
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="booking-empty-center">
+                        <img
+                            src={ghostBooking}
+                            alt="No Booking"
+                            className="booking-empty-image"
+                        />
+                    </div>
+                </div>
+            ) : (
                 booking.map((item) => {
                     const hasReview = reviewForm[item.id] && reviewForm[item.id].id;
                     return (
-                        <div key={item.id} style={{
-                            border: "1px solid #ddd", padding: "15px", marginBottom: "10px", borderRadius: "10px",
-                            backgroundColor: item.status === "selesai" ? "#f0fff0" : "#fff"
-                        }}>
+                        <div
+                            key={item.id}
+                            className={`booking-card ${item.status}`}
+                        >
                             <h3>{item.nama_tukang}</h3>
                             <p><strong>Alamat:</strong> {item.alamat}</p>
                             <p><strong>Keluhan:</strong> {item.keluhan}</p>
@@ -99,26 +148,31 @@ function MyBooking() {
                             )}
 
                             {item.status === "selesai" && !hasReview && (
-                                <div style={{ marginTop: 12, padding: 12, backgroundColor: "#f9f9f9", borderRadius: 8 }}>
+                                <div className="review-box">
                                     <h4>Berikan Review</h4>
                                     <select
+                                        className="review-select"
                                         value={reviewForm[item.id]?.rating || ""}
                                         onChange={e => handleReviewChange(item.id, "rating", e.target.value)}
-                                        style={{ marginBottom: 8, padding: 6 }}
                                     >
                                         <option value="">Pilih Rating</option>
                                         {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} ★</option>)}
                                     </select>
                                     <br />
                                     <textarea
+                                        className="review-textarea"
                                         placeholder="Komentar (opsional)"
                                         value={reviewForm[item.id]?.komentar || ""}
                                         onChange={e => handleReviewChange(item.id, "komentar", e.target.value)}
                                         rows={3}
-                                        style={{ width: "100%", marginBottom: 8 }}
                                     />
                                     <br />
-                                    <button onClick={() => handleSubmitReview(item.id)}>Kirim Review</button>
+                                    <button
+                                        className="primary-btn"
+                                        onClick={() => handleSubmitReview(item.id)}
+                                    >
+                                        Kirim Review
+                                    </button>
                                 </div>
                             )}
 
