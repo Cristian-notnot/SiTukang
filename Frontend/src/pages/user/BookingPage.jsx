@@ -14,17 +14,31 @@ function BookingPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
+ useEffect(() => {
+
+    console.log("ID dari URL:", id);
+
     getDetailTukang(id)
-      .then(res => {
-        setTukang(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        alert("Tukang tidak ditemukan");
-        navigate("/layanan");
-      });
-  }, [id, navigate]);
+        .then((res) => {
+
+            console.log("Response:", res);
+
+            setTukang(res.data);
+
+            setLoading(false);
+
+        })
+        .catch((err) => {
+
+            console.log("Error:", err);
+
+            console.log("Status:", err.response?.status);
+
+            console.log("Response Error:", err.response?.data);
+
+        });
+
+}, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

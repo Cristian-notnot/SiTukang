@@ -10,7 +10,8 @@ const {
   updateStatusBooking,
   getDashboardTukang,
   getRekomendasiTukang,
-  searchTukang
+  searchTukang,
+  getAllKategori
 } = require("../controllers/tukangController");
 
 router.get("/", getAllTukang);
@@ -33,9 +34,9 @@ router.get(
 );
 
 router.get("/rekomendasi", getRekomendasiTukang);
-router.get("/:id", getDetailTukang);
-
 router.get("/search", searchTukang);
+router.get("/kategori", getAllKategori);
+router.get("/:id", getDetailTukang);
 
 router.post(
     "/register",

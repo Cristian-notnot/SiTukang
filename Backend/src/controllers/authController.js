@@ -201,6 +201,70 @@ exports.getProfile = (req, res) => {
   });
 };
 
+exports.updateProfile = async (req, res) => {
+    const userId = req.user.id;
+    const { nama, email, current_password, new_password } = req.body;
+
+    if (!nama && !email && !new_password) {
+        return res.status(400).json({ success: false, message: "Tidak ada data yang diubah" });
+    }
+
+    const buildQuery = () => {
+        let sql = "UPDATE users SET";
+        const params = [];
+        const sets = [];
+
+        if (nama) {
+            sets.push(" nama = ?");
+            params.push(nama);
+        }
+        if (email) {
+            sets.push(" email = ?");
+            params.push(email);
+        }
+        if (new_password) {
+            sets.push(" password = ?");
+            params.push(new_password);
+        }
+
+        sql += sets.join(",");
+        sql += " WHERE id = ?";
+        params.push(userId);
+
+        return { sql, params };
+    };
+
+    const handleUpdate = (hashedPassword) => {
+        const { sql, params } = buildQuery();
+        db.query(sql, params, (err, result) => {
+            if (err) {
+                if (err.code === 'ER_DUP_ENTRY') {
+                    return res.status(400).json({ success: false, message: "Email sudah digunakan" });
+                }
+                return res.status(500).json({ success: false, message: err.message });
+            }
+            res.json({ success: true, message: "Profil berhasil diperbarui" });
+        });
+    };
+
+    if (new_password) {
+        if (!current_password) {
+            return res.status(400).json({ success: false, message: "Password saat ini wajib diisi untuk mengganti password" });
+        }
+        db.query("SELECT password FROM users WHERE id = ?", [userId], async (err, result) => {
+            if (err) return res.status(500).json({ success: false, message: err.message });
+            const isMatch = await bcrypt.compare(current_password, result[0].password);
+            if (!isMatch) {
+                return res.status(400).json({ success: false, message: "Password saat ini salah" });
+            }
+            const hashedPassword = await bcrypt.hash(new_password, 10);
+            handleUpdate(hashedPassword);
+        });
+    } else {
+        handleUpdate(null);
+    }
+};
+
 exports.resetPassword = async (req, res) => {
 
     const { id } = req.params;

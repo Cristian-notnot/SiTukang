@@ -8,6 +8,7 @@ const {
   login,
   registerTukang,
   getProfile,
+  updateProfile,
   resetPassword
 } = require("../controllers/authController");
 
@@ -15,6 +16,12 @@ router.get(
     "/profile",
     verifyToken,
     getProfile
+);
+
+router.put(
+    "/profile",
+    verifyToken,
+    updateProfile
 );
 
 router.put(

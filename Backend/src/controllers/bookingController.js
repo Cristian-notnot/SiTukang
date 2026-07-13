@@ -109,6 +109,36 @@ exports.updateBookingStatus = (req, res) => {
     });
 };
 
+exports.getBookingById = (req, res) => {
+    const bookingId = req.params.id;
+    const userId = req.user.id;
+
+    const sql = `
+        SELECT
+            booking.*,
+            users.nama AS nama_tukang,
+            users.email AS email_tukang,
+            tukang.telepon AS telepon_tukang,
+            tukang.alamat AS alamat_tukang,
+            tukang.rating AS rating_tukang,
+            tukang.pengalaman,
+            kategori.nama_kategori,
+            (SELECT rating FROM reviews WHERE booking_id = booking.id AND user_id = ? LIMIT 1) AS user_rating,
+            (SELECT komentar FROM reviews WHERE booking_id = booking.id AND user_id = ? LIMIT 1) AS user_komentar
+        FROM booking
+        JOIN tukang ON booking.tukang_id = tukang.id
+        JOIN users ON tukang.user_id = users.id
+        JOIN kategori ON tukang.kategori_id = kategori.id
+        WHERE booking.id = ? AND booking.user_id = ?
+    `;
+
+    db.query(sql, [userId, userId, bookingId, userId], (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        if (result.length === 0) return res.status(404).json({ success: false, message: "Booking tidak ditemukan" });
+        res.json({ success: true, data: result[0] });
+    });
+};
+
 exports.cancelBooking = (req, res) => {
     const bookingId = req.params.id;
     const userId = req.user.id;

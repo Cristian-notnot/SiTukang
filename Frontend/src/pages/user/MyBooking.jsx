@@ -1,13 +1,12 @@
 import ghostBooking from "../../assets/gambar/ghost.image.png";
 import "../../assets/css/MyBooking.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getMyBooking, cancelBooking } from "../../api/bookingApi";
 import { createReview, getReviewByBooking } from "../../api/reviewApi";
 
 function MyBooking() {
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user"));
     const [booking, setBooking] = useState([]);
     const [loading, setLoading] = useState(true);
     const [reviewForm, setReviewForm] = useState({});
@@ -142,6 +141,10 @@ function MyBooking() {
                             <p><strong>Keluhan:</strong> {item.keluhan}</p>
                             <p><strong>Status:</strong> <span className={`badge badge-${item.status}`}>{item.status}</span></p>
                             <p><strong>Tanggal:</strong> {new Date(item.tanggal_booking).toLocaleString()}</p>
+
+                            <Link to={`/user/booking/detail/${item.id}`} style={{ display: "inline-block", marginTop: 8, color: "#026b5e", fontWeight: 600, fontSize: 13 }}>
+                                Lihat Detail →
+                            </Link>
 
                             {item.status === "pending" && (
                                 <button onClick={() => handleCancel(item.id)} style={{ color: "red", marginTop: 8 }}>Batalkan</button>

@@ -8,6 +8,12 @@ import DashboardUtama from "./pages/user/DashboardUtama";
 import DetailTukang from "./pages/user/DetailTukang";
 import BookingPage from "./pages/user/BookingPage";
 import MyBooking from "./pages/user/MyBooking";
+import CariTukang from "./pages/user/CariTukang";
+import DetailBooking from "./pages/user/DetailBooking";
+import OrderAktif from "./pages/user/OrderAktif";
+import Riwayat from "./pages/user/Riwayat";
+import UlasanSaya from "./pages/user/UlasanSaya";
+import PengaturanUser from "./pages/user/Pengaturan";
 import Layanan from "./pages/user/Layanan";
 import Tentang from "./pages/user/Tentang";
 import Ulasan from "./pages/user/Ulasan";
@@ -49,9 +55,15 @@ function App() {
                 <Route path="/registertukang" element={<RegisterTukang />} />
 
                 <Route path="/user" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+                <Route path="/user/cari-tukang" element={<ProtectedRoute><CariTukang /></ProtectedRoute>} />
                 <Route path="/user/tukang/:id" element={<ProtectedRoute><DetailTukang /></ProtectedRoute>} />
                 <Route path="/user/booking/:id" element={<ProtectedRoute><BookingPage /></ProtectedRoute>} />
+                <Route path="/user/booking/detail/:id" element={<ProtectedRoute><DetailBooking /></ProtectedRoute>} />
                 <Route path="/user/my-booking" element={<ProtectedRoute><MyBooking /></ProtectedRoute>} />
+                <Route path="/user/order-aktif" element={<ProtectedRoute><OrderAktif /></ProtectedRoute>} />
+                <Route path="/user/riwayat" element={<ProtectedRoute><Riwayat /></ProtectedRoute>} />
+                <Route path="/user/ulasan-saya" element={<ProtectedRoute><UlasanSaya /></ProtectedRoute>} />
+                <Route path="/user/pengaturan" element={<ProtectedRoute><PengaturanUser /></ProtectedRoute>} />
 
                 <Route path="/tukang" element={<ProtectedRoute><TukangDashboard /></ProtectedRoute>} />
 

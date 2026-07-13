@@ -9,12 +9,14 @@ exports.getAllTukang = (req, res) => {
       kategori.nama_kategori,
       tukang.telepon,
       tukang.alamat,
-      tukang.rating
+      tukang.rating,
+      tukang.pengalaman
     FROM tukang
     JOIN users
       ON tukang.user_id = users.id
     JOIN kategori
       ON tukang.kategori_id = kategori.id
+    WHERE tukang.status = 'approved'
   `;
 
   db.query(sql, (err, result) => {
@@ -23,7 +25,10 @@ exports.getAllTukang = (req, res) => {
       return res.status(500).json(err);
     }
 
-    res.json(result);
+    res.json({
+      success: true,
+      data: result
+    });
   });
 };
 
@@ -47,6 +52,7 @@ exports.getDetailTukang = (req, res) => {
         JOIN kategori
             ON tukang.kategori_id = kategori.id
         WHERE tukang.id = ?
+        AND tukang.status = 'approved'
     `;
 
     db.query(sql, [id], (err, result) => {
@@ -464,17 +470,48 @@ exports.getRekomendasiTukang = (req, res) => {
   });
 };
 
-// Search tukang by keyword + alamat
+// Get all categories
+exports.getAllKategori = (req, res) => {
+  db.query("SELECT * FROM kategori ORDER BY nama_kategori ASC", (err, result) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    res.json({ success: true, data: result });
+  });
+};
+
+// Search tukang by keyword + alamat + kategori + sort
 exports.searchTukang = (req, res) => {
 
-  const { keyword = "", alamat = "" } = req.query;
+  const { keyword = "", alamat = "", kategori = "", sort = "" } = req.query;
 
   const keywordTrim = String(keyword).trim();
   const alamatTrim = String(alamat).trim();
+  const kategoriTrim = String(kategori).trim();
 
-  if (!keywordTrim && !alamatTrim) {
-    return res.status(200).json([]);
+  let conditions = ["tukang.status = 'approved'"];
+  let params = [];
+
+  if (keywordTrim) {
+    conditions.push("(users.nama LIKE ? OR kategori.nama_kategori LIKE ?)");
+    params.push(`%${keywordTrim}%`, `%${keywordTrim}%`);
   }
+
+  if (alamatTrim) {
+    conditions.push("tukang.alamat LIKE ?");
+    params.push(`%${alamatTrim}%`);
+  }
+
+  if (kategoriTrim) {
+    conditions.push("kategori.nama_kategori = ?");
+    params.push(kategoriTrim);
+  }
+
+  const whereClause = conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : "";
+
+  let orderClause = "ORDER BY tukang.rating DESC";
+  if (sort === "pengalaman") orderClause = "ORDER BY tukang.pengalaman DESC";
+  else if (sort === "nama") orderClause = "ORDER BY users.nama ASC";
+  else if (sort === "kategori") orderClause = "ORDER BY kategori.nama_kategori ASC";
+  else if (sort === "rating") orderClause = "ORDER BY tukang.rating DESC";
 
   const sql = `
     SELECT
@@ -483,30 +520,25 @@ exports.searchTukang = (req, res) => {
       kategori.nama_kategori,
       tukang.telepon,
       tukang.alamat,
-      tukang.rating
+      tukang.rating,
+      tukang.pengalaman
     FROM tukang
     JOIN users
       ON tukang.user_id = users.id
     JOIN kategori
       ON tukang.kategori_id = kategori.id
-    WHERE 1=1
-    AND ( ? = '' OR users.nama LIKE ? OR kategori.nama_kategori LIKE ? )
-    AND ( ? = '' OR tukang.alamat LIKE ? )
-    `;
-
-  const params = [
-    keywordTrim,
-    `%${keywordTrim}%`,
-    `%${keywordTrim}%`,
-    alamatTrim,
-    `%${alamatTrim}%`
-  ];
+    ${whereClause}
+    ${orderClause}
+  `;
 
   db.query(sql, params, (err, result) => {
     if (err) {
       return res.status(500).json(err);
     }
-    res.json(result);
+    res.json({
+      success: true,
+      data: result
+    });
   });
 
 };

@@ -84,11 +84,11 @@ function UserDashboard() {
         <nav className="sidebar-nav" aria-label="Dashboard customer" style={{ flex: 1 }}>
           <div className="sidebar-section" style={{ marginBottom: "20px" }}>
             <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--soft)", textTransform: "uppercase", paddingLeft: "16px", marginBottom: "8px" }}>Menu</p>
-            <button className="sidebar-link active" type="button"><FiGrid /><span>Beranda</span></button>
-            <button className="sidebar-link" type="button" onClick={() => navigate("/layanan")}><FiSearch /><span>Cari Tukang</span></button>
+            <button className="sidebar-link active" type="button" onClick={() => navigate("/user")}><FiGrid /><span>Beranda</span></button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/user/cari-tukang")}><FiSearch /><span>Cari Tukang</span></button>
             <button className="sidebar-link" type="button" onClick={() => navigate("/user/my-booking")}><FiCalendar /><span>Booking</span></button>
-            <button className="sidebar-link" type="button"><FiCheckCircle /><span>Order Aktif</span></button>
-            <button className="sidebar-link" type="button"><FiClock /><span>Riwayat</span></button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/user/order-aktif")}><FiCheckCircle /><span>Order Aktif</span></button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/user/riwayat")}><FiClock /><span>Riwayat</span></button>
           </div>
           <div className="sidebar-section" style={{ marginBottom: "20px" }}>
             <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--soft)", textTransform: "uppercase", paddingLeft: "16px", marginBottom: "8px" }}>Komunikasi</p>
@@ -98,8 +98,8 @@ function UserDashboard() {
           <div className="sidebar-section">
             <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--soft)", textTransform: "uppercase", paddingLeft: "16px", marginBottom: "8px" }}>Akun</p>
             <button className="sidebar-link" type="button"><FiCreditCard /><span>Pembayaran</span></button>
-            <button className="sidebar-link" type="button"><FiStar /><span>Ulasan Saya</span></button>
-            <button className="sidebar-link" type="button"><FiSettings /><span>Pengaturan</span></button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/user/ulasan-saya")}><FiStar /><span>Ulasan Saya</span></button>
+            <button className="sidebar-link" type="button" onClick={() => navigate("/user/pengaturan")}><FiSettings /><span>Pengaturan</span></button>
           </div>
         </nav>
         <div className="sidebar-profile-card" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", borderRadius: "14px", background: "var(--canvas)", marginTop: "auto" }}>
@@ -133,7 +133,7 @@ function UserDashboard() {
             <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#e2e8f0", display: "grid", placeItems: "center", fontWeight: "600", fontSize: "14px" }}>
               {profileInitials}
             </div>
-            <button className="primary-action" type="button" onClick={() => navigate("/layanan")}
+            <button className="primary-action" type="button" onClick={() => navigate("/user/cari-tukang")}
               style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer" }}>
               Cari tukang
             </button>
@@ -149,7 +149,7 @@ function UserDashboard() {
             <div style={{ display: "flex", background: "white", padding: "6px 6px 6px 16px", borderRadius: "24px", alignItems: "center", width: "100%", maxWidth: "500px", gap: "10px", margin: "24px 0 16px" }}>
               <FiSearch style={{ color: "var(--muted)" }} />
               <input type="text" placeholder="Mau perbaiki apa hari ini?" style={{ border: "none", outline: "none", flex: 1, fontSize: "14px" }} />
-              <button onClick={() => navigate("/layanan")} style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+              <button onClick={() => navigate("/user/cari-tukang")} style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 Cari sekarang <FiChevronRight />
               </button>
             </div>
@@ -195,7 +195,7 @@ function UserDashboard() {
               <h2 style={{ fontSize: "18px", fontWeight: "800", margin: "0 0 4px 0" }}>Rekomendasi tukang</h2>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0 }}>Tukang terbaik dengan rating tertinggi.</p>
             </div>
-            <button type="button" onClick={() => navigate("/layanan")}
+            <button type="button" onClick={() => navigate("/user/cari-tukang")}
               style={{ background: "none", border: "none", color: "var(--primary)", fontWeight: "600", fontSize: "14px", cursor: "pointer" }}>
               Semua tukang
             </button>
@@ -230,7 +230,7 @@ function UserDashboard() {
               <h2 style={{ fontSize: "18px", fontWeight: "800", margin: "0 0 4px 0" }}>Layanan populer</h2>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0 }}>Pilih kategori untuk lihat tukang tersedia di area Anda.</p>
             </div>
-            <button type="button" onClick={() => navigate("/layanan")}
+            <button type="button" onClick={() => navigate("/user/cari-tukang")}
               style={{ background: "none", border: "none", color: "var(--primary)", fontWeight: "600", fontSize: "14px", cursor: "pointer" }}>
               Semua kategori
             </button>
@@ -239,7 +239,7 @@ function UserDashboard() {
             {popularServices.map((service, index) => {
               const Icon = service.icon;
               return (
-                <button className="quick-service-card" type="button" key={index} onClick={() => navigate("/layanan")}
+                <button className="quick-service-card" type="button" key={index} onClick={() => navigate("/user/cari-tukang")}
                   style={{ cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
                   <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--canvas)", color: service.color, display: "grid", placeItems: "center", fontSize: "20px" }}>
                     <Icon />

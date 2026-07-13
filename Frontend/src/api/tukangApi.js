@@ -13,10 +13,12 @@ export const getRekomendasiTukang = async () => {
     return response.data;
 };
 
-export const getSearchTukang = async (keyword, alamat) => {
+export const getSearchTukang = async ({ keyword, alamat, kategori, sort } = {}) => {
     const params = new URLSearchParams();
     if (keyword) params.append("keyword", keyword);
     if (alamat) params.append("alamat", alamat);
+    if (kategori) params.append("kategori", kategori);
+    if (sort) params.append("sort", sort);
     const query = params.toString();
     const response = await API.get(`/tukang/search${query ? `?${query}` : ""}`);
     return response.data;
@@ -24,6 +26,11 @@ export const getSearchTukang = async (keyword, alamat) => {
 
 export const getDetailTukang = async (id) => {
     const response = await API.get(`/tukang/${id}`);
+    return response.data;
+};
+
+export const getAllKategori = async () => {
+    const response = await API.get("/tukang/kategori");
     return response.data;
 };
 

@@ -18,6 +18,11 @@ export const getMyBookingSelesai = async () => {
     return response.data;
 };
 
+export const getBookingById = async (id) => {
+    const response = await API.get(`/booking/${id}`, auth());
+    return response.data;
+};
+
 export const cancelBooking = async (id) => {
     const response = await API.put(`/booking/${id}/cancel`, {}, auth());
     return response.data;

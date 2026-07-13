@@ -21,7 +21,7 @@ function Home() {
 
             const response = await getAllTukang();
 
-            setTukang(response);
+            setTukang(response.data);
 
         } catch (error) {
 
@@ -49,8 +49,8 @@ function Home() {
     const handleSearch = async () => {
         setLoading(true);
         try {
-            const response = await getSearchTukang(keyword, alamat);
-            setTukang(response);
+            const response = await getSearchTukang({ keyword, alamat });
+            setTukang(response.data);
         } catch (error) {
             console.error(error);
         } finally {
@@ -190,12 +190,21 @@ function Home() {
 
                         </div>
 
-                        <Link
-                            to={`/user/tukang/${item.id}`}
-                            className="detail-btn"
-                        >
-                            Lihat Detail
-                        </Link>
+                        <div style={{ display: "flex", gap: 8 }}>
+                            <Link
+                                to={`/user/tukang/${item.id}`}
+                                className="detail-btn"
+                            >
+                                Lihat Detail
+                            </Link>
+                            <Link
+                                to={`/user/booking/${item.id}`}
+                                className="detail-btn"
+                                style={{ background: "#0d9488", color: "white", textDecoration: "none" }}
+                            >
+                                Booking
+                            </Link>
+                        </div>
 
                     </div>
 
