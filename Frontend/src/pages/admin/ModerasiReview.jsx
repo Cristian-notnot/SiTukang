@@ -42,7 +42,7 @@ function ModerasiReview() {
     };
 
     const getReportLabel = (row) => {
-        if (row.report_reason) return row.report_reason;
+        if (row.report_reason) return { label: row.report_reason, cls: "spam" };
         if (row.rating <= 1) return { label: "Konten Tidak Pantas", cls: "spam" };
         return null;
     };

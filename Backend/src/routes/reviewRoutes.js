@@ -7,11 +7,13 @@ const {
     createReview,
     getReviewByBooking,
     getMyReviews,
+    getLatestReviews,
     getReviewByTukangId
 } = require("../controllers/reviewController");
 
 router.post("/", verifyToken, createReview);
 router.get("/my", verifyToken, getMyReviews);
+router.get("/latest", getLatestReviews);
 router.get("/booking/:booking_id", verifyToken, getReviewByBooking);
 router.get("/tukang/:tukang_id", getReviewByTukangId);
 

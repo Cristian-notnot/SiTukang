@@ -166,6 +166,30 @@ export const getLaporan = async () => {
     const response = await API.get("/admin/laporan", auth());
     return response.data;
 };
+export const getLaporanPendapatan = async () => {
+    const response = await API.get("/admin/laporan/pendapatan", auth());
+    return response.data;
+};
+export const getLaporanTukang = async () => {
+    const response = await API.get("/admin/laporan/tukang", auth());
+    return response.data;
+};
+export const getLaporanCustomer = async () => {
+    const response = await API.get("/admin/laporan/customer", auth());
+    return response.data;
+};
+export const getLaporanPembayaran = async () => {
+    const response = await API.get("/admin/laporan/pembayaran", auth());
+    return response.data;
+};
+export const getLaporanKategori = async () => {
+    const response = await API.get("/admin/laporan/kategori", auth());
+    return response.data;
+};
+export const getLaporanWilayah = async () => {
+    const response = await API.get("/admin/laporan/wilayah", auth());
+    return response.data;
+};
 
 // Pengaturan & Profil
 export const getPengaturan = async () => {

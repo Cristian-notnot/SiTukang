@@ -248,6 +248,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    padding-right: 68px;
 }
 .kategori-card-icon {
     width: 48px;
@@ -272,25 +273,35 @@
     color: var(--text-secondary);
 }
 .kategori-card-actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
     display: flex;
-    gap: 6px;
-    margin-left: auto;
+    gap: 4px;
 }
-.kategori-card-actions button {
-    background: none;
+.kategori-card-actions .btn-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 4px 10px;
+    background: var(--card);
     cursor: pointer;
-    font-size: 0.78rem;
+    transition: all 0.2s;
     color: var(--text-secondary);
-    transition: 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.kategori-card-actions button:hover {
-    background: var(--surface);
-    color: var(--text);
+.kategori-card-actions .btn-icon:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.kategori-card-actions button.danger:hover {
+.kategori-card-actions .btn-icon-edit:hover {
+    background: #eef2ff;
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+.kategori-card-actions .btn-icon-delete:hover {
     background: #fef2f2;
     color: var(--danger);
     border-color: var(--danger);

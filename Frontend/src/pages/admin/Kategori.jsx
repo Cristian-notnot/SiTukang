@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../components/admin/Toast";
-import { ConfirmModal } from "../../components/admin/Modal";
+import Modal, { ConfirmModal } from "../../components/admin/Modal";
 import { getAllKategori, createKategori, updateKategori, deleteKategori } from "../../api/adminApi";
 import { Plus, Edit3, Trash2 } from "lucide-react";
 
@@ -14,6 +14,7 @@ function KategoriPage() {
     const { success, error } = useToast();
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
+    const [editModal, setEditModal] = useState({ open: false, id: null, nama: "" });
 
     useEffect(() => { load(); }, []);
 
@@ -29,11 +30,19 @@ function KategoriPage() {
         catch (e) { error("Gagal menambah kategori"); }
     };
 
+    const handleEdit = async () => {
+        if (!editModal.nama.trim()) return;
+        try { await updateKategori(editModal.id, editModal.nama.trim()); success("Kategori berhasil diubah"); load(); setEditModal({ open: false, id: null, nama: "" }); }
+        catch (e) { error("Gagal mengubah kategori"); }
+    };
+
     const handleDelete = async () => {
         try { await deleteKategori(selectedRow.id); success("Kategori berhasil dihapus"); load(); }
         catch (e) { error("Gagal menghapus kategori"); }
         finally { setShowConfirm(false); setSelectedRow(null); }
     };
+
+    const openEdit = (k) => setEditModal({ open: true, id: k.id, nama: k.nama_kategori });
 
     return (
         <div className="page-content">
@@ -42,10 +51,10 @@ function KategoriPage() {
                 <p className="page-subtitle">Kelola kategori jasa tukang</p>
             </div>
 
-            <div className="card-add">
-                <input type="text" placeholder="Nama kategori baru..." value={newName} onChange={e => setNewName(e.target.value)} />
-                <input type="number" placeholder="Komisi %" value={newCommission} onChange={e => setNewCommission(e.target.value)} style={{ width: 120 }} />
-                <button className="btn btn-primary" onClick={handleCreate}>
+            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 20, padding: 16, borderRadius: 12, background: "var(--card)", boxShadow: "var(--shadow)", border: "1px solid var(--border)" }}>
+                <input type="text" placeholder="Nama kategori baru..." value={newName} onChange={e => setNewName(e.target.value)} style={{ flex: 1, minWidth: 180, padding: "8px 12px", borderRadius: 8, border: "1px solid var(--border)", fontSize: 14, outline: "none" }} />
+                <input type="number" placeholder="Komisi %" value={newCommission} onChange={e => setNewCommission(e.target.value)} style={{ width: 110, padding: "8px 12px", borderRadius: 8, border: "1px solid var(--border)", fontSize: 14, outline: "none" }} />
+                <button className="btn btn-primary" onClick={handleCreate} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 18px", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer", border: "none" }}>
                     <Plus size={18} /> Tambah
                 </button>
             </div>
@@ -73,17 +82,28 @@ function KategoriPage() {
                                     </div>
                                 </div>
                                 <div className="kategori-card-actions">
-                                    <button onClick={() => {
-                                        const newName = prompt("Edit nama kategori:", k.nama_kategori);
-                                        if (newName && newName.trim()) updateKategori(k.id, newName.trim()).then(() => { success("Kategori diubah"); load(); }).catch(() => error("Gagal"));
-                                    }}><Edit3 size={14} /></button>
-                                    <button className="danger" onClick={() => { setSelectedRow(k); setShowConfirm(true); }}><Trash2 size={14} /></button>
+                                    <button className="btn-icon btn-icon-edit" onClick={() => openEdit(k)} title="Edit">
+                                        <Edit3 size={15} />
+                                    </button>
+                                    <button className="btn-icon btn-icon-delete" onClick={() => { setSelectedRow(k); setShowConfirm(true); }} title="Hapus">
+                                        <Trash2 size={15} />
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
+
+            <Modal open={editModal.open} onClose={() => setEditModal({ open: false, id: null, nama: "" })} title="Edit Kategori" size="sm">
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <input type="text" placeholder="Nama kategori" value={editModal.nama} onChange={e => setEditModal(p => ({ ...p, nama: e.target.value }))} style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid var(--border)", fontSize: 14, outline: "none" }} />
+                    <div className="modal-actions" style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 4 }}>
+                        <button className="btn btn-secondary" onClick={() => setEditModal({ open: false, id: null, nama: "" })}>Batal</button>
+                        <button className="btn btn-primary" onClick={handleEdit} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 18px", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer", border: "none" }}>Simpan</button>
+                    </div>
+                </div>
+            </Modal>
 
             <ConfirmModal open={showConfirm} onClose={() => { setShowConfirm(false); setSelectedRow(null); }} onConfirm={handleDelete} title="Konfirmasi Hapus" message={`Yakin hapus kategori "${selectedRow?.nama_kategori}"?`} />
         </div>

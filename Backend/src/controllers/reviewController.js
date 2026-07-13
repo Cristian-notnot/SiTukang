@@ -87,6 +87,29 @@ exports.getMyReviews = (req, res) => {
     });
 };
 
+exports.getLatestReviews = (req, res) => {
+    const limit = parseInt(req.query.limit) || 4;
+
+    const sql = `
+        SELECT
+            reviews.id,
+            reviews.rating,
+            reviews.komentar,
+            reviews.created_at,
+            users.nama AS nama_user
+        FROM reviews
+        JOIN users ON reviews.user_id = users.id
+        WHERE reviews.status = 'approved'
+        ORDER BY reviews.created_at DESC
+        LIMIT ?
+    `;
+
+    db.query(sql, [limit], (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        res.json({ success: true, total: result.length, data: result });
+    });
+};
+
 exports.getReviewByTukangId = (req, res) => {
     const { tukang_id } = req.params;
 
@@ -99,7 +122,7 @@ exports.getReviewByTukangId = (req, res) => {
             users.nama AS nama_user
         FROM reviews
         JOIN users ON reviews.user_id = users.id
-        WHERE reviews.tukang_id = ?
+        WHERE reviews.tukang_id = ? AND reviews.status = 'approved'
         ORDER BY reviews.created_at DESC
     `;
 

@@ -46,7 +46,6 @@ function AdminLayout() {
 
     const breadcrumbMap = {
         "/admin": "Dashboard",
-        "/admin/analytics": "Analytics",
         "/admin/users": "Manajemen Pengguna",
         "/admin/tukang/pending": "Verifikasi Tukang",
         "/admin/tukang": "Manajemen Tukang",
@@ -146,13 +145,6 @@ function AdminLayout() {
                                 <span className="nav-label">Dashboard</span>
                             </button>
                         </li>
-                        <li>
-                            <button onClick={() => navigate("/admin/analytics")} className={location.pathname.includes("/admin/analytics") ? "active" : ""}>
-                                <span className="nav-icon"><BarChart3 size={22} /></span>
-                                <span className="nav-label">Analytics</span>
-                            </button>
-                        </li>
-
                         <li className="nav-section">Manajemen</li>
 
                         <li>

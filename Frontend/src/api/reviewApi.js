@@ -22,3 +22,8 @@ export const getReviewByTukangId = async (tukangId) => {
     const response = await API.get(`/reviews/tukang/${tukangId}`);
     return response.data;
 };
+
+export const getLatestReviews = async (limit = 4) => {
+    const response = await API.get(`/reviews/latest?limit=${limit}`);
+    return response.data;
+};

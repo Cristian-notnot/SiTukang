@@ -16,6 +16,7 @@ const {
     getAllPembayaran, updatePembayaranStatus,
     getAllKomisi,
     getLaporan,
+    getLaporanPendapatan, getLaporanTukang, getLaporanCustomer, getLaporanPembayaran, getLaporanKategori, getLaporanWilayah,
     getRecentBooking, getRecentUsers,
     getPengaturan, updatePengaturan,
     getAdminProfile, updateAdminProfile
@@ -76,6 +77,12 @@ router.get("/komisi", ...adminOnly, getAllKomisi);
 
 // Laporan
 router.get("/laporan", ...adminOnly, getLaporan);
+router.get("/laporan/pendapatan", ...adminOnly, getLaporanPendapatan);
+router.get("/laporan/tukang", ...adminOnly, getLaporanTukang);
+router.get("/laporan/customer", ...adminOnly, getLaporanCustomer);
+router.get("/laporan/pembayaran", ...adminOnly, getLaporanPembayaran);
+router.get("/laporan/kategori", ...adminOnly, getLaporanKategori);
+router.get("/laporan/wilayah", ...adminOnly, getLaporanWilayah);
 
 // Ticket Support
 router.get("/ticket", ...adminOnly, getAllTicket);

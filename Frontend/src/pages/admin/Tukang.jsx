@@ -10,6 +10,8 @@ function TukangPage() {
     const { success, error } = useToast();
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
+    const [showRejectConfirm, setShowRejectConfirm] = useState(false);
+    const [selectedReject, setSelectedReject] = useState(null);
     const [statusFilter, setStatusFilter] = useState("semua");
     const [kategoriFilter, setKategoriFilter] = useState("semua");
     const [kategoriList, setKategoriList] = useState([]);
@@ -60,6 +62,12 @@ function TukangPage() {
     const handleReject = async (id) => {
         try { await rejectTukang(id); success("Tukang ditolak"); load(buildParams()); }
         catch (e) { error("Gagal menolak"); }
+    };
+
+    const handleRejectConfirm = async () => {
+        try { await rejectTukang(selectedReject.id); success("Tukang ditolak"); load(buildParams()); }
+        catch (e) { error("Gagal menolak"); }
+        finally { setShowRejectConfirm(false); setSelectedReject(null); }
     };
 
     const getInitials = (name) => {
@@ -132,7 +140,7 @@ function TukangPage() {
                 loading={loading}
                 actions={[
                     { label: "Setujui", onClick: row => { if (row.status === 'pending') handleApprove(row.id); }},
-                    { label: "Tolak", className: "danger", onClick: row => { if (row.status === 'pending') handleReject(row.id); }},
+                    { label: "Tolak", className: "danger", onClick: row => { if (row.status === 'pending') { setSelectedReject(row); setShowRejectConfirm(true); } }},
                     { label: "Hapus", className: "danger", onClick: row => { setSelectedRow(row); setShowConfirm(true); }},
                 ]}
                 searchable={false}
@@ -140,6 +148,7 @@ function TukangPage() {
                 emptyMessage="Belum ada tukang"
             />
             <ConfirmModal open={showConfirm} onClose={() => { setShowConfirm(false); setSelectedRow(null); }} onConfirm={handleDelete} title="Konfirmasi Hapus" message={`Yakin hapus tukang "${selectedRow?.nama}"?`} />
+            <ConfirmModal open={showRejectConfirm} onClose={() => { setShowRejectConfirm(false); setSelectedReject(null); }} onConfirm={handleRejectConfirm} title="Konfirmasi Tolak" message={`Yakin tolak tukang "${selectedReject?.nama}"? Tukang ini tidak akan muncul di pencarian.`} />
         </div>
     );
 }

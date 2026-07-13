@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRekomendasiTukang } from "../../api/tukangApi";
+import { getLatestReviews } from "../../api/reviewApi";
 import "../../assets/css/Dashboard.css";
 import logoImg from "../../assets/gambar/logo.jpeg";
 
 function UserDashboard() {
   const navigate = useNavigate();
   const [rekomendasi, setRekomendasi] = useState([]);
+  const [latestReviews, setLatestReviews] = useState([]);
 
   useEffect(() => {
     getRekomendasiTukang()
       .then(res => setRekomendasi(res.data || []))
+      .catch(() => {});
+    getLatestReviews()
+      .then(res => setLatestReviews(res.data || []))
       .catch(() => {});
   }, []);
 
@@ -309,61 +314,21 @@ function UserDashboard() {
           <h2 className="section-title">Dipercaya oleh ribuan keluarga</h2>
         </div>
         <div className="testimonial-row">
-          <div className="testi-card">
-            <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">
-              "Tukangnya cepat, rapi, dan ramah. AC saya dingin lagi seperti baru. Pasti pakai SiTukang lagi!"
-            </p>
-            <div className="user-profile-sm">
-              <div className="avatar-sm">SD</div>
-              <div className="user-meta">
-                <h5>Sari Dewi</h5>
-                <p>Ibu Rumah Tangga</p>
+          {latestReviews.length === 0 ? (
+            <p style={{ color: "#94a3b8" }}>Belum ada ulasan.</p>
+          ) : latestReviews.map(r => (
+            <div key={r.id} className="testi-card">
+              <div className="stars-row">{'★'.repeat(Math.min(Number(r.rating) || 0, 5))}{'☆'.repeat(Math.max(0, 5 - (Number(r.rating) || 0)))}</div>
+              <p className="testi-comment">"{r.komentar}"</p>
+              <div className="user-profile-sm">
+                <div className="avatar-sm">{getInitials(r.nama_user)}</div>
+                <div className="user-meta">
+                  <h5>{r.nama_user}</h5>
+                  <p>Pelanggan</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="testi-card">
-            <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">
-              "Booking jam 9 pagi, jam 11 sudah datang. Hasil instalasi listrik di kosan saya sangat profesional."
-            </p>
-            <div className="user-profile-sm">
-              <div className="avatar-sm">RP</div>
-              <div className="user-meta">
-                <h5>Rian Pratama</h5>
-                <p>Pemilik Kos</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="testi-card">
-            <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">
-              "Saya pakai SiTukang untuk klien-klien kecil. Selalu dapat tukang yang bisa diandalkan dengan harga jelas."
-            </p>
-            <div className="user-profile-sm">
-              <div className="avatar-sm">MP</div>
-              <div className="user-meta">
-                <h5>Maya Putri</h5>
-                <p>Arsitek</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="testi-card">
-            <div className="stars-row">★★★★★</div>
-            <p className="testi-comment">
-              "Aplikasinya mudah dipakai, transparansi harga oke. Live tracking-nya membantu."
-            </p>
-            <div className="user-profile-sm">
-              <div className="avatar-sm">DH</div>
-              <div className="user-meta">
-                <h5>Doni Hartono</h5>
-                <p>Pegawai Swasta</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 

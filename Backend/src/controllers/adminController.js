@@ -282,9 +282,18 @@ exports.approveTukang = (req, res) => {
 
 exports.rejectTukang = (req, res) => {
     const { id } = req.params;
-    db.query("UPDATE tukang SET status='rejected' WHERE id=?", [id], (err) => {
+    const sqlCari = "SELECT user_id FROM tukang WHERE id = ?";
+    db.query(sqlCari, [id], (err, result) => {
         if (err) return res.status(500).json({ success: false, message: err.message });
-        res.json({ success: true, message: "Tukang ditolak" });
+        if (result.length === 0) return res.status(404).json({ success: false, message: "Data tidak ditemukan" });
+        const userId = result[0].user_id;
+        db.query("UPDATE tukang SET status='rejected' WHERE id=?", [id], (err) => {
+            if (err) return res.status(500).json({ success: false, message: err.message });
+            db.query("UPDATE users SET role='user' WHERE id=? AND role='tukang'", [userId], (err) => {
+                if (err) return res.status(500).json({ success: false, message: err.message });
+                res.json({ success: true, message: "Tukang ditolak" });
+            });
+        });
     });
 };
 
@@ -431,9 +440,13 @@ exports.getAllKategori = (req, res) => {
 };
 
 exports.createKategori = (req, res) => {
-    const { nama_kategori } = req.body;
+    const { nama_kategori, komisi } = req.body;
     if (!nama_kategori) return res.status(400).json({ success: false, message: "Nama kategori wajib diisi" });
-    db.query("INSERT INTO kategori (nama_kategori) VALUES (?)", [nama_kategori], (err, result) => {
+    const sql = komisi !== undefined
+        ? "INSERT INTO kategori (nama_kategori, komisi) VALUES (?, ?)"
+        : "INSERT INTO kategori (nama_kategori) VALUES (?)";
+    const params = komisi !== undefined ? [nama_kategori, komisi] : [nama_kategori];
+    db.query(sql, params, (err, result) => {
         if (err) return res.status(500).json({ success: false, message: err.message });
         res.json({ success: true, message: "Kategori berhasil ditambahkan", id: result.insertId });
     });
@@ -441,9 +454,13 @@ exports.createKategori = (req, res) => {
 
 exports.updateKategori = (req, res) => {
     const { id } = req.params;
-    const { nama_kategori } = req.body;
+    const { nama_kategori, komisi } = req.body;
     if (!nama_kategori) return res.status(400).json({ success: false, message: "Nama kategori wajib diisi" });
-    db.query("UPDATE kategori SET nama_kategori = ? WHERE id = ?", [nama_kategori, id], (err, result) => {
+    const sql = komisi !== undefined
+        ? "UPDATE kategori SET nama_kategori = ?, komisi = ? WHERE id = ?"
+        : "UPDATE kategori SET nama_kategori = ? WHERE id = ?";
+    const params = komisi !== undefined ? [nama_kategori, komisi, id] : [nama_kategori, id];
+    db.query(sql, params, (err, result) => {
         if (err) return res.status(500).json({ success: false, message: err.message });
         if (result.affectedRows === 0) return res.status(404).json({ success: false, message: "Kategori tidak ditemukan" });
         res.json({ success: true, message: "Kategori berhasil diubah" });
@@ -583,6 +600,102 @@ exports.getLaporan = (req, res) => {
     db.query(sql, (err, result) => {
         if (err) return res.status(500).json({ success: false, message: err.message });
         res.json({ success: true, data: result[0] });
+    });
+};
+
+// ─── LAPORAN SPESIFIK ─────────────────────────────────────────
+exports.getLaporanPendapatan = (req, res) => {
+    const sql = `
+        SELECT DATE_FORMAT(p.created_at, '%Y-%m') AS bulan,
+               SUM(CASE WHEN p.tipe = 'masuk' THEN p.jumlah ELSE 0 END) AS pemasukan,
+               SUM(CASE WHEN p.tipe = 'keluar' THEN p.jumlah ELSE 0 END) AS pengeluaran
+        FROM pembayaran p
+        WHERE p.created_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+        GROUP BY bulan ORDER BY bulan ASC
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        const total = result.reduce((acc, r) => ({ pemasukan: acc.pemasukan + Number(r.pemasukan || 0), pengeluaran: acc.pengeluaran + Number(r.pengeluaran || 0) }), { pemasukan: 0, pengeluaran: 0 });
+        res.json({ success: true, data: { bulanan: result, total } });
+    });
+};
+
+exports.getLaporanTukang = (req, res) => {
+    const sql = `
+        SELECT
+            COUNT(*) AS total,
+            COUNT(CASE WHEN status = 'approved' THEN 1 END) AS aktif,
+            COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending,
+            ROUND(AVG(NULLIF(rating, 0)), 1) AS rating_rata
+        FROM tukang
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        res.json({ success: true, data: result[0] });
+    });
+};
+
+exports.getLaporanCustomer = (req, res) => {
+    const sql = `
+        SELECT
+            COUNT(*) AS total,
+            COUNT(CASE WHEN role = 'user' THEN 1 END) AS user,
+            COUNT(CASE WHEN role = 'tukang' THEN 1 END) AS tukang,
+            COUNT(CASE WHEN DATE(created_at) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) THEN 1 END) AS minggu_ini
+        FROM users
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        res.json({ success: true, data: result[0] });
+    });
+};
+
+exports.getLaporanPembayaran = (req, res) => {
+    const sql = `
+        SELECT
+            COUNT(*) AS total_transaksi,
+            SUM(CASE WHEN tipe = 'masuk' THEN jumlah ELSE 0 END) AS total_pemasukan,
+            SUM(CASE WHEN tipe = 'keluar' THEN jumlah ELSE 0 END) AS total_pengeluaran,
+            COUNT(CASE WHEN status = 'sukses' THEN 1 END) AS sukses,
+            COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending,
+            COUNT(CASE WHEN status = 'gagal' OR status = 'pending_refund' THEN 1 END) AS gagal
+        FROM pembayaran
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        res.json({ success: true, data: result[0] });
+    });
+};
+
+exports.getLaporanKategori = (req, res) => {
+    const sql = `
+        SELECT k.nama_kategori, COUNT(t.id) AS total_tukang,
+               COALESCE(COUNT(b.id), 0) AS total_booking
+        FROM kategori k
+        LEFT JOIN tukang t ON t.kategori_id = k.id AND t.status = 'approved'
+        LEFT JOIN booking b ON b.tukang_id = t.id
+        GROUP BY k.id, k.nama_kategori
+        ORDER BY total_tukang DESC
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        res.json({ success: true, data: result });
+    });
+};
+
+exports.getLaporanWilayah = (req, res) => {
+    const sql = `
+        SELECT
+            TRIM(SUBSTRING_INDEX(alamat, ' ', -1)) AS kota,
+            COUNT(*) AS total_tukang
+        FROM tukang
+        WHERE alamat IS NOT NULL AND alamat != ''
+        GROUP BY kota
+        ORDER BY total_tukang DESC
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+        res.json({ success: true, data: result });
     });
 };
 
