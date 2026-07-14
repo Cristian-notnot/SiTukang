@@ -175,6 +175,7 @@ Aplikasi berjalan di `http://localhost:5173`
 | id | int(11) PK, AUTO_INCREMENT | ID User |
 | nama | varchar(100) | Nama lengkap |
 | email | varchar(100) UNIQUE | Email |
+| foto | varchar(255) | Path foto profil (nullable) |
 | password | varchar(255) | Hash bcrypt |
 | role | enum('user','tukang','admin') | Default: 'user' |
 | created_at | timestamp | Waktu registrasi |
@@ -242,7 +243,9 @@ Aplikasi berjalan di `http://localhost:5173`
 | POST | `/api/auth/register` | ✗ | Registrasi user baru |
 | POST | `/api/auth/login` | ✗ | Login (body: email, password, loginAs) |
 | POST | `/api/auth/register-tukang` | ✗ | Registrasi tukang (user + profil tukang) |
-| GET | `/api/auth/profile` | ✓ | Lihat profil user |
+| GET | `/api/auth/profile` | ✓ | Lihat profil user (termasuk foto) |
+| PUT | `/api/auth/profile` | ✓ | Update profil (nama, email, password) |
+| PUT | `/api/auth/profile/photo` | ✓ | Upload foto profil (multipart, field: foto, max 5MB, format: jpeg/jpg/png/gif/webp/bmp/svg/tiff/ico/avif) |
 | PUT | `/api/auth/reset-password/:id` | ✗ | Reset password |
 
 ### Tukang — `/api/tukang`
@@ -351,10 +354,16 @@ Aplikasi berjalan di `http://localhost:5173`
 
 | Route | Halaman | Role |
 |---|---|---|
-| `/user` | UserDashboard | User |
+| `/user` | UserDashboard (tab: Beranda, Cari Tukang, Booking, Order Aktif, Riwayat, Chat, Notifikasi, Pembayaran, Ulasan Saya, Pengaturan) | User |
 | `/user/tukang/:id` | DetailTukang | User |
 | `/user/booking/:id` | BookingPage | User |
-| `/user/my-booking` | MyBooking | User |
+| `/user/booking/detail/:id` | DetailBooking | User |
+| `/user/cari-tukang` | CariTukang (standalone) | User |
+| `/user/my-booking` | MyBooking (standalone) | User |
+| `/user/order-aktif` | OrderAktif (standalone) | User |
+| `/user/riwayat` | Riwayat (standalone) | User |
+| `/user/ulasan-saya` | UlasanSaya (standalone) | User |
+| `/user/pengaturan` | Pengaturan (standalone) | User |
 | `/tukang` | Dashboard (tukang) | Tukang |
 
 ### Admin Panel (role admin)
@@ -441,6 +450,23 @@ baseURL: "http://localhost:5000/api"
 | `Backend/src/routes/authRoutes.js` | Menambahkan route `POST /api/auth/register-tukang` |
 | `Frontend/src/pages/auth/RegisterTukang.jsx` | Rewrite total: form field terhubung ke state, handleSubmit memanggil API, validasi konfirmasi password, auto-login |
 | `Frontend/src/pages/auth/Register.jsx` | Menambahkan input konfirmasi password + validasi |
+
+### Sesi 4: UserDashboard Tab Navigation + Foto Profil + Logout
+
+**Masalah:** Sidebar user mengarah ke halaman terpisah (pindah route) untuk setiap menu. Pengaturan tidak memiliki upload foto dan tombol logout.
+
+**Perubahan:**
+
+| File | Perubahan |
+|---|---|
+| `Frontend/src/pages/user/UserDashboard.jsx` | Rewrite total menjadi single-page dengan tab navigation (activeTab state). Semua konten (Beranda, CariTukang, Booking, OrderAktif, Riwayat, UlasanSaya, Pengaturan) dirender inline tanpa pindah halaman. Sidebar highlight otomatis sesuai tab aktif. Chat/Notifikasi/Pembayaran sebagai placeholder. Menambahkan link "Lihat Profil Tukang" di Booking, Order Aktif, dan Riwayat. Menambahkan upload foto profil + tombol Logout di Pengaturan. |
+| `Frontend/src/api/userApi.js` | Menambahkan fungsi `uploadProfilePhoto()` |
+| `Backend/src/controllers/authController.js` | Menambahkan method `uploadPhoto()` — upload file + hapus foto lama. `getProfile()` sekarang mengembalikan field `foto`. |
+| `Backend/src/routes/authRoutes.js` | Menambahkan route `PUT /api/auth/profile/photo` dengan multer middleware (max 2MB, hanya gambar) |
+| `Backend/src/app.js` | Menambahkan `express.static` untuk folder `/uploads` |
+| `Backend/package.json` | Menambahkan dependency `multer` |
+| `database/migrasi_foto_user.sql` | Migration: menambah kolom `foto` varchar(255) pada tabel `users` |
+| `dokumentasi.md` | Update API endpoints, table schema users, protected routes, ringkasan sesi 4 |
 
 ### Sesi 3: Halaman Booking User + Rekomendasi Tukang dari Database
 

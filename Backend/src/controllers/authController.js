@@ -1,5 +1,7 @@
 const db = require("../config/db");
 const bcrypt = require("bcrypt");
+const path = require("path");
+const fs = require("fs");
 
 exports.register = async (req, res) => {
   const { nama, email, password } = req.body;
@@ -181,6 +183,7 @@ exports.getProfile = (req, res) => {
             id,
             nama,
             email,
+            foto,
             role
         FROM users
         WHERE id = ?
@@ -263,6 +266,30 @@ exports.updateProfile = async (req, res) => {
     } else {
         handleUpdate(null);
     }
+};
+
+exports.uploadPhoto = (req, res) => {
+  const userId = req.user.id;
+
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "Tidak ada file yang diupload" });
+  }
+
+  const fotoPath = "uploads/profile/" + req.file.filename;
+
+  db.query("SELECT foto FROM users WHERE id = ?", [userId], (err, result) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+
+    if (result[0]?.foto) {
+      const oldPath = path.join(__dirname, "../..", result[0].foto);
+      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    }
+
+    db.query("UPDATE users SET foto = ? WHERE id = ?", [fotoPath, userId], (err) => {
+      if (err) return res.status(500).json({ success: false, message: err.message });
+      res.json({ success: true, message: "Foto berhasil diupload", data: { foto: fotoPath } });
+    });
+  });
 };
 
 exports.resetPassword = async (req, res) => {
