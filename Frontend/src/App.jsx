@@ -64,11 +64,11 @@ function App() {
                 <Route path="/user/ulasan-saya" element={<ProtectedRoute><UlasanSaya /></ProtectedRoute>} />
                 <Route path="/user/pengaturan" element={<ProtectedRoute><PengaturanUser /></ProtectedRoute>} />
 
-                <Route path="/tukang" element={<ProtectedRoute><TukangDashboard /></ProtectedRoute>} />
+                <Route path="/tukang" element={<ProtectedRoute requiredRole="tukang"><TukangDashboard /></ProtectedRoute>} />
 
                 <Route path="/login-admin" element={<LoginAdmin />} />
 
-                <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+                <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminLayout /></ProtectedRoute>}>
                     <Route index element={<AdminDashboard />} />
                     <Route path="users" element={<UsersPage />} />
                     <Route path="tukang/pending" element={<VerifikasiTukang />} />

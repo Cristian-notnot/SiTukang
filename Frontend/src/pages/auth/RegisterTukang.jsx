@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import "../../assets/css/RegisterTukang.css";
 import logoImg from "../../assets/gambar/logo.jpeg";
+import bgTukang from "../../assets/gambar/registertukang.jpg";
 
 const KATEGORI_LIST = [
   { id: 1, nama: "Tukang AC" },
