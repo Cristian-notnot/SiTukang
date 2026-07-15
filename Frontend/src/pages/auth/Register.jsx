@@ -87,13 +87,20 @@ function Register() {
         <div className="register-container">
             
             {/* SISI KIRI: PANEL GRADIENT HIJAU */}
-            <div className="reg-left-panel">
+            {/* SISI KIRI: PANEL GRADIENT HIJAU */}
+            {/* SISI KIRI: PANEL GRADIENT HIJAU */}
+            <div className="reg-left-panel" style={{ 
+                backgroundImage: `linear-gradient(105deg, rgba(6, 78, 59, 0.95) 0%, rgba(6, 78, 59, 0.80) 45%, rgba(6, 78, 59, 0.30) 100%), url(${bgRoom})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat"
+            }}>
                 <div className="reg-logo-container" onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>
                     <img src={logoImg} alt="SiTukang" className="logo-img" />
                 </div>
                 
                 <div className="reg-left-content">
-                    className="log-left-panel"
+                    
                     <h1 className="reg-left-heading">Profesional terpercaya di ujung jari Anda</h1>
                     <p className="reg-left-subtext">
                         Lebih dari 12.000 tukang terverifikasi siap membantu di seluruh Indonesia.
