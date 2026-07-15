@@ -5,7 +5,7 @@ import API from "../../api/axios";
 import "../../assets/css/login.css";
 
 // ── Import semua gambar dari src/assets/gambar/ ───────────────
-import bgRoom        from "../../assets/gambar/background-room.png";
+import bgRoom        from "../../assets/gambar/background login,dan register.jpeg";
 import shieldIcon    from "../../assets/gambar/shield.svg";
 import clockIcon     from "../../assets/gambar/clock.svg";
 import badgeIcon     from "../../assets/gambar/badge.svg";
@@ -47,11 +47,16 @@ function Login() {
         <div className="log-container">
 
             {/* ═══════════════════════════════
-                PANEL KIRI
+                PANEL KIRI (Dengan Background Baru & Gradasi CSS)
             ═══════════════════════════════ */}
             <div
                 className="log-left-panel"
-                style={{ backgroundImage: `url(${bgRoom})` }}
+                style={{ 
+                    backgroundImage: `linear-gradient(105deg, rgba(6, 78, 59, 0.95) 0%, rgba(6, 78, 59, 0.80) 45%, rgba(6, 78, 59, 0.30) 100%), url(${bgRoom})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat"
+                }}
             >
                 <div className="log-left-overlay" />
 
@@ -122,35 +127,16 @@ function Login() {
             ═══════════════════════════════ */}
             <div className="log-right-panel">
 
-                {/* Trust sidebar — di antara panel kiri dan form */}
-                <div className="log-trust-sidebar">
-                    <div className="log-trust-item">
-                        <div className="log-trust-icon">
-                            <img src={shieldIcon} alt="identitas terverifikasi" />
-                        </div>
-                        <div className="log-trust-title">Identitas terverifikasi</div>
-                        <div className="log-trust-desc">Semua tukang melalui proses verifikasi ketat</div>
-                    </div>
-                    <div className="log-trust-item">
-                        <div className="log-trust-icon">
-                            <img src={clockIcon} alt="datang tepat waktu" />
-                        </div>
-                        <div className="log-trust-title">Datang tepat waktu</div>
-                        <div className="log-trust-desc">Tukang datang sesuai jadwal yang disepakati</div>
-                    </div>
-                    <div className="log-trust-item">
-                        <div className="log-trust-icon">
-                            <img src={badgeIcon} alt="garansi 7 hari" />
-                        </div>
-                        <div className="log-trust-title">Garansi 7 hari</div>
-                        <div className="log-trust-desc">Garansi pengerjaan untuk setiap layanan</div>
-                    </div>
-                </div>
-
                 {/* Form card */}
                 <div className="log-form-wrapper">
-                    <h2 className="log-right-heading">Selamat datang kembali</h2>
-                    <p className="log-right-subtext">Masuk untuk melanjutkan ke akun SiTukang Anda</p>
+                         <h2 className="log-right-heading">
+                            {roleTab === "Tukang" ? "Selamat datang kembali" : "Selamat datang kembali"}
+                        </h2>
+                        <p className="log-right-subtext">
+                            {roleTab === "Tukang" 
+                                ? "Masuk sebagai Tukang — Kelola job & penghasilan Anda." 
+                                : "Masuk sebagai Customer — Pesan tukang untuk kebutuhan rumah."}
+                        </p>
 
                     {/* Role tabs */}
                     <div className="log-role-tabs">

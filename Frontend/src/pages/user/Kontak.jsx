@@ -205,7 +205,7 @@ function Kontak() {
           <div style={{ flex: "1", minWidth: "200px" }}>
             <h4 style={{ fontSize: "16px", marginBottom: "15px", fontWeight: "600" }}>Kontak Kami</h4>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: "14px", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <li>📍 Jl. Merdeka No. 45, Jakarta Selatan</li>
+              <li>📍 Jl. Gemah Permai I Nof.15 Sendangguwo, Tembalang, Kota Semarang, Jawa Tengah, Indonesia</li>
               <li>📞 +62 812-3456-7890 (WhatsApp)</li>
               <li>✉️ support@situkang.com</li>
               <li>🕒 Senin - Minggu: 08.00 - 20.00 WIB</li>

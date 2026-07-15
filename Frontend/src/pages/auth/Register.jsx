@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
-import "../../assets/css/register.css"; // Pastikan path file CSS sesuai tempat kamu menyimpannya
+import "../../assets/css/register.css";
 import logoImg from "../../assets/gambar/logo.jpeg";
+import bgRoom from "../../assets/gambar/background login,dan register.jpeg";
 
 function Register() {
     const navigate = useNavigate();
@@ -92,6 +93,7 @@ function Register() {
                 </div>
                 
                 <div className="reg-left-content">
+                    className="log-left-panel"
                     <h1 className="reg-left-heading">Profesional terpercaya di ujung jari Anda</h1>
                     <p className="reg-left-subtext">
                         Lebih dari 12.000 tukang terverifikasi siap membantu di seluruh Indonesia.

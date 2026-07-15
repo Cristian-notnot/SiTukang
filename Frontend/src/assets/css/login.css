@@ -1,6 +1,5 @@
 /* ============================================================
-   SiTukang – Login Page CSS
-   File: src/assets/login.css
+   SiTukang – Login Page CSS (Versi Final Dynamic Toggle)
    ============================================================ */
 
 .log-container * {
@@ -18,44 +17,43 @@
 
 /* ============================================================
    PANEL KIRI
-   background-room.png sebagai foto, overlay hijau di atasnya
    ============================================================ */
 
 .log-left-panel {
-    position: relative;
-    width: 47%;
-    flex-shrink: 0;
+    flex: 1;
+    padding: 60px;
     display: flex;
     flex-direction: column;
-    padding: 40px 48px 44px;
+    justify-content: space-between;
+    color: white;
+    position: relative; /* Kunci biar overlay gak bocor ke kanan */
     overflow: hidden;
-    /* Foto ruangan — taruh background-room.png di public/ */
-    background-image: url('/background-room.png');
+    
+    /* Background gambar lu dengan gradasi */
+    background: linear-gradient(
+        105deg, 
+        rgba(6, 78, 59, 0.95) 0%, 
+        rgba(6, 78, 59, 0.80) 45%, 
+        rgba(6, 78, 59, 0.30) 100%
+    ),
+    url('../../assets/gambar/background login,dan register.jpeg') center center no-repeat;
     background-size: cover;
-    background-position: center top;
-    background-color: #0a3d20;   /* fallback jika foto belum ada */
 }
 
-/* Overlay gelap hijau di atas foto */
+/* Overlay (Transparan karena warna gelap udah di-handle gradient di atas) */
 .log-left-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        145deg,
-        rgba(5, 35, 18, 0.88) 0%,
-        rgba(8, 55, 28, 0.75) 45%,
-        rgba(5, 30, 15, 0.92) 100%
-    );
+    background: transparent; 
     z-index: 0;
 }
 
-/* Semua elemen di atas overlay */
 .log-left-panel > *:not(.log-left-overlay) {
     position: relative;
     z-index: 1;
 }
 
-/* ── Logo ─────────────────────────────── */
+/* ── Logo ── */
 .log-logo-container {
     display: flex;
     align-items: center;
@@ -75,9 +73,9 @@
 }
 
 .log-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .log-logo-text {
@@ -87,7 +85,7 @@
     letter-spacing: -0.3px;
 }
 
-/* ── Badge verifikasi ─────────────────── */
+/* ── Badge verifikasi ── */
 .log-verified-badge {
     display: inline-flex;
     align-items: center;
@@ -106,12 +104,10 @@
 .log-badge-icon {
     width: 13px;
     height: 13px;
-    /* shield jadi hijau muda */
-    filter: brightness(0) saturate(100%) invert(82%) sepia(25%)
-            saturate(600%) hue-rotate(90deg) brightness(108%);
+    filter: brightness(0) saturate(100%) invert(82%) sepia(25%) saturate(600%) hue-rotate(90deg) brightness(108%);
 }
 
-/* ── Konten tengah (headline + stats) ── */
+/* ── Konten tengah ── */
 .log-left-content {
     flex: 1;
     display: flex;
@@ -141,7 +137,7 @@
     margin-bottom: 36px;
 }
 
-/* ── Stats ────────────────────────────── */
+/* ── Stats ── */
 .log-stats-container {
     display: flex;
     gap: 32px;
@@ -154,7 +150,6 @@
     gap: 5px;
 }
 
-/* Lingkaran hijau transparan di belakang ikon stats */
 .log-stat-icon-circle {
     width: 44px;
     height: 44px;
@@ -170,9 +165,7 @@
 .log-stat-svg {
     width: 20px;
     height: 20px;
-    /* SVG jadi hijau cerah */
-    filter: brightness(0) saturate(100%) invert(76%) sepia(55%)
-            saturate(450%) hue-rotate(88deg) brightness(112%);
+    filter: brightness(0) saturate(100%) invert(76%) sepia(55%) saturate(450%) hue-rotate(88deg) brightness(112%);
 }
 
 .log-stat-number {
@@ -188,7 +181,7 @@
     text-align: center;
 }
 
-/* ── Testimonial card ─────────────────── */
+/* ── Testimonial ── */
 .log-testimonial-card {
     background: #ffffff;
     border-radius: 14px;
@@ -235,8 +228,6 @@
 
 /* ============================================================
    PANEL KANAN
-   Tiga kolom: [trust-sidebar] [form-card]
-   Background abu-abu terang seperti mockup
    ============================================================ */
 
 .log-right-panel {
@@ -245,20 +236,18 @@
     align-items: center;
     justify-content: center;
     padding: 48px 40px;
-    background: #f0f4f0;   /* abu-abu hijau sangat muda */
-    gap: 0;
+    background: #f0f4f0;   /* abu-abu hijau terang */
+    gap: 48px;             /* Jarak pas antara sidebar trust & form */
 }
 
-/* ── Trust sidebar (POSISI: kiri dari form, tengah layar) ── */
+/* ── Trust sidebar ── */
 .log-trust-sidebar {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 52px;
+    gap: 40px;
     width: 140px;
     flex-shrink: 0;
-    margin-right: 32px;
-    /* Sejajarkan dengan tengah form */
     align-self: center;
 }
 
@@ -270,7 +259,6 @@
     text-align: center;
 }
 
-/* Lingkaran ikon trust — outline hijau tipis */
 .log-trust-icon {
     width: 46px;
     height: 46px;
@@ -287,9 +275,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* SVG jadi hijau tua brand */
-    filter: brightness(0) saturate(100%) invert(28%) sepia(70%)
-            saturate(600%) hue-rotate(118deg) brightness(88%);
+    filter: brightness(0) saturate(100%) invert(28%) sepia(70%) saturate(600%) hue-rotate(118deg) brightness(88%);
 }
 
 .log-trust-title {
@@ -305,7 +291,7 @@
     line-height: 1.45;
 }
 
-/* ── Form card ────────────────────────── */
+/* ── Form card ── */
 .log-form-wrapper {
     width: 100%;
     max-width: 400px;
@@ -330,10 +316,11 @@
     line-height: 1.5;
 }
 
-/* ── Role tabs ────────────────────────── */
+/* ── Role tabs (Customer/Tukang Switcher) ── */
 .log-role-tabs {
     display: flex;
-    background: #f1f5f9;
+    background: #ffffff; /* Background luarnya putih */
+    border: 1.5px solid #e2e8f0; /* Outline tipis sesuai desain */
     border-radius: 999px;
     padding: 4px;
     gap: 4px;
@@ -351,19 +338,23 @@
     color: #64748b;
     cursor: pointer;
     transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
 }
 
+/* State ketika tab aktif */
 .log-tab-btn.active {
     background: #ffffff;
-    color: #166534;
-    box-shadow: 0 1px 8px rgba(22,101,52,0.12);
+    color: #026b5e; /* Warna hijau brand */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sedikit bayangan biar timbul */
 }
 
-.log-tab-btn:focus         { outline: none; }
-.log-tab-btn:focus-visible { box-shadow: 0 0 0 3px rgba(22,101,52,0.2); }
-.log-tab-btn:active        { transform: scale(0.98); }
+.log-tab-btn:focus { outline: none; }
+.log-tab-btn:active { transform: scale(0.98); }
 
-/* ── Form ─────────────────────────────── */
+/* ── Form & Inputs ── */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -390,14 +381,13 @@
 
 .log-forgot-link {
     font-size: 13px;
-    color: #16a34a;
+    color: #026b5e;
     font-weight: 600;
     cursor: pointer;
     transition: color 0.15s;
 }
-.log-forgot-link:hover { color: #15803d; }
+.log-forgot-link:hover { color: #01423a; text-decoration: underline; }
 
-/* Input wrapper */
 .log-input-wrapper {
     position: relative;
     display: flex;
@@ -411,8 +401,10 @@
     align-items: center;
     pointer-events: none;
     z-index: 1;
+    font-size: 16px; /* Ukuran icon emoji jika pakai emoji */
 }
 
+/* Karena ada icon di kiri, padding left-nya digedein (42px) */
 .log-form-input {
     width: 100%;
     padding: 12px 42px 12px 42px;
@@ -428,8 +420,8 @@
 
 .log-form-input:focus {
     outline: none;
-    border-color: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22,163,74,0.10);
+    border-color: #72bcae;
+    box-shadow: 0 0 0 3px rgba(2, 107, 94, 0.10);
 }
 
 .log-toggle-password-btn {
@@ -443,12 +435,12 @@
     align-items: center;
     z-index: 2;
     opacity: 0.7;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
+    font-size: 16px;
 }
-.log-toggle-password-btn:hover { opacity: 1; transform: translateY(-2px); }
-.log-toggle-password-btn:active { transform: translateY(0); }
+.log-toggle-password-btn:hover { opacity: 1; transform: translateY(-1px); }
 
-/* Ingat saya row */
+/* ── Checkbox Ingat Saya ── */
 .log-meta-row {
     display: flex;
     justify-content: space-between;
@@ -465,17 +457,19 @@
 }
 
 .log-remember-me input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-    accent-color: #16a34a;
+    width: 16px;
+    height: 16px;
+    accent-color: #026b5e; /* Warna checklist jadi hijau */
     cursor: pointer;
 }
 
-/* Tombol submit */
+/* ── Buttons ── */
+
+/* 1. Tombol Masuk Utama */
 .log-btn-submit {
     width: 100%;
     padding: 13px 20px;
-    background: linear-gradient(135deg, #026b5e, #01423a);
+    background: linear-gradient(135deg, #7ebca8, #579885); /* Hijau pudar seperti gambar lu */
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -485,43 +479,38 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3);
-    letter-spacing: 0.1px;
+    transition: all 0.25s ease;
 }
 
-.log-btn-submit:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4);
+.log-btn-submit:hover {
+    background: linear-gradient(135deg, #64a18e, #478472);
+    transform: translateY(-1px);
 }
 
-.log-btn-submit:active:not(:disabled) { transform: translateY(0); }
-.log-btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
-
-.log-btn-loading {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+/* 2. Tombol Gunakan Akun Demo (Garis Putus-putus) */
+.log-btn-demo {
+    width: 100%;
+    padding: 12px 20px;
+    background: #ffffff;
+    color: #475569;
+    border: 1.5px dashed #cbd5e1; /* Garis putus-putus */
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.log-spinner {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: #fff;
-    animation: log-spin 0.75s linear infinite;
-    display: inline-block;
+.log-btn-demo:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
 }
 
-@keyframes log-spin { to { transform: rotate(360deg); } }
-
-/* Divider */
+/* ── Divider (Atau lanjut dengan) ── */
 .log-divider {
     position: relative;
     text-align: center;
-    margin: 2px 0;
+    margin: 4px 0;
 }
 
 .log-divider::before {
@@ -541,7 +530,7 @@
     color: #94a3b8;
 }
 
-/* Social buttons */
+/* ── Social Buttons (Google / Apple) ── */
 .log-social-row {
     display: flex;
     gap: 10px;
@@ -561,17 +550,12 @@
     font-weight: 600;
     color: #1e293b;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
 }
 
 .log-btn-social:hover {
     border-color: #026b5e;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(2, 107, 94, 0.15);
-}
-
-.log-btn-social:active {
-    transform: translateY(0);
+    background: #f8fafc;
 }
 
 .log-social-icon {
@@ -580,23 +564,23 @@
     object-fit: contain;
 }
 
-/* Daftar link */
+/* ── Footer Link (Daftar Sekarang) ── */
 .log-register-text {
     text-align: center;
     font-size: 13.5px;
     color: #64748b;
-    margin-top: 22px;
+    margin-top: 16px;
 }
 
 .log-register-link {
-    color: #16a34a;
+    color: #026b5e;
     font-weight: 700;
     cursor: pointer;
 }
 .log-register-link:hover { text-decoration: underline; }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE LAYOUT
    ============================================================ */
 
 @media (max-width: 1100px) {
@@ -606,7 +590,7 @@
 
 @media (max-width: 820px) {
     .log-container     { flex-direction: column; }
-    .log-left-panel    { width: 100%; padding: 30px 24px; min-height: 52vh; }
+    .log-left-panel    { width: 100%; padding: 30px 24px; min-height: 40vh; }
     .log-left-heading  { font-size: 26px; }
     .log-right-panel   { padding: 32px 20px; background: #f8faf8; }
     .log-form-wrapper  { max-width: 100%; padding: 26px 20px 22px; }
