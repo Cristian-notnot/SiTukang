@@ -1,101 +1,445 @@
-/* ANIMASI: Agar elemen muncul dengan halus */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.register-page {
+.register-tukang-page {
   display: flex;
   min-height: 100vh;
-  width: 100%;
   font-family: 'Inter', -apple-system, sans-serif;
-  animation: fadeIn 0.6s ease-out; /* Animasi seluruh halaman */
 }
 
-/* --- KIRI: BRANDING --- */
-.register-left {
+/* ─── LEFT PANEL ─── */
+.register-left-panel {
   flex: 1;
   background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%);
   color: white;
-  padding: 60px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.left-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.left-content {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  padding: 60px 40px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 36px;
 }
 
-.logo-section { font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
-.logo-section .logo-img {
-  height: 44px;
+.left-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+}
+.left-logo img {
+  height: 40px;
   width: auto;
-  vertical-align: middle;
-  margin-right: 8px;
+  border-radius: 10px;
 }
-.hero-text h1 { font-size: 48px; line-height: 1.1; margin-bottom: 20px; }
-.hero-text p { font-size: 16px; opacity: 0.9; }
 
-/* Stats dengan sedikit hover effect */
-.stats-row { display: flex; gap: 40px; }
-.stat-item { transition: transform 0.3s ease; }
-.stat-item:hover { transform: translateY(-5px); }
-.stat-item h3 { font-size: 28px; margin: 0; }
-.stat-item p { font-size: 14px; opacity: 0.8; margin: 0; }
+.left-hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.text-highlight {
+  color: #5eead4;
+}
+.left-subtitle {
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.9;
+}
 
-/* --- KANAN: FORM & INTERAKSI --- */
-.register-right {
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.feature-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5eead4;
+}
+.feature-text h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.feature-text p {
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.left-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.avatar-stack {
+  display: flex;
+  align-items: center;
+}
+.avatar-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  margin-right: -10px;
+}
+.avatar-item:nth-child(2) { background: linear-gradient(135deg, #0891b2, #06b6d4); z-index: 1; }
+.avatar-item:nth-child(3) { background: linear-gradient(135deg, #7c3aed, #8b5cf6); z-index: 2; }
+.avatar-item:nth-child(4) { background: linear-gradient(135deg, #d97706, #f59e0b); z-index: 3; }
+.avatar-item:nth-child(5) { background: linear-gradient(135deg, #dc2626, #ef4444); z-index: 4; }
+.avatar-more {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  z-index: 5;
+}
+.left-footer p {
+  font-size: 13px;
+  opacity: 0.75;
+  line-height: 1.5;
+}
+
+.wave-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 0;
+  pointer-events: none;
+}
+.wave-decoration svg {
+  width: 100%;
+  height: 80px;
+  fill: white;
+}
+
+/* ─── RIGHT PANEL ─── */
+.register-right-panel {
   flex: 1;
   background: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px;
+  position: relative;
 }
 
-.form-container { width: 100%; max-width: 450px; }
-
-/* INPUT: Menjadi lebih "hidup" saat di-klik */
-.field-group input, .field-group select {
+.form-wrapper {
   width: 100%;
-  padding: 14px;
+  max-width: 420px;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.form-header-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.form-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+.form-header p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 18px;
+}
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  display: flex;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+.input-wrapper:focus-within .input-icon {
+  color: #0d9488;
+}
+.input-wrapper input,
+.input-wrapper select {
+  width: 100%;
+  padding: 12px 14px 12px 44px;
   border: 2px solid #e2e8f0;
   border-radius: 10px;
-  box-sizing: border-box;
-  transition: all 0.3s ease; /* Transisi halus */
-}
-
-.field-group input:focus, .field-group select:focus {
+  font-size: 14px;
+  font-family: inherit;
+  color: #0f172a;
+  background: #f8fafc;
   outline: none;
+  transition: all 0.25s ease;
+}
+.input-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+.input-wrapper input:focus,
+.input-wrapper select:focus {
   border-color: #0d9488;
-  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1); /* Glow efek */
+  background: white;
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+}
+.input-wrapper input::placeholder {
+  color: #94a3b8;
 }
 
-/* BUTTON: Hover efek */
-.btn-register {
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 6px;
+  display: flex;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.toggle-password:hover {
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+.input-error-text {
+  display: block;
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+}
+
+/* Verification Checklist */
+.verification-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f0fdfa;
+  padding: 18px 20px;
+  border-radius: 10px;
+  border: 1px solid #ccfbf1;
+  margin-bottom: 22px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #0f172a;
+}
+.check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #059669;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Button */
+.btn-daftar {
   width: 100%;
-  padding: 15px;
-  background: linear-gradient(135deg, #026b5e, #01423a);
+  padding: 14px;
+  background: linear-gradient(135deg, #059669, #047857);
   color: white;
   border: none;
   border-radius: 10px;
+  font-size: 16px;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(2, 107, 94, 0.3);
+  box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
 }
-
-.btn-register:hover {
+.btn-daftar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(2, 107, 94, 0.4);
+  box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+}
+.btn-daftar:active {
+  transform: translateY(0);
+}
+.btn-daftar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.btn-register:active { transform: translateY(0); }
-
-/* Vibe Check: Verification Box */
-.verification-box {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #edf2f7;
-  transition: background 0.3s;
+.login-link-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #64748b;
 }
-.verification-box:hover { background: #f1f5f9; }
+.login-link-text a {
+  color: #0d9488;
+  font-weight: 600;
+  text-decoration: none;
+}
+.login-link-text a:hover {
+  text-decoration: underline;
+}
+
+/* Bottom Footer Bar */
+.bottom-footer-bar {
+  display: flex;
+  gap: 24px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  width: 100%;
+  max-width: 420px;
+  justify-content: center;
+}
+.footer-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #64748b;
+  text-align: center;
+}
+.footer-bar-item svg {
+  color: #0d9488;
+}
+.footer-bar-item span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+.footer-bar-item small {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .register-tukang-page {
+    flex-direction: column;
+  }
+  .register-left-panel {
+    padding: 40px 20px;
+  }
+  .left-content {
+    padding: 0;
+    gap: 28px;
+  }
+  .left-hero h1 {
+    font-size: 32px;
+  }
+  .register-right-panel {
+    padding: 40px 20px;
+  }
+  .bottom-footer-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .footer-bar-item {
+    flex-direction: row;
+    gap: 8px;
+  }
+}

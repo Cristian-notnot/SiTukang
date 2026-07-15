@@ -89,7 +89,7 @@ function MyBooking() {
                     className="booking-top-button"
                     onClick={() => navigate("/user")}
                 >
-                    Cari Tukang
+                    ← Kembali ke Dashboard
                 </button>
             </div>
 
@@ -139,7 +139,14 @@ function MyBooking() {
                             <h3>{item.nama_tukang}</h3>
                             <p><strong>Alamat:</strong> {item.alamat}</p>
                             <p><strong>Keluhan:</strong> {item.keluhan}</p>
-                            <p><strong>Status:</strong> <span className={`badge badge-${item.status}`}>{item.status}</span></p>
+                            <p><strong>Status:</strong> <span className={`badge badge-${item.status}`}>
+                                {item.status === "pending" ? "Menunggu" :
+                                 item.status === "diterima" ? "Diterima" :
+                                 item.status === "dikerjakan" ? "Dikerjakan" :
+                                 item.status === "selesai" ? "Selesai" :
+                                 item.status === "ditolak" ? "Ditolak" :
+                                 item.status === "dibatalkan" ? "Dibatalkan" : item.status}
+                            </span></p>
                             <p><strong>Tanggal:</strong> {new Date(item.tanggal_booking).toLocaleString()}</p>
 
                             <Link to={`/user/booking/detail/${item.id}`} style={{ display: "inline-block", marginTop: 8, color: "#026b5e", fontWeight: 600, fontSize: 13 }}>

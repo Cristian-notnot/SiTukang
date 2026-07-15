@@ -19,8 +19,11 @@ function TukangPage() {
 
     useEffect(() => {
         loadKategori();
-        load({});
     }, []);
+
+    useEffect(() => {
+        load(buildParams());
+    }, [statusFilter, kategoriFilter]);
 
     const loadKategori = async () => {
         try {
@@ -120,13 +123,13 @@ function TukangPage() {
                     />
                 </form>
                 <div className="filter-select-wrapper">
-                    <select className="filter-select" value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setTimeout(() => load(buildParams()), 0); }}>
+                    <select className="filter-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
                         <option value="semua">Status: Semua</option>
                         <option value="pending">Menunggu</option>
                         <option value="approved">Disetujui</option>
                         <option value="rejected">Ditolak</option>
                     </select>
-                    <select className="filter-select" value={kategoriFilter} onChange={e => { setKategoriFilter(e.target.value); setTimeout(() => load(buildParams()), 0); }}>
+                    <select className="filter-select" value={kategoriFilter} onChange={e => setKategoriFilter(e.target.value)}>
                         <option value="semua">Kategori: Semua</option>
                         {kategoriList.map(k => (
                             <option key={k.id} value={k.nama_kategori}>{k.nama_kategori}</option>
