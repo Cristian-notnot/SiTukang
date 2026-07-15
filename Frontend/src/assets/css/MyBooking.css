@@ -131,16 +131,24 @@
     background:#f39c12;
 }
 
-.badge-proses{
+.badge-diterima{
     background:#3498db;
+}
+
+.badge-dikerjakan{
+    background:#8b5cf6;
 }
 
 .badge-selesai{
     background:#00b894;
 }
 
-.badge-dibatalkan{
+.badge-ditolak{
     background:#e74c3c;
+}
+
+.badge-dibatalkan{
+    background:#95a5a6;
 }
 
 .empty-booking{

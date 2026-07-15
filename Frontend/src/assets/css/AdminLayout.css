@@ -419,8 +419,8 @@ h1, h2, h3, h4 { line-height: 1.3; }
 .btn-cancel { background: var(--card); border: 1px solid var(--border); padding: 8px 18px; border-radius: var(--radius-sm); cursor: pointer; font-size: 0.85rem; color: var(--text-secondary); transition: 0.2s; }
 .btn-cancel:hover { background: var(--surface); }
 
-.role-select, .status-select, .filter-select { padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius-xs); font-size: 0.82rem; background: var(--card); cursor: pointer; }
-.filter-select { padding: 10px 16px; border-radius: var(--radius-sm); }
+.role-select, .status-select { padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius-xs); font-size: 0.82rem; background: var(--card); cursor: pointer; outline: none; }
+.role-select:focus, .status-select:focus { border-color: var(--primary); }
 
 /* ─── Card UI ─── */
 .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); }
