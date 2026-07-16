@@ -254,10 +254,10 @@ exports.updateStatusBooking = (req, res) => {
     const bookingId = req.params.id;
     const { status } = req.body;
 
-    // Validasi status
     const allowedStatus = [
     "diterima",
     "ditolak",
+    "waiting_payment",
     "dikerjakan",
     "selesai"
 ];
@@ -320,54 +320,29 @@ exports.updateStatusBooking = (req, res) => {
 
             const currentStatus = booking[0].status;
 
-            if (
-    currentStatus === "pending" &&
-    status !== "diterima" &&
-    status !== "ditolak"
-) {
+            const validTransitions = {
+                pending: ["waiting_payment", "ditolak"],
+                waiting_payment: [],
+                paid: ["dikerjakan"],
+                diterima: ["dikerjakan"],
+                dikerjakan: ["selesai"],
+            };
 
-    return res.status(400).json({
-        success:false,
-        message:"Booking pending hanya bisa diterima atau ditolak"
-    });
+            const allowedNext = validTransitions[currentStatus] || [];
 
-}
-
-if (
-    currentStatus === "diterima" &&
-    status !== "dikerjakan"
-){
-
-    return res.status(400).json({
-        success:false,
-        message:"Booking diterima hanya bisa menjadi dikerjakan"
-    });
-
-}
-
-if (
-    currentStatus === "dikerjakan" &&
-    status !== "selesai"
-){
-
-    return res.status(400).json({
-        success:false,
-        message:"Booking dikerjakan hanya bisa menjadi selesai"
-    });
-
-}
-
-if (
-    currentStatus === "ditolak" ||
-    currentStatus === "selesai"
-){
-
-    return res.status(400).json({
-        success:false,
-        message:"Status booking tidak dapat diubah lagi"
-    });
-
-}
+            if (!allowedNext.includes(status)) {
+                const errMsg = {
+                    pending: "Booking pending hanya bisa dikonfirmasi (waiting_payment) atau ditolak",
+                    waiting_payment: "Tunggu pembayaran dari pelanggan sebelum melanjutkan",
+                    paid: "Booking sudah dibayar, silakan mulai dikerjakan",
+                    diterima: "Booking diterima hanya bisa menjadi dikerjakan",
+                    dikerjakan: "Booking dikerjakan hanya bisa menjadi selesai",
+                };
+                return res.status(400).json({
+                    success: false,
+                    message: errMsg[currentStatus] || "Status tidak dapat diubah"
+                });
+            }
 
             // Update status booking
             const sqlUpdate = `

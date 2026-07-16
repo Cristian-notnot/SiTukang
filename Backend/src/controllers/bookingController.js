@@ -94,7 +94,7 @@ exports.updateBookingStatus = (req, res) => {
     const bookingId = req.params.id;
     const { status } = req.body;
 
-    const allowedStatus = ["pending", "diterima", "dikerjakan", "selesai", "ditolak", "dibatalkan"];
+    const allowedStatus = ["pending", "diterima", "ditolak", "waiting_payment", "paid", "dikerjakan", "selesai", "dibatalkan"];
 
     if (!allowedStatus.includes(status)) {
         return res.status(400).json({ success: false, message: "Status tidak valid" });
@@ -147,8 +147,8 @@ exports.cancelBooking = (req, res) => {
         if (err) return res.status(500).json({ success: false, message: err.message });
         if (result.length === 0) return res.status(404).json({ success: false, message: "Booking tidak ditemukan" });
 
-        if (result[0].status !== "pending") {
-            return res.status(400).json({ success: false, message: "Hanya booking dengan status pending yang bisa dibatalkan" });
+        if (!["pending", "waiting_payment"].includes(result[0].status)) {
+            return res.status(400).json({ success: false, message: "Hanya booking dengan status pending atau waiting_payment yang bisa dibatalkan" });
         }
 
         db.query("UPDATE booking SET status = 'dibatalkan' WHERE id = ?", [bookingId], (err) => {

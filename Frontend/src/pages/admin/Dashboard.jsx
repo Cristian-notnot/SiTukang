@@ -4,7 +4,8 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import { Card, TableSkeleton } from "../../components/admin/Card";
-import { TrendingUp, FileText, Building2, Users } from "lucide-react";
+import { TrendingUp, FileText, Building2, Users, ChevronRight } from "lucide-react";
+import fotoAllTeam from "../../assets/img/Foto_All_Team.jpeg";
 
 const COLORS = ["#14b8a6", "#059669", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"];
 
@@ -90,6 +91,39 @@ function AdminDashboard() {
 
     return (
         <div className="page-content">
+
+            {/* Welcome Hero */}
+            <div style={{
+                background: "linear-gradient(135deg, #0f766c 0%, #14b8a6 50%, #0d9488 100%)",
+                borderRadius: 20, padding: "32px 36px", marginBottom: "1.5rem",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                gap: 32, position: "relative", overflow: "hidden"
+            }}>
+                <div style={{ flex: 1, position: "relative", zIndex: 1 }}>
+                    <h1 style={{ margin: 0, fontSize: 26, fontWeight: 800, color: "#fff" }}>
+                        Selamat Datang, Admin!
+                    </h1>
+                    <p style={{ margin: "8px 0 0", fontSize: 14, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, maxWidth: 500 }}>
+                        Pantau dan kelola seluruh aktivitas platform SiTukang mulai dari pengguna, tukang, booking, hingga laporan keuangan dengan mudah.
+                    </p>
+                    <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+                        <span style={{ padding: "4px 14px", background: "rgba(255,255,255,0.2)", borderRadius: 20, fontSize: 12, fontWeight: 600, color: "#fff" }}>
+                            {new Date().toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+                        </span>
+                        <span style={{ padding: "4px 14px", background: "rgba(255,255,255,0.2)", borderRadius: 20, fontSize: 12, fontWeight: 600, color: "#fff" }}>
+                            {stats?.total_user || 0} User Terdaftar
+                        </span>
+                    </div>
+                </div>
+                <div style={{
+                    width: 280, height: "100%", minHeight: 180, overflow: "hidden",
+                    flexShrink: 0, position: "relative", zIndex: 1,
+                    borderRadius: 12
+                }}>
+                    <img src={fotoAllTeam} alt="Tim SiTukang"
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", position: "absolute", inset: 0 }} />
+                </div>
+            </div>
 
             {/* 4 Stat Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>

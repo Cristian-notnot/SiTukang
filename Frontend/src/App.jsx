@@ -19,6 +19,9 @@ import Tentang from "./pages/user/Tentang";
 import Ulasan from "./pages/user/Ulasan";
 import FAQ from "./pages/user/FAQ";
 import Kontak from "./pages/user/Kontak";
+import PaymentPage from "./pages/user/PaymentPage";
+import PaymentDetail from "./pages/user/PaymentDetail";
+import RiwayatPembayaran from "./pages/user/RiwayatPembayaran";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 import TukangDashboard from "./pages/tukang/Dashboard";
@@ -58,6 +61,9 @@ function App() {
                 <Route path="/user/tukang/:id" element={<ProtectedRoute><DetailTukang /></ProtectedRoute>} />
                 <Route path="/user/booking/:id" element={<ProtectedRoute><BookingPage /></ProtectedRoute>} />
                 <Route path="/user/booking/detail/:id" element={<ProtectedRoute><DetailBooking /></ProtectedRoute>} />
+                <Route path="/user/payment/:id" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
+                <Route path="/user/payment/invoice/:invoiceNumber" element={<ProtectedRoute><PaymentDetail /></ProtectedRoute>} />
+                <Route path="/user/riwayat-pembayaran" element={<ProtectedRoute><RiwayatPembayaran /></ProtectedRoute>} />
                 <Route path="/user/my-booking" element={<ProtectedRoute><MyBooking /></ProtectedRoute>} />
                 <Route path="/user/order-aktif" element={<ProtectedRoute><OrderAktif /></ProtectedRoute>} />
                 <Route path="/user/riwayat" element={<ProtectedRoute><Riwayat /></ProtectedRoute>} />
@@ -65,8 +71,6 @@ function App() {
                 <Route path="/user/pengaturan" element={<ProtectedRoute><PengaturanUser /></ProtectedRoute>} />
 
                 <Route path="/tukang" element={<ProtectedRoute requiredRole="tukang"><TukangDashboard /></ProtectedRoute>} />
-
-                <Route path="/login-admin" element={<LoginAdmin />} />
 
                 <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminLayout /></ProtectedRoute>}>
                     <Route index element={<AdminDashboard />} />

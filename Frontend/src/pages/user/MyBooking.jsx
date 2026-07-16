@@ -142,6 +142,8 @@ function MyBooking() {
                             <p><strong>Status:</strong> <span className={`badge badge-${item.status}`}>
                                 {item.status === "pending" ? "Menunggu" :
                                  item.status === "diterima" ? "Diterima" :
+                                 item.status === "waiting_payment" ? "Menunggu Pembayaran" :
+                                 item.status === "paid" ? "Lunas" :
                                  item.status === "dikerjakan" ? "Dikerjakan" :
                                  item.status === "selesai" ? "Selesai" :
                                  item.status === "ditolak" ? "Ditolak" :

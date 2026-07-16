@@ -16,7 +16,13 @@ const app = express();
 const path = require("path");
 
 app.use(cors());
-app.use(express.json());
+
+app.use(express.json({
+    verify: (req, res, buf) => {
+        req.rawBody = buf.toString();
+    }
+}));
+
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/api/auth", authRoutes);
@@ -27,8 +33,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/dashbord-tukang", dashbordTukangRoutes);
 app.use("/api/payment", paymentRoutes);
 
+const paymentController = require("./controllers/paymentController");
+app.post("/api/payment/webhook-midtrans", paymentController.handleMidtransWebhook);
 
 module.exports = app;
-
-console.log("authRoutes =", authRoutes);
-console.log("tukangRoutes =", tukangRoutes);

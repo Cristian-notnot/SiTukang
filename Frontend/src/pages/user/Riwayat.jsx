@@ -3,12 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { getMyBooking } from "../../api/bookingApi";
 import {
   FiCalendar, FiMapPin, FiClock, FiCheckCircle, FiXCircle,
-  FiRefreshCw, FiSearch, FiChevronRight, FiFilter
+  FiRefreshCw,   FiSearch, FiChevronRight, FiFilter, FiCreditCard
 } from "react-icons/fi";
 
 const statusConfig = {
   pending: { label: "Menunggu", color: "#f59e0b", bg: "#fef3c7", icon: FiClock },
   diterima: { label: "Diterima", color: "#3b82f6", bg: "#dbeafe", icon: FiCheckCircle },
+  waiting_payment: { label: "Menunggu Pembayaran", color: "#f59e0b", bg: "#fef3c7", icon: FiCreditCard },
+  paid: { label: "Lunas", color: "#10b981", bg: "#d1fae5", icon: FiCheckCircle },
   dikerjakan: { label: "Dikerjakan", color: "#8b5cf6", bg: "#ede9fe", icon: FiRefreshCw },
   selesai: { label: "Selesai", color: "#10b981", bg: "#d1fae5", icon: FiCheckCircle },
   ditolak: { label: "Ditolak", color: "#ef4444", bg: "#fee2e2", icon: FiXCircle },
@@ -20,6 +22,8 @@ const filterOptions = [
   { value: "", label: "Semua Status" },
   { value: "pending", label: "Menunggu" },
   { value: "diterima", label: "Diterima" },
+  { value: "waiting_payment", label: "Menunggu Pembayaran" },
+  { value: "paid", label: "Lunas" },
   { value: "dikerjakan", label: "Dikerjakan" },
   { value: "selesai", label: "Selesai" },
   { value: "ditolak", label: "Ditolak" },
