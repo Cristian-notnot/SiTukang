@@ -377,9 +377,7 @@ function UserDashboard() {
                 Portal Customer ➔
               </button>
               <button className="btn-action-dark" onClick={() => navigate("/register")}>Daftar sebagai Pelanggan ➔</button>
-              <span className="side-text-link" onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
-                Sudanya punya akun?
-              </span>
+          
             </div>
           </div>
 
@@ -404,19 +402,10 @@ function UserDashboard() {
 
             <div className="join-actions">
               <button className="btn-action-outline-white" onClick={() => navigate("/login")}>Portal Tukang ➔</button>
-              <button className="btn-action-white" onClick={() => navigate("/register")}>Daftar sebagai Tukang ➔</button>
+              <button className="btn-action-white" onClick={() => navigate("/registerTukang")}>Daftar sebagai Tukang ➔</button>
             </div>
 
-            {/* Admin portal small button at bottom */}
-            <div style={{ marginTop: 14, textAlign: "center" }}>
-              <button
-                className="btn-action-dark"
-                onClick={() => navigate("/login-admin")}
-                style={{ borderRadius: 14 }}
-              >
-                Portal Admin ➔
-              </button>
-            </div>
+           
           </div>
         </div>
       </section>

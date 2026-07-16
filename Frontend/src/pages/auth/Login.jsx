@@ -281,7 +281,7 @@ function Login() {
 
                     <div className="log-register-text">
                         Belum punya akun?{" "}
-                        <span className="log-register-link" onClick={() => navigate("/register")}>
+                        <span className="log-register-link" onClick={() => navigate(roleTab === "Tukang" ? "/registerTukang" : "/register")}>
                             Daftar sekarang
                         </span>
                     </div>

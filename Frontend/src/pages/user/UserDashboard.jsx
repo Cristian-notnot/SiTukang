@@ -14,7 +14,7 @@ import {
   FiSettings, FiStar, FiTool, FiZap, FiAward, FiChevronRight,
   FiShield, FiHome, FiX, FiSliders, FiUser, FiMail, FiLock,
   FiSave, FiEye, FiEyeOff, FiFilter, FiRefreshCw, FiXCircle,
-  FiLogOut, FiCamera
+  FiLogOut, FiCamera, FiInbox
 } from "react-icons/fi";
 
 const popularServices = [
@@ -121,7 +121,7 @@ function UserDashboard() {
 
   const sidebar = (
     <aside className="customer-sidebar">
-      <button className="sidebar-brand" type="button" onClick={() => navigate("/")} style={{ background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
+      <button className="sidebar-brand" type="button" style={{ background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
         <span className="brand-mark"><FiTool /></span>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span style={{ lineHeight: 1 }}>SiTukang</span>
@@ -158,7 +158,7 @@ function UserDashboard() {
         <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#026b5e", color: "white", display: "grid", placeItems: "center", fontWeight: "bold" }}>{profileInitials}</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--ink)" }}>{displayName}</span>
-          <small style={{ fontSize: "12px", color: "#026b5e", fontWeight: "600" }}>Pelanggan Premium</small>
+          <small style={{ fontSize: "12px", color: "#026b5e", fontWeight: "600" }}>Customer</small>
         </div>
       </div>
     </aside>
@@ -327,10 +327,7 @@ function UserDashboard() {
               <h2 style={{ fontSize: "18px", fontWeight: "800", margin: "0 0 4px 0" }}>Layanan populer</h2>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0 }}>Pilih kategori untuk lihat tukang tersedia di area Anda.</p>
             </div>
-            <button type="button" onClick={() => setActiveTab("cari-tukang")}
-              style={{ background: "none", border: "none", color: "var(--primary)", fontWeight: "600", fontSize: "14px", cursor: "pointer" }}>
-              Semua kategori
-            </button>
+        
           </div>
           <div className="quick-services-grid">
             {popularServices.map((service, index) => {
@@ -645,7 +642,7 @@ function UserDashboard() {
               <p>Anda belum memiliki riwayat pemesanan tukang. Cari tukang terbaik dan lakukan booking pertama Anda.</p>
               <div className="booking-empty-actions">
                 <button className="primary-btn" onClick={() => setActiveTab("cari-tukang")}>Cari Tukang</button>
-                <button className="secondary-btn" onClick={() => navigate("/layanan")}>Lihat Layanan</button>
+               
               </div>
             </div>
             <div className="booking-empty-center">
@@ -663,12 +660,8 @@ function UserDashboard() {
                 <p><strong>Status:</strong> <span className={`badge badge-${item.status}`}>{item.status}</span></p>
                 <p><strong>Tanggal:</strong> {new Date(item.tanggal_booking).toLocaleString()}</p>
                 <div style={{ display: "flex", gap: 16, marginTop: 8, alignItems: "center" }}>
-                  <Link to={`/user/booking/detail/${item.id}`} style={{ color: "#026b5e", fontWeight: 600, fontSize: 13 }}>
-                    Lihat Detail Booking →
-                  </Link>
-                  <Link to={`/user/tukang/${item.tukang_id}`} style={{ color: "#026b5e", fontWeight: 600, fontSize: 13 }}>
-                    Lihat Profil Tukang →
-                  </Link>
+                  
+                  
                 </div>
                 {item.status === "pending" && (
                   <button onClick={() => handleCancel(item.id)} style={{ color: "red", marginTop: 8, marginLeft: 16, background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>Batalkan</button>
@@ -746,9 +739,9 @@ function UserDashboard() {
           <div style={{ textAlign: "center", padding: 60, color: "#667085" }}>Memuat data...</div>
         ) : bookings.length === 0 ? (
           <div style={{ textAlign: "center", padding: "60px 20px", background: "white", borderRadius: 20, border: "1px solid #e4e7ec" }}>
-            <FiCheckCircle style={{ fontSize: 48, color: "#d1d5db", marginBottom: 16 }} />
+            <FiInbox style={{ fontSize: 48, color: "#d1d5db", marginBottom: 16 }} />
             <h3 style={{ margin: "0 0 8px", fontWeight: 700 }}>Tidak ada order aktif</h3>
-            <p style={{ margin: 0, fontSize: 14, color: "#667085", marginBottom: 20 }}>Belum ada booking yang sedang berjalan.</p>
+            <p style={{ margin: "0 0 20px", fontSize: 14, color: "#667085" }}>Belum ada booking yang sedang berjalan.</p>
             <button onClick={() => setActiveTab("cari-tukang")} style={{ padding: "10px 24px", background: "#026b5e", color: "white", border: "none", borderRadius: 12, fontWeight: 600, cursor: "pointer" }}>
               Cari Tukang Sekarang
             </button>
