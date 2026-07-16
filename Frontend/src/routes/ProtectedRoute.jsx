@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function ProtectedRoute({ children, requiredRole }) {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
+    const { user, token } = useContext(AuthContext);
 
     if (!token) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/login" replace />;
     }
 
     if (requiredRole && user?.role !== requiredRole) {
@@ -14,7 +15,7 @@ function ProtectedRoute({ children, requiredRole }) {
             tukang: "/login",
             user: "/login",
         };
-        return <Navigate to={redirectMap[requiredRole] || "/login"} />;
+        return <Navigate to={redirectMap[requiredRole] || "/login"} replace />;
     }
 
     return children;

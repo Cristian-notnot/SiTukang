@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { getAdminProfile } from "../api/adminApi";
 import {
     Menu, Bell, Search, User, ChevronDown,
     LayoutDashboard, BarChart3,
@@ -21,6 +22,13 @@ function AdminLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [adminNama, setAdminNama] = useState(user?.nama || "Admin");
+
+    useEffect(() => {
+        getAdminProfile()
+            .then(res => { if (res?.data?.nama) setAdminNama(res.data.nama); })
+            .catch(() => {});
+    }, [location.pathname]);
 
     useEffect(() => {
         setDrawerOpen(false);
@@ -116,7 +124,7 @@ function AdminLayout() {
                         <button className="user-avatar">
                             <User size={20} />
                         </button>
-                        <span className="user-name">{user?.nama || "Admin"}</span>
+                        <span className="user-name">{adminNama}</span>
                         <ChevronDown size={16} />
                         <div className="dropdown-menu">
                             <button onClick={() => navigate("/admin/profil")}>Profil</button>
@@ -221,10 +229,10 @@ function AdminLayout() {
 
                 <div className="sidebar-profile">
                     <div className="sidebar-profile-avatar">
-                        {user?.nama?.charAt(0).toUpperCase() || "A"}
+                        {adminNama?.charAt(0).toUpperCase() || "A"}
                     </div>
                     <div className="sidebar-profile-info">
-                        <div className="sidebar-profile-name">{user?.nama || "Admin"}</div>
+                        <div className="sidebar-profile-name">{adminNama}</div>
                         <div className="sidebar-profile-role">Administrator</div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import { getRekomendasiTukang, getAllTukang, getSearchTukang, getAllKategori } f
 import { getMyBooking, cancelBooking } from "../../api/bookingApi";
 import { createReview, getReviewByBooking, getMyReviews } from "../../api/reviewApi";
 import { getProfile, updateProfile, uploadProfilePhoto } from "../../api/userApi";
+import { getWallet, getTransactions, getPaymentMethods, addPaymentMethod, deletePaymentMethod, setDefaultPaymentMethod, payBooking } from "../../api/paymentApi";
 import ghostBooking from "../../assets/gambar/ghost.image.png";
 import "../../assets/css/UserDashboard.css";
 import "../../assets/css/MyBooking.css";
@@ -155,7 +156,13 @@ function UserDashboard() {
         </div>
       </nav>
       <div className="sidebar-profile-card" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", borderRadius: "14px", background: "var(--canvas)", marginTop: "auto" }}>
-        <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#026b5e", color: "white", display: "grid", placeItems: "center", fontWeight: "bold" }}>{profileInitials}</div>
+        <div style={{ width: "40px", height: "40px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "#026b5e" }}>
+          {user?.foto ? (
+            <img src={`http://localhost:5000/${user.foto}`} alt={displayName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <div style={{ width: "100%", height: "100%", display: "grid", placeItems: "center", color: "white", fontWeight: "bold", fontSize: "14px" }}>{profileInitials}</div>
+          )}
+        </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--ink)" }}>{displayName}</span>
           <small style={{ fontSize: "12px", color: "#026b5e", fontWeight: "600" }}>Customer</small>
@@ -176,7 +183,7 @@ function UserDashboard() {
         {activeTab === "riwayat" && <RiwayatSection />}
         {activeTab === "chat" && <PlaceholderSection icon={FiMessageSquare} title="Chat" message="Fitur chat akan segera hadir. Anda dapat berkomunikasi langsung dengan tukang melalui fitur ini." />}
         {activeTab === "notifikasi" && <PlaceholderSection icon={FiBell} title="Notifikasi" message="Fitur notifikasi akan segera hadir. Anda akan mendapatkan pemberitahuan mengenai status booking dan promo terbaru." />}
-        {activeTab === "pembayaran" && <PlaceholderSection icon={FiCreditCard} title="Pembayaran" message="Fitur pembayaran akan segera hadir. Anda dapat melakukan pembayaran secara online melalui berbagai metode." />}
+        {activeTab === "pembayaran" && <PembayaranSection />}
         {activeTab === "ulasan-saya" && <UlasanSayaSection />}
         {activeTab === "pengaturan" && <PengaturanSection />}
       </main>
@@ -187,6 +194,7 @@ function UserDashboard() {
     const [rekomendasi, setRekomendasi] = useState([]);
     const [bookingCount, setBookingCount] = useState(0);
     const [activeCount, setActiveCount] = useState(0);
+    const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
       getRekomendasiTukang()
@@ -195,6 +203,7 @@ function UserDashboard() {
       getMyBooking()
         .then(data => {
           const arr = Array.isArray(data) ? data : (data.data || []);
+          setBookings(arr);
           setBookingCount(arr.length);
           setActiveCount(arr.filter(b => b.status === "pending" || b.status === "diterima" || b.status === "dikerjakan").length);
         })
@@ -222,14 +231,19 @@ function UserDashboard() {
           <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <div className="dashboard-search" style={{ display: "flex", alignItems: "center", background: "white", padding: "10px 16px", borderRadius: "20px", border: "1px solid var(--line)", width: "260px", gap: "10px" }}>
               <FiSearch style={{ color: "var(--muted)" }} />
-              <input type="text" placeholder="Cari order, tukang..." style={{ border: "none", outline: "none", width: "100%", fontSize: "14px" }} />
+              <input type="text" placeholder="Cari order, tukang..." style={{ border: "none", outline: "none", width: "100%", fontSize: "14px" }}
+                onKeyDown={e => { if (e.key === "Enter" && e.target.value.trim()) { setActiveTab("cari-tukang"); } }} />
             </div>
             <button className="icon-button" style={{ position: "relative", background: "white", border: "1px solid var(--line)", width: "42px", height: "42px", borderRadius: "50%", display: "grid", placeItems: "center", cursor: "pointer" }}>
               <FiBell style={{ color: "var(--ink)" }} />
               <span style={{ position: "absolute", top: "12px", right: "12px", width: "8px", height: "8px", background: "#ef4444", borderRadius: "50%" }}></span>
             </button>
-            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#e2e8f0", display: "grid", placeItems: "center", fontWeight: "600", fontSize: "14px" }}>
-              {profileInitials}
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", background: "#e2e8f0", flexShrink: 0 }}>
+              {user?.foto ? (
+                <img src={`http://localhost:5000/${user.foto}`} alt={displayName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              ) : (
+                <div style={{ width: "100%", height: "100%", display: "grid", placeItems: "center", fontWeight: "600", fontSize: "14px" }}>{profileInitials}</div>
+              )}
             </div>
             <button className="primary-action" type="button" onClick={() => setActiveTab("cari-tukang")}
               style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer" }}>
@@ -246,7 +260,8 @@ function UserDashboard() {
             <h2 style={{ maxWidth: "550px" }}>Butuh perbaikan rumah? Cari tukang terpercaya dalam hitungan menit.</h2>
             <div style={{ display: "flex", background: "white", padding: "6px 6px 6px 16px", borderRadius: "24px", alignItems: "center", width: "100%", maxWidth: "500px", gap: "10px", margin: "24px 0 16px" }}>
               <FiSearch style={{ color: "var(--muted)" }} />
-              <input type="text" placeholder="Mau perbaiki apa hari ini?" style={{ border: "none", outline: "none", flex: 1, fontSize: "14px" }} />
+              <input type="text" placeholder="Mau perbaiki apa hari ini?" id="hero-search-input" style={{ border: "none", outline: "none", flex: 1, fontSize: "14px" }}
+                onKeyDown={e => { if (e.key === "Enter" && e.target.value.trim()) { setActiveTab("cari-tukang"); } }} />
               <button onClick={() => setActiveTab("cari-tukang")} style={{ background: "var(--primary)", color: "white", border: "none", padding: "10px 20px", borderRadius: "20px", fontWeight: "600", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 Cari sekarang <FiChevronRight />
               </button>
@@ -318,6 +333,48 @@ function UserDashboard() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="dashboard-section" style={{ marginTop: "32px" }}>
+          <div className="section-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "16px" }}>
+            <div>
+              <h2 style={{ fontSize: "18px", fontWeight: "800", margin: "0 0 4px 0" }}>Status Pengerjaan Aktif</h2>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0 }}>Pantau progress order yang sedang berjalan.</p>
+            </div>
+            <button type="button" onClick={() => setActiveTab("order-aktif")}
+              style={{ background: "none", border: "none", color: "var(--primary)", fontWeight: "600", fontSize: "14px", cursor: "pointer" }}>
+              Lihat semua
+            </button>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" }}>
+            {bookings.filter(b => ["pending", "diterima", "dikerjakan"].includes(b.status)).length === 0 ? (
+              <div style={{ padding: "20px", background: "white", borderRadius: 16, border: "1px solid var(--line)", textAlign: "center" }}>
+                <FiCheckCircle style={{ fontSize: 24, color: "#d1d5db", marginBottom: 8 }} />
+                <p style={{ color: "#94a3b8", fontSize: 14, margin: 0 }}>Tidak ada order aktif. Yuk booking tukang sekarang!</p>
+              </div>
+            ) : bookings.filter(b => ["pending", "diterima", "dikerjakan"].includes(b.status)).slice(0, 3).map(item => {
+              const config = statusConfig[item.status] || { label: item.status, color: "#6b7280", bg: "#f3f4f6", icon: FiCheckCircle };
+              const Icon = config.icon;
+              return (
+                <div key={item.id} style={{ display: "flex", alignItems: "center", gap: 14, background: "white", borderRadius: 16, border: "1px solid var(--line)", padding: "14px 18px", cursor: "pointer" }}
+                  onClick={() => navigate(`/user/booking/detail/${item.id}`)}>
+                  <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#e6f4f2", color: "#026b5e", display: "grid", placeItems: "center", fontWeight: "bold", fontSize: 14, flexShrink: 0 }}>
+                    {getInitials(item.nama_tukang)}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>{item.nama_tukang}</div>
+                    <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{item.alamat?.split(",")[0] || "-"}</div>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 12px", borderRadius: 20, fontSize: 12, fontWeight: 700, background: config.bg, color: config.color }}>
+                      <Icon size={14} /> {config.label}
+                    </span>
+                    <FiChevronRight style={{ color: "#d1d5db", flexShrink: 0 }} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -698,9 +755,12 @@ function UserDashboard() {
   function OrderAktifSection() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
-    const activeStatuses = ["pending", "diterima", "dikerjakan"];
+    const [payModal, setPayModal] = useState({ open: false, booking: null, jumlah: "" });
+    const [paying, setPaying] = useState(false);
+    const activeStatuses = ["pending", "diterima", "dikerjakan", "selesai"];
 
-    useEffect(() => {
+    const loadOrders = () => {
+      setLoading(true);
       getMyBooking()
         .then(data => {
           const arr = Array.isArray(data) ? data : (data.data || []);
@@ -708,7 +768,9 @@ function UserDashboard() {
         })
         .catch(() => {})
         .finally(() => setLoading(false));
-    }, []);
+    };
+
+    useEffect(() => { loadOrders(); }, []);
 
     const handleCancel = async (id) => {
       if (!confirm("Yakin ingin membatalkan booking ini?")) return;
@@ -721,18 +783,43 @@ function UserDashboard() {
       }
     };
 
+    const handlePay = async () => {
+      const amount = parseFloat(payModal.jumlah);
+      if (!amount || amount <= 0) {
+        showToast("Masukkan jumlah pembayaran", "error");
+        return;
+      }
+      setPaying(true);
+      try {
+        const res = await payBooking(payModal.booking.id, amount, "qris");
+        if (res.success) {
+          showToast(`Pembayaran Rp ${amount.toLocaleString()} berhasil!`);
+          setPayModal({ open: false, booking: null, jumlah: "" });
+          loadOrders();
+        }
+      } catch (e) {
+        showToast(e?.response?.data?.message || "Pembayaran gagal", "error");
+      }
+      setPaying(false);
+    };
+
     return (
       <div style={{ maxWidth: "100%" }}>
         <header className="customer-topbar">
           <div>
             <h1 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Order Aktif</h1>
             <p style={{ margin: "4px 0 0", fontSize: 14, color: "#667085" }}>
-              {loading ? "Memuat..." : `${bookings.length} order aktif`}
+              {loading ? "Memuat..." : `${bookings.length} order`}
             </p>
           </div>
-          <button onClick={() => setActiveTab("cari-tukang")} style={{ display: "flex", alignItems: "center", gap: 6, padding: "10px 20px", background: "#026b5e", color: "white", border: "none", borderRadius: 12, fontWeight: 600, fontSize: 14, cursor: "pointer" }}>
-            <FiSearch /> Cari Tukang
-          </button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={loadOrders} style={{ display: "flex", alignItems: "center", gap: 6, padding: "10px 16px", background: "white", color: "#667085", border: "1px solid #e4e7ec", borderRadius: 12, fontWeight: 600, fontSize: 13, cursor: "pointer" }}>
+              <FiRefreshCw size={14} /> Refresh
+            </button>
+            <button onClick={() => setActiveTab("cari-tukang")} style={{ display: "flex", alignItems: "center", gap: 6, padding: "10px 20px", background: "#026b5e", color: "white", border: "none", borderRadius: 12, fontWeight: 600, fontSize: 14, cursor: "pointer" }}>
+              <FiSearch /> Cari Tukang
+            </button>
+          </div>
         </header>
 
         {loading ? (
@@ -752,7 +839,7 @@ function UserDashboard() {
               const config = statusConfig[item.status] || { label: item.status, color: "#6b7280", bg: "#f3f4f6", icon: FiCheckCircle };
               const Icon = config.icon;
               return (
-                <div style={{ background: "white", borderRadius: 18, border: "1px solid #e4e7ec", padding: 20, display: "flex", alignItems: "center", gap: 16, transition: "box-shadow 0.2s" }}>
+                <div key={item.id} style={{ background: "white", borderRadius: 18, border: "1px solid #e4e7ec", padding: 20, display: "flex", alignItems: "center", gap: 16, transition: "box-shadow 0.2s" }}>
                   <Link to={`/user/tukang/${item.tukang_id}`} style={{ textDecoration: "none", color: "inherit" }}>
                     <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#e6f4f2", color: "#026b5e", display: "grid", placeItems: "center", fontWeight: "bold", fontSize: 16, flexShrink: 0, cursor: "pointer" }}>
                       {getInitials(item.nama_tukang)}
@@ -778,6 +865,11 @@ function UserDashboard() {
                         Batal
                       </button>
                     )}
+                    {item.status === "selesai" && (
+                      <button onClick={() => setPayModal({ open: true, booking: item, jumlah: "" })} style={{ padding: "6px 12px", background: "#026b5e", color: "white", border: "none", borderRadius: 10, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                        Bayar QRIS
+                      </button>
+                    )}
                     <Link to={`/user/booking/detail/${item.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                       <FiChevronRight style={{ color: "#d1d5db", flexShrink: 0, cursor: "pointer" }} />
                     </Link>
@@ -785,6 +877,39 @@ function UserDashboard() {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {payModal.open && (
+          <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }} onClick={() => setPayModal({ open: false, booking: null, jumlah: "" })}>
+            <div style={{ background: "white", borderRadius: 24, padding: 32, maxWidth: 420, width: "90%", position: "relative" }} onClick={e => e.stopPropagation()}>
+              <button onClick={() => setPayModal({ open: false, booking: null, jumlah: "" })} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer", color: "#98a2b3" }}><FiX size={20} /></button>
+              <h2 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 800 }}>Pembayaran QRIS</h2>
+              <p style={{ fontSize: 14, color: "#667085", margin: "0 0 24px" }}>
+                Booking #{payModal.booking.id} — {payModal.booking.nama_tukang}
+              </p>
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#344054", marginBottom: 6 }}>Jumlah Pembayaran (Rp)</label>
+                <input type="number" value={payModal.jumlah} onChange={e => setPayModal({ ...payModal, jumlah: e.target.value })} placeholder="Masukkan nominal"
+                  style={{ width: "100%", padding: "12px 14px", border: "1px solid #e4e7ec", borderRadius: 12, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+              </div>
+              <div style={{ marginBottom: 24, padding: 20, background: "#f8fafc", borderRadius: 16, textAlign: "center" }}>
+                <div style={{ width: 180, height: 180, background: "white", margin: "0 auto 12px", borderRadius: 12, display: "grid", placeItems: "center", border: "1px solid #e4e7ec" }}>
+                  <div style={{ textAlign: "center", color: "#026b5e" }}>
+                    <FiCreditCard size={48} />
+                    <p style={{ margin: "8px 0 0", fontSize: 11, color: "#667085" }}>Scan QRIS</p>
+                  </div>
+                </div>
+                <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#344054" }}>Bayar dengan QRIS / E-Wallet</p>
+                <p style={{ margin: "4px 0 0", fontSize: 12, color: "#667085" }}>Scan menggunakan GoPay, OVO, Dana, atau aplikasi perbankan</p>
+              </div>
+              <button onClick={handlePay} disabled={paying} style={{
+                width: "100%", padding: 14, background: paying ? "#94a3b8" : "#026b5e", color: "white", border: "none",
+                borderRadius: 12, fontWeight: 700, fontSize: 15, cursor: paying ? "not-allowed" : "pointer"
+              }}>
+                <FiCheckCircle size={18} style={{ marginRight: 8 }} /> {paying ? "Memproses..." : "Konfirmasi Pembayaran"}
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -1039,8 +1164,9 @@ function UserDashboard() {
         formData.append("foto", fotoFile);
         const res = await uploadProfilePhoto(formData);
         setFoto(res.data.foto);
+        setFotoPreview(`http://localhost:5000/${res.data.foto}`);
         setFotoFile(null);
-        const updatedUser = { ...user, foto: res.data.foto };
+        const updatedUser = { ...user, foto: res.data.foto, nama, email };
         localStorage.setItem("user", JSON.stringify(updatedUser));
         if (login) login(updatedUser, localStorage.getItem("token"));
         setMessage({ type: "success", text: "Foto profil berhasil diupload!" });
@@ -1065,6 +1191,16 @@ function UserDashboard() {
       }
       setSaving(true);
       try {
+        let fotoBaru = user?.foto;
+        if (fotoFile) {
+          const formData = new FormData();
+          formData.append("foto", fotoFile);
+          const uploadRes = await uploadProfilePhoto(formData);
+          fotoBaru = uploadRes.data.foto;
+          setFoto(fotoBaru);
+          setFotoFile(null);
+        }
+
         const payload = {};
         if (nama !== user?.nama) payload.nama = nama;
         if (email !== user?.email) payload.email = email;
@@ -1072,12 +1208,22 @@ function UserDashboard() {
           payload.current_password = currentPassword;
           payload.new_password = newPassword;
         }
-        await updateProfile(payload);
-        setMessage({ type: "success", text: "Profil berhasil diperbarui!" });
-        showToast("Profil berhasil diperbarui");
-        const updatedUser = { ...user, nama, email };
+
+        if (Object.keys(payload).length > 0) {
+          await updateProfile(payload);
+        }
+
+        if (Object.keys(payload).length === 0 && !fotoFile) {
+          setMessage({ type: "info", text: "Tidak ada perubahan yang disimpan." });
+          setSaving(false);
+          return;
+        }
+
+        const updatedUser = { ...user, nama, email, foto: fotoBaru };
         localStorage.setItem("user", JSON.stringify(updatedUser));
         if (login) login(updatedUser, localStorage.getItem("token"));
+        setMessage({ type: "success", text: "Profil berhasil diperbarui!" });
+        showToast("Profil berhasil diperbarui");
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
@@ -1211,6 +1357,244 @@ function UserDashboard() {
             <FiLogOut /> Logout
           </button>
         </form>
+      </div>
+    );
+  }
+
+  function PembayaranSection() {
+    const [wallet, setWallet] = useState(null);
+    const [transactions, setTransactions] = useState([]);
+    const [paymentMethods, setPaymentMethods] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [showAddMethod, setShowAddMethod] = useState(false);
+    const [newMethod, setNewMethod] = useState({ tipe: "bank_transfer", nama_bank: "", nomor_rekening: "", nama_pemilik: "", is_default: false });
+
+    useEffect(() => {
+      loadPaymentData();
+    }, []);
+
+    const loadPaymentData = async () => {
+      setLoading(true);
+      try {
+        const [walletRes, txRes, methodsRes] = await Promise.all([
+          getWallet(),
+          getTransactions({ limit: 10 }),
+          getPaymentMethods()
+        ]);
+        if (walletRes.success) setWallet(walletRes.data);
+        if (txRes.success) setTransactions(txRes.data);
+        if (methodsRes.success) setPaymentMethods(methodsRes.data);
+      } catch (e) {
+        console.error(e);
+      }
+      setLoading(false);
+    };
+
+    const handleAddMethod = async () => {
+      if (!newMethod.nomor_rekening || !newMethod.nama_pemilik) {
+        showToast("Lengkapi data rekening", "error");
+        return;
+      }
+      try {
+        const res = await addPaymentMethod(newMethod);
+        if (res.success) {
+          showToast("Metode pembayaran berhasil ditambahkan");
+          setShowAddMethod(false);
+          setNewMethod({ tipe: "bank_transfer", nama_bank: "", nomor_rekening: "", nama_pemilik: "", is_default: false });
+          loadPaymentData();
+        }
+      } catch (e) {
+        showToast(e?.response?.data?.message || "Gagal menambahkan", "error");
+      }
+    };
+
+    const handleDeleteMethod = async (id) => {
+      if (!confirm("Yakin ingin menghapus metode pembayaran ini?")) return;
+      try {
+        await deletePaymentMethod(id);
+        showToast("Metode pembayaran dihapus");
+        loadPaymentData();
+      } catch (e) {
+        showToast("Gagal menghapus", "error");
+      }
+    };
+
+    const handleSetDefault = async (id) => {
+      try {
+        await setDefaultPaymentMethod(id);
+        showToast("Metode utama berhasil diubah");
+        loadPaymentData();
+      } catch (e) {
+        showToast("Gagal mengubah", "error");
+      }
+    };
+
+    const tipeColors = {
+      topup: { bg: "#d1fae5", color: "#065f46", label: "Topup" },
+      payment: { bg: "#fee2e2", color: "#991b1b", label: "Pembayaran" },
+      withdraw: { bg: "#fef3c7", color: "#92400e", label: "Tarik" },
+      refund: { bg: "#dbeafe", color: "#1e40af", label: "Refund" },
+    };
+    const statusColors = {
+      success: { bg: "#d1fae5", color: "#065f46", label: "Berhasil" },
+      pending: { bg: "#fef3c7", color: "#92400e", label: "Menunggu" },
+      failed: { bg: "#fee2e2", color: "#991b1b", label: "Gagal" },
+    };
+
+    const formatCurrency = (amount) => {
+      return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(amount);
+    };
+
+    const formatDateFull = (dateStr) => {
+      if (!dateStr) return "-";
+      return new Date(dateStr).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
+    };
+
+    if (loading) return <div style={{ textAlign: "center", padding: 60, color: "#667085" }}>Memuat data...</div>;
+
+    return (
+      <div style={{ maxWidth: "100%" }}>
+        <header className="customer-topbar">
+          <div>
+            <h1 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Pembayaran</h1>
+            <p style={{ margin: "4px 0 0", fontSize: 14, color: "#667085" }}>Kelola dompet digital, topup saldo, dan metode pembayaran.</p>
+          </div>
+        </header>
+
+        {/* Wallet Card */}
+        <div style={{ background: "linear-gradient(135deg, #026b5e 0%, #00c9a7 100%)", borderRadius: 24, padding: 28, color: "white", marginBottom: 24 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div>
+              <p style={{ margin: "0 0 4px", fontSize: 13, opacity: 0.8, fontWeight: 600 }}>Saldo Dompet</p>
+              <h2 style={{ margin: 0, fontSize: 36, fontWeight: 800 }}>{wallet ? formatCurrency(wallet.saldo) : "Rp 0"}</h2>
+            </div>
+            <div style={{ width: 48, height: 48, borderRadius: "50%", background: "rgba(255,255,255,0.2)", display: "grid", placeItems: "center", fontSize: 24 }}>
+              <FiCreditCard />
+            </div>
+          </div>
+        </div>
+
+        {/* Two columns: Transactions + Payment Methods */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          {/* Transactions */}
+          <div style={{ background: "white", borderRadius: 20, border: "1px solid #e4e7ec", padding: 24 }}>
+            <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>Riwayat Transaksi</h3>
+            {transactions.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 0", color: "#98a2b3" }}>
+                <FiCreditCard style={{ fontSize: 32, marginBottom: 8 }} />
+                <p style={{ margin: 0, fontSize: 14 }}>Belum ada transaksi</p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {transactions.map(tx => {
+                  const tc = tipeColors[tx.tipe] || { bg: "#f3f4f6", color: "#6b7280", label: tx.tipe };
+                  const sc = statusColors[tx.status] || { bg: "#f3f4f6", color: "#6b7280", label: tx.status };
+                  return (
+                    <div key={tx.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0", borderBottom: "1px solid #f3f4f6" }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                          <span style={{ padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 700, background: tc.bg, color: tc.color }}>{tc.label}</span>
+                          <span style={{ padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 700, background: sc.bg, color: sc.color }}>{sc.label}</span>
+                        </div>
+                        <p style={{ margin: 0, fontSize: 13, color: "#667085" }}>{tx.keterangan || tx.referensi || "-"}</p>
+                        <p style={{ margin: "2px 0 0", fontSize: 11, color: "#98a2b3" }}>{formatDateFull(tx.created_at)}</p>
+                      </div>
+                      <span style={{ fontWeight: 700, fontSize: 14, color: tx.tipe === "topup" || tx.tipe === "refund" ? "#065f46" : "#991b1b" }}>
+                        {tx.tipe === "topup" || tx.tipe === "refund" ? "+" : "-"}{formatCurrency(tx.jumlah)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Payment Methods */}
+          <div style={{ background: "white", borderRadius: 20, border: "1px solid #e4e7ec", padding: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>Metode Pembayaran</h3>
+              <button onClick={() => setShowAddMethod(true)} style={{ padding: "6px 14px", background: "#e6f4f2", color: "#026b5e", border: "none", borderRadius: 8, fontWeight: 600, fontSize: 12, cursor: "pointer" }}>
+                + Tambah
+              </button>
+            </div>
+            {paymentMethods.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 0", color: "#98a2b3" }}>
+                <FiCreditCard style={{ fontSize: 32, marginBottom: 8 }} />
+                <p style={{ margin: 0, fontSize: 14 }}>Belum ada metode pembayaran</p>
+                <button onClick={() => setShowAddMethod(true)} style={{ marginTop: 12, padding: "8px 16px", background: "#026b5e", color: "white", border: "none", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer" }}>
+                  Tambah Rekening
+                </button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {paymentMethods.map(m => (
+                  <div key={m.id} style={{ padding: 14, borderRadius: 12, border: m.is_default ? "2px solid #026b5e" : "1px solid #e4e7ec", background: m.is_default ? "#e6f4f2" : "white" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                      <div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                          <span style={{ fontWeight: 700, fontSize: 14 }}>{m.nama_bank || m.tipe}</span>
+                          {m.is_default && <span style={{ padding: "1px 6px", borderRadius: 4, background: "#026b5e", color: "white", fontSize: 10, fontWeight: 700 }}>Utama</span>}
+                        </div>
+                        <p style={{ margin: 0, fontSize: 13, color: "#344054" }}>{m.nomor_rekening}</p>
+                        <p style={{ margin: "2px 0 0", fontSize: 12, color: "#667085" }}>{m.nama_pemilik}</p>
+                      </div>
+                      <div style={{ display: "flex", gap: 6 }}>
+                        {!m.is_default && (
+                          <button onClick={() => handleSetDefault(m.id)} style={{ padding: "4px 10px", background: "white", border: "1px solid #e4e7ec", borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: "pointer", color: "#667085" }}>
+                            Utamakan
+                          </button>
+                        )}
+                        <button onClick={() => handleDeleteMethod(m.id)} style={{ padding: "4px 10px", background: "#fee2e2", border: "none", borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: "pointer", color: "#dc2626" }}>
+                          Hapus
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Add Payment Method Modal */}
+        {showAddMethod && (
+          <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }} onClick={() => setShowAddMethod(false)}>
+            <div style={{ background: "white", borderRadius: 24, padding: 32, maxWidth: 420, width: "90%", position: "relative" }} onClick={e => e.stopPropagation()}>
+              <button onClick={() => setShowAddMethod(false)} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer", color: "#98a2b3" }}><FiX size={20} /></button>
+              <h2 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 800 }}>Tambah Metode Pembayaran</h2>
+              <p style={{ fontSize: 14, color: "#667085", margin: "0 0 24px" }}>Simpan data rekening bank atau e-wallet Anda.</p>
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#344054", marginBottom: 6 }}>Tipe</label>
+                <select value={newMethod.tipe} onChange={e => setNewMethod({ ...newMethod, tipe: e.target.value })}
+                  style={{ width: "100%", padding: "12px 14px", border: "1px solid #e4e7ec", borderRadius: 12, fontSize: 14, outline: "none", background: "white" }}>
+                  <option value="e_wallet">E-Wallet / QRIS</option>
+                </select>
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#344054", marginBottom: 6 }}>Nama Bank / E-Wallet</label>
+                <input type="text" value={newMethod.nama_bank} onChange={e => setNewMethod({ ...newMethod, nama_bank: e.target.value })} placeholder="BCA, Mandiri, GoPay, dll"
+                  style={{ width: "100%", padding: "12px 14px", border: "1px solid #e4e7ec", borderRadius: 12, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#344054", marginBottom: 6 }}>Nomor Rekening</label>
+                <input type="text" value={newMethod.nomor_rekening} onChange={e => setNewMethod({ ...newMethod, nomor_rekening: e.target.value })} placeholder="1234567890"
+                  style={{ width: "100%", padding: "12px 14px", border: "1px solid #e4e7ec", borderRadius: 12, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#344054", marginBottom: 6 }}>Nama Pemilik</label>
+                <input type="text" value={newMethod.nama_pemilik} onChange={e => setNewMethod({ ...newMethod, nama_pemilik: e.target.value })} placeholder="John Doe"
+                  style={{ width: "100%", padding: "12px 14px", border: "1px solid #e4e7ec", borderRadius: 12, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+              </div>
+              <div style={{ marginBottom: 24, display: "flex", alignItems: "center", gap: 8 }}>
+                <input type="checkbox" id="is_default" checked={newMethod.is_default} onChange={e => setNewMethod({ ...newMethod, is_default: e.target.checked })} />
+                <label htmlFor="is_default" style={{ fontSize: 14, fontWeight: 500, color: "#344054" }}>Jadikan metode utama</label>
+              </div>
+              <button onClick={handleAddMethod} style={{ width: "100%", padding: 14, background: "#026b5e", color: "white", border: "none", borderRadius: 12, fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
+                Simpan Metode
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

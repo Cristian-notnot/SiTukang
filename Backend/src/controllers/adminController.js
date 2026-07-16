@@ -310,9 +310,9 @@ exports.deleteTukang = (req, res) => {
 exports.getAllBooking = (req, res) => {
     let sql = `SELECT booking.*, users.nama AS nama_user, tukang_usr.nama AS nama_tukang
         FROM booking
-        JOIN users ON booking.user_id = users.id
-        JOIN tukang ON booking.tukang_id = tukang.id
-        JOIN users AS tukang_usr ON tukang.user_id = tukang_usr.id`;
+        LEFT JOIN users ON booking.user_id = users.id
+        LEFT JOIN tukang ON booking.tukang_id = tukang.id
+        LEFT JOIN users AS tukang_usr ON tukang.user_id = tukang_usr.id`;
     const { search, status, sort, order } = req.query;
     const conditions = [];
     const params = [];

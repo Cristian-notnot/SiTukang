@@ -50,8 +50,8 @@ router.delete("/tukang/:id", ...adminOnly, deleteTukang);
 
 // Booking
 router.get("/booking", ...adminOnly, getAllBooking);
-router.get("/booking/:id", ...adminOnly, getBookingById);
 router.get("/booking/stats", ...adminOnly, getBookingStats);
+router.get("/booking/:id", ...adminOnly, getBookingById);
 router.put("/booking/:id/status", ...adminOnly, updateBookingStatus);
 router.delete("/booking/:id", ...adminOnly, deleteBooking);
 

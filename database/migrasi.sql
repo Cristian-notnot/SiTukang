@@ -45,3 +45,55 @@ CREATE TABLE IF NOT EXISTS `pengaturan` (
 -- Insert default pengaturan if table was just created
 INSERT IGNORE INTO pengaturan (id, nama_platform, email_admin, deskripsi)
 VALUES (1, 'SiTukang', 'halo@situkang.id', 'Marketplace jasa tukang profesional dan terpercaya.');
+
+-- 5. Tambah kolom foto ke tabel users (jika belum ada)
+SET @exist_foto := (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'users' AND COLUMN_NAME = 'foto');
+SET @sql_foto := IF(@exist_foto = 0,
+    'ALTER TABLE users ADD COLUMN `foto` VARCHAR(255) DEFAULT NULL AFTER `role`',
+    'SELECT 1');
+PREPARE stmt FROM @sql_foto;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 6. Buat tabel wallet untuk user
+CREATE TABLE IF NOT EXISTS `wallets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `saldo` decimal(15,2) DEFAULT '0.00',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `wallets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 6. Buat tabel transaksi untuk riwayat pembayaran
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `tipe` enum('topup','payment','withdraw','refund') NOT NULL,
+  `jumlah` decimal(15,2) NOT NULL,
+  `metode` varchar(50) DEFAULT NULL,
+  `status` enum('pending','success','failed') DEFAULT 'pending',
+  `referensi` varchar(100) DEFAULT NULL,
+  `keterangan` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 7. Buat tabel metode_pembayaran untuk menyimpan metode pembayaran user
+CREATE TABLE IF NOT EXISTS `payment_methods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `tipe` enum('bank_transfer','e_wallet','virtual_account') NOT NULL,
+  `nama_bank` varchar(100) DEFAULT NULL,
+  `nomor_rekening` varchar(50) DEFAULT NULL,
+  `nama_pemilik` varchar(100) DEFAULT NULL,
+  `is_default` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `payment_methods_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -9,7 +9,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const dashbordTukangRoutes = require("./routes/dashbordTukangRoutes");
-
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use("/api/booking", bookingRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/dashbord-tukang", dashbordTukangRoutes);
-
+app.use("/api/payment", paymentRoutes);
 
 
 module.exports = app;

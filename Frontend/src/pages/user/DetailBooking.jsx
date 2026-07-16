@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getBookingById, cancelBooking } from "../../api/bookingApi";
+import { payBooking } from "../../api/paymentApi";
 import {
   FiCalendar, FiMapPin, FiPhone, FiStar, FiTool, FiClock,
   FiChevronLeft, FiXCircle, FiCheckCircle, FiAlertCircle,
-  FiRefreshCw, FiMessageSquare, FiUser
+  FiRefreshCw, FiMessageSquare, FiUser, FiCreditCard
 } from "react-icons/fi";
 
 const statusConfig = {
@@ -25,6 +26,9 @@ function DetailBooking() {
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState(false);
+  const [showPayModal, setShowPayModal] = useState(false);
+  const [payAmount, setPayAmount] = useState("");
+  const [paying, setPaying] = useState(false);
 
   useEffect(() => {
     getBookingById(id)
@@ -45,6 +49,28 @@ function DetailBooking() {
     } finally {
       setCancelling(false);
     }
+  };
+
+  const handlePayBooking = async () => {
+    const amount = parseFloat(payAmount);
+    if (!amount || amount <= 0) {
+      alert("Masukkan jumlah pembayaran");
+      return;
+    }
+    setPaying(true);
+    try {
+      const res = await payBooking(id, amount, "qris");
+      if (res.success) {
+        alert(`Pembayaran Rp ${amount.toLocaleString()} berhasil!`);
+        setShowPayModal(false);
+        setPayAmount("");
+        const bookingRes = await getBookingById(id);
+        setBooking(bookingRes.data);
+      }
+    } catch (e) {
+      alert(e?.response?.data?.message || "Pembayaran gagal");
+    }
+    setPaying(false);
   };
 
   if (loading) {
@@ -263,18 +289,60 @@ function DetailBooking() {
               </button>
             )}
 
-            {currentStatus === "selesai" && !booking.user_rating && (
-              <Link to={`/user/my-booking`} style={{
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                width: "100%", padding: 14, background: "#026b5e", color: "white", border: "none",
-                borderRadius: 14, fontWeight: 700, fontSize: 14, cursor: "pointer", textDecoration: "none"
-              }}>
-                <FiStar /> Berikan Ulasan
-              </Link>
+            {currentStatus === "selesai" && (
+              <>
+                <button onClick={() => setShowPayModal(true)} style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  width: "100%", padding: 14, background: "#026b5e", color: "white", border: "none",
+                  borderRadius: 14, fontWeight: 700, fontSize: 14, cursor: "pointer", marginBottom: 8
+                }}>
+                  <FiCreditCard /> Bayar Via QRIS
+                </button>
+                {!booking.user_rating && (
+                  <Link to={`/user/my-booking`} style={{
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                    width: "100%", padding: 14, background: "#065f46", color: "white", border: "none",
+                    borderRadius: 14, fontWeight: 700, fontSize: 14, cursor: "pointer", textDecoration: "none"
+                  }}>
+                    <FiStar /> Berikan Ulasan
+                  </Link>
+                )}
+              </>
             )}
           </div>
         </div>
       </div>
+
+      {showPayModal && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }} onClick={() => setShowPayModal(false)}>
+          <div style={{ background: "white", borderRadius: 24, padding: 32, maxWidth: 420, width: "90%", position: "relative" }} onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowPayModal(false)} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer", color: "#98a2b3" }}><FiXCircle size={20} /></button>
+            <h2 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 800 }}>Pembayaran QRIS</h2>
+            <p style={{ fontSize: 14, color: "#667085", margin: "0 0 24px" }}>Booking #{id} — {booking.nama_tukang}</p>
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#344054", marginBottom: 6 }}>Jumlah Pembayaran (Rp)</label>
+              <input type="number" value={payAmount} onChange={e => setPayAmount(e.target.value)} placeholder="Masukkan nominal"
+                style={{ width: "100%", padding: "12px 14px", border: "1px solid #e4e7ec", borderRadius: 12, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+            </div>
+            <div style={{ marginBottom: 24, padding: 20, background: "#f8fafc", borderRadius: 16, textAlign: "center" }}>
+              <div style={{ width: 180, height: 180, background: "white", margin: "0 auto 12px", borderRadius: 12, display: "grid", placeItems: "center", border: "1px solid #e4e7ec" }}>
+                <div style={{ textAlign: "center", color: "#026b5e" }}>
+                  <FiCreditCard size={48} />
+                  <p style={{ margin: "8px 0 0", fontSize: 11, color: "#667085" }}>Scan QRIS</p>
+                </div>
+              </div>
+              <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#344054" }}>Bayar dengan QRIS / E-Wallet</p>
+              <p style={{ margin: "4px 0 0", fontSize: 12, color: "#667085" }}>Scan menggunakan GoPay, OVO, Dana, atau aplikasi perbankan</p>
+            </div>
+            <button onClick={handlePayBooking} disabled={paying} style={{
+              width: "100%", padding: 14, background: paying ? "#94a3b8" : "#026b5e", color: "white", border: "none",
+              borderRadius: 12, fontWeight: 700, fontSize: 15, cursor: paying ? "not-allowed" : "pointer"
+            }}>
+              <FiCheckCircle size={18} style={{ marginRight: 8 }} /> {paying ? "Memproses..." : "Konfirmasi Pembayaran"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

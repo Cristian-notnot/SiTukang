@@ -104,9 +104,12 @@ exports.login = (req, res) => {
       },
     );
 
+    const userData = { ...user };
+    delete userData.password;
+
     res.json({
       token,
-      user,
+      user: userData,
     });
   });
 };
@@ -178,16 +181,7 @@ exports.registerTukang = async (req, res) => {
 exports.getProfile = (req, res) => {
   const userId = req.user.id;
 
-  const sql = `
-        SELECT
-            id,
-            nama,
-            email,
-            foto,
-            role
-        FROM users
-        WHERE id = ?
-    `;
+  const sql = "SELECT * FROM users WHERE id = ?";
 
   db.query(sql, [userId], (err, result) => {
     if (err) {
@@ -197,10 +191,10 @@ exports.getProfile = (req, res) => {
       });
     }
 
-    res.json({
-      success: true,
-      data: result[0],
-    });
+    const data = result[0];
+    delete data.password;
+
+    res.json({ success: true, data });
   });
 };
 
@@ -277,18 +271,38 @@ exports.uploadPhoto = (req, res) => {
 
   const fotoPath = "uploads/profile/" + req.file.filename;
 
-  db.query("SELECT foto FROM users WHERE id = ?", [userId], (err, result) => {
-    if (err) return res.status(500).json({ success: false, message: err.message });
-
-    if (result[0]?.foto) {
-      const oldPath = path.join(__dirname, "../..", result[0].foto);
-      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-    }
-
+  const tryUpdate = () => {
     db.query("UPDATE users SET foto = ? WHERE id = ?", [fotoPath, userId], (err) => {
-      if (err) return res.status(500).json({ success: false, message: err.message });
-      res.json({ success: true, message: "Foto berhasil diupload", data: { foto: fotoPath } });
+      if (err) {
+        if (err.errno === 1054) {
+          db.query("ALTER TABLE users ADD COLUMN `foto` VARCHAR(255) DEFAULT NULL AFTER `role`", (alterErr) => {
+            if (alterErr) return res.status(500).json({ success: false, message: alterErr.message });
+            tryUpdate();
+          });
+        } else {
+          return res.status(500).json({ success: false, message: err.message });
+        }
+      } else {
+        res.json({ success: true, message: "Foto berhasil diupload", data: { foto: fotoPath } });
+      }
     });
+  };
+
+  db.query("SELECT foto FROM users WHERE id = ?", [userId], (err, result) => {
+    if (err && err.errno === 1054) {
+      db.query("ALTER TABLE users ADD COLUMN `foto` VARCHAR(255) DEFAULT NULL AFTER `role`", (alterErr) => {
+        if (alterErr) return res.status(500).json({ success: false, message: alterErr.message });
+        tryUpdate();
+      });
+    } else if (err) {
+      return res.status(500).json({ success: false, message: err.message });
+    } else {
+      if (result[0]?.foto) {
+        const oldPath = path.join(__dirname, "../..", result[0].foto);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+      tryUpdate();
+    }
   });
 };
 
