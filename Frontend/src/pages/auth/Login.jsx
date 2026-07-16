@@ -108,18 +108,7 @@ function Login() {
                         </div>
                     </div>
                 </div>
-
-                {/* Testimonial card */}
-                <div className="log-testimonial-card">
-                    <span className="log-quote-mark">"</span>
-                    <p className="log-testimonial-text">
-                        SiTukang sangat membantu! Tukangnya profesional dan hasilnya memuaskan.
-                    </p>
-                    <div className="log-testimonial-footer">
-                        <span className="log-testimonial-author">– Rina, Jakarta</span>
-                        <span className="log-testimonial-stars">★★★★★</span>
-                    </div>
-                </div>
+                
             </div>
 
             {/* ═══════════════════════════════

@@ -85,9 +85,6 @@ function Register() {
 
     return (
         <div className="register-container">
-            
-            {/* SISI KIRI: PANEL GRADIENT HIJAU */}
-            {/* SISI KIRI: PANEL GRADIENT HIJAU */}
             {/* SISI KIRI: PANEL GRADIENT HIJAU */}
             <div className="reg-left-panel" style={{ 
                 backgroundImage: `linear-gradient(105deg, rgba(6, 78, 59, 0.95) 0%, rgba(6, 78, 59, 0.80) 45%, rgba(6, 78, 59, 0.30) 100%), url(${bgRoom})`,

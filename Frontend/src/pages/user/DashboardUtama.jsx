@@ -4,6 +4,7 @@ import { getRekomendasiTukang } from "../../api/tukangApi";
 import { getLatestReviews } from "../../api/reviewApi";
 import "../../assets/css/Dashboard.css";
 import logoImg from "../../assets/gambar/logo.jpeg";
+import deskripsiImg from "../../assets/gambar/blockart.jpeg";
 
 function UserDashboard() {
   const navigate = useNavigate();
@@ -180,11 +181,30 @@ function UserDashboard() {
                 </div>
               </div>
               <button className="btn-booking" onClick={() => navigate("/login")}>Booking Sekarang</button>
+              
             </div>
           </div>
         </div>
       </header>
-
+      {/* --- TAMBAHAN DESKRIPSI SITUKANG DISINI --- */}
+{/* --- TAMBAHAN DESKRIPSI SITUKANG DISINI --- */}
+      <div className="dashboard-description">
+          <div className="description-img-container">
+              <img src={deskripsiImg} alt="Ilustrasi Tukang" className="description-avatar" />
+          </div>
+          <div className="description-text">
+              <h3>Solusi Praktis untuk Perbaikan Rumah</h3>
+              <p>
+                  <strong>SiTukang</strong> adalah platform terpercaya yang menghubungkan Anda dengan para profesional 
+                  berpengalaman untuk solusi perbaikan rumah, instalasi listrik, hingga renovasi. 
+                  Kami berkomitmen memberikan kemudahan akses, transparansi harga, dan kualitas 
+                  kerja yang terjamin agar hunian Anda selalu dalam kondisi terbaik.
+                  Kami menghadirkan sistem yang transparan untuk menghilangkan ketidakpastian dalam mencari bantuan teknis. Baik itu perbaikan listrik, AC, pipa, hingga renovasi, semua proses pengerjaan dapat Anda pantau langsung dari dashboard ini.SiTukang membuat perbaikan rumah yang dulunya rumit, kini menjadi sistematis, cepat, dan terpercaya.
+              </p>
+          </div>
+      </div>
+      {/* ------------------------------------------ */}
+        
       {/* 3. LAYANAN POPULER SECTION */}
       <section className="section-container">
         <div className="section-header">
